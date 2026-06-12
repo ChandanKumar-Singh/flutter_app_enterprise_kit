@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 
@@ -13,41 +14,54 @@ class AppDialog {
   // ── 1. Basic Info Dialog ──────────────────────────────────────────────────
   static Future<void> show(
     BuildContext context, {
-    required String title,
-    required String message,
+    String title = 'Information',
+    String message = 'This is an information message.',
     String closeLabel = 'OK',
     Widget? icon,
   }) => showDialog(
     context: context,
-    builder: (_) => _BasicDialog(title: title, message: message,
-        closeLabel: closeLabel, icon: icon),
+    builder: (_) => _BasicDialog(
+      title: title,
+      message: message,
+      closeLabel: closeLabel,
+      icon: icon,
+    ),
   );
 
   // ── 2. Confirm Dialog ─────────────────────────────────────────────────────
   static Future<bool?> confirm(
     BuildContext context, {
-    required String title,
-    required String message,
+    String title = 'Confirm Action',
+    String message = 'Are you sure you want to proceed?',
     String confirmLabel = 'Confirm',
     String cancelLabel = 'Cancel',
     Widget? icon,
   }) => showDialog<bool>(
     context: context,
-    builder: (_) => _ConfirmDialog(title: title, message: message,
-        confirmLabel: confirmLabel, cancelLabel: cancelLabel, icon: icon),
+    builder: (_) => _ConfirmDialog(
+      title: title,
+      message: message,
+      confirmLabel: confirmLabel,
+      cancelLabel: cancelLabel,
+      icon: icon,
+    ),
   );
 
   // ── 3. Destructive Confirm ────────────────────────────────────────────────
   static Future<bool?> danger(
     BuildContext context, {
-    required String title,
-    required String message,
+    String title = 'Delete Item',
+    String message = 'Are you sure you want to delete this? This action cannot be undone.',
     String confirmLabel = 'Delete',
     String cancelLabel = 'Cancel',
   }) => showDialog<bool>(
     context: context,
-    builder: (_) => _DangerDialog(title: title, message: message,
-        confirmLabel: confirmLabel, cancelLabel: cancelLabel),
+    builder: (_) => _DangerDialog(
+      title: title,
+      message: message,
+      confirmLabel: confirmLabel,
+      cancelLabel: cancelLabel,
+    ),
   );
 
   // ── 4. Input Dialog ───────────────────────────────────────────────────────
@@ -63,8 +77,12 @@ class AppDialog {
   }) => showDialog<String>(
     context: context,
     builder: (_) => _InputDialog(
-      title: title, hint: hint, initialValue: initialValue,
-      label: label, keyboardType: keyboardType, maxLines: maxLines,
+      title: title,
+      hint: hint,
+      initialValue: initialValue,
+      label: label,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
       validator: validator,
     ),
   );
@@ -101,8 +119,11 @@ class AppDialog {
   }) => showDialog(
     context: context,
     builder: (_) => _StatusDialog(
-      title: title, message: message, closeLabel: closeLabel,
-      color: Colors.green, icon: Icons.check_circle_outline,
+      title: title,
+      message: message,
+      closeLabel: closeLabel,
+      color: Colors.green,
+      icon: Icons.check_circle_outline,
     ),
   );
 
@@ -116,8 +137,13 @@ class AppDialog {
     VoidCallback? onRetry,
   }) => showDialog(
     context: context,
-    builder: (_) => _ErrorDialog(title: title, message: message,
-        details: details, closeLabel: closeLabel, onRetry: onRetry),
+    builder: (_) => _ErrorDialog(
+      title: title,
+      message: message,
+      details: details,
+      closeLabel: closeLabel,
+      onRetry: onRetry,
+    ),
   );
 
   // ── 8. Warning ────────────────────────────────────────────────────────────
@@ -129,8 +155,11 @@ class AppDialog {
   }) => showDialog(
     context: context,
     builder: (_) => _StatusDialog(
-      title: title, message: message, closeLabel: closeLabel,
-      color: Colors.orange, icon: Icons.warning_amber_outlined,
+      title: title,
+      message: message,
+      closeLabel: closeLabel,
+      color: Colors.orange,
+      icon: Icons.warning_amber_outlined,
     ),
   );
 
@@ -165,7 +194,128 @@ class AppDialog {
       Navigator.of(context).pop(result);
 }
 
-// ─── Dialog Implementations ────────────────────────────────────────────────────
+// ─── Dialog Container Shell ──────────────────────────────────────────────────
+
+class _DialogContainer extends StatelessWidget {
+  final Widget? icon;
+  final Color? iconContainerColor;
+  final String title;
+  final Widget content;
+  final List<Widget> actions;
+  final bool isDestructive;
+
+  const _DialogContainer({
+    this.icon,
+    this.iconContainerColor,
+    required this.title,
+    required this.content,
+    required this.actions,
+    this.isDestructive = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 340),
+          decoration: BoxDecoration(
+            color: cs.surface,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            border: Border.all(color: cs.outlineVariant.withOpacity(0.5)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  height: 4,
+                  color: isDestructive ? cs.error : (iconContainerColor ?? cs.primary),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null) ...[
+                        Container(
+                          padding: const EdgeInsets.all(AppSpacing.md),
+                          decoration: BoxDecoration(
+                            color: (iconContainerColor ?? cs.primary).withOpacity(0.08),
+                            shape: BoxShape.circle,
+                          ),
+                          child: icon,
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                      ],
+                      Text(
+                        title,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      DefaultTextStyle(
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: cs.onSurfaceVariant,
+                          height: 1.4,
+                        ) ?? const TextStyle(),
+                        textAlign: TextAlign.center,
+                        child: content,
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      Row(
+                        children: actions.asMap().entries.map((entry) {
+                          final idx = entry.key;
+                          final action = entry.value;
+                          return Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: idx == 0 ? 0 : 8,
+                                right: idx == actions.length - 1 ? 0 : 8,
+                              ),
+                              child: action,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ).animate()
+     .fadeIn(duration: 220.ms, curve: Curves.easeOut)
+     .scale(
+       begin: const Offset(0.95, 0.95),
+       end: const Offset(1.0, 1.0),
+       duration: 220.ms,
+       curve: Curves.easeOutBack,
+     );
+  }
+}
+
+// ─── Dialog Implementations ──────────────────────────────────────────────────
 
 class _BasicDialog extends StatelessWidget {
   final String title;
@@ -173,17 +323,25 @@ class _BasicDialog extends StatelessWidget {
   final String closeLabel;
   final Widget? icon;
 
-  const _BasicDialog({required this.title, required this.message,
-      required this.closeLabel, this.icon});
+  const _BasicDialog({
+    required this.title,
+    required this.message,
+    required this.closeLabel,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return _DialogContainer(
       icon: icon,
-      title: Text(title),
+      title: title,
       content: Text(message),
       actions: [
-        AppButton.text(label: closeLabel, onPressed: () => Navigator.pop(context), isFullWidth: false),
+        AppButton.filled(
+          label: closeLabel,
+          onPressed: () => Navigator.pop(context),
+          size: AppButtonSize.md,
+        ),
       ],
     );
   }
@@ -192,19 +350,32 @@ class _BasicDialog extends StatelessWidget {
 class _ConfirmDialog extends StatelessWidget {
   final String title, message, confirmLabel, cancelLabel;
   final Widget? icon;
-  const _ConfirmDialog({required this.title, required this.message,
-      required this.confirmLabel, required this.cancelLabel, this.icon});
+
+  const _ConfirmDialog({
+    required this.title,
+    required this.message,
+    required this.confirmLabel,
+    required this.cancelLabel,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return _DialogContainer(
       icon: icon,
-      title: Text(title),
+      title: title,
       content: Text(message),
       actions: [
-        AppButton.text(label: cancelLabel, onPressed: () => Navigator.pop(context, false), isFullWidth: false),
-        AppButton.filled(label: confirmLabel, onPressed: () => Navigator.pop(context, true),
-            size: AppButtonSize.sm, isFullWidth: false),
+        AppButton.outlined(
+          label: cancelLabel,
+          onPressed: () => Navigator.pop(context, false),
+          size: AppButtonSize.md,
+        ),
+        AppButton.filled(
+          label: confirmLabel,
+          onPressed: () => Navigator.pop(context, true),
+          size: AppButtonSize.md,
+        ),
       ],
     );
   }
@@ -212,19 +383,34 @@ class _ConfirmDialog extends StatelessWidget {
 
 class _DangerDialog extends StatelessWidget {
   final String title, message, confirmLabel, cancelLabel;
-  const _DangerDialog({required this.title, required this.message,
-      required this.confirmLabel, required this.cancelLabel});
+
+  const _DangerDialog({
+    required this.title,
+    required this.message,
+    required this.confirmLabel,
+    required this.cancelLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      icon: Icon(Icons.delete_outline, color: Theme.of(context).colorScheme.error, size: 32),
-      title: Text(title),
+    final errorColor = Theme.of(context).colorScheme.error;
+    return _DialogContainer(
+      icon: Icon(Icons.delete_outline, color: errorColor, size: 28),
+      iconContainerColor: errorColor,
+      isDestructive: true,
+      title: title,
       content: Text(message),
       actions: [
-        AppButton.text(label: cancelLabel, onPressed: () => Navigator.pop(context, false), isFullWidth: false),
-        AppButton.destructive(label: confirmLabel, onPressed: () => Navigator.pop(context, true),
-            size: AppButtonSize.sm, isFullWidth: false),
+        AppButton.outlined(
+          label: cancelLabel,
+          onPressed: () => Navigator.pop(context, false),
+          size: AppButtonSize.md,
+        ),
+        AppButton.destructive(
+          label: confirmLabel,
+          onPressed: () => Navigator.pop(context, true),
+          size: AppButtonSize.md,
+        ),
       ],
     );
   }
@@ -237,8 +423,15 @@ class _InputDialog extends StatefulWidget {
   final int? maxLines;
   final String? Function(String?)? validator;
 
-  const _InputDialog({required this.title, this.hint, this.initialValue,
-      this.label, required this.keyboardType, this.maxLines, this.validator});
+  const _InputDialog({
+    required this.title,
+    this.hint,
+    this.initialValue,
+    this.label,
+    required this.keyboardType,
+    this.maxLines,
+    this.validator,
+  });
 
   @override
   State<_InputDialog> createState() => _InputDialogState();
@@ -249,29 +442,43 @@ class _InputDialogState extends State<_InputDialog> {
   final _key = GlobalKey<FormState>();
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.title),
+    return _DialogContainer(
+      title: widget.title,
       content: Form(
         key: _key,
-        child: TextFormField(
-          controller: _ctrl,
-          keyboardType: widget.keyboardType,
-          maxLines: widget.maxLines,
-          validator: widget.validator,
-          autofocus: true,
-          decoration: InputDecoration(
-            labelText: widget.label,
-            hintText: widget.hint,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: TextFormField(
+            controller: _ctrl,
+            keyboardType: widget.keyboardType,
+            maxLines: widget.maxLines,
+            validator: widget.validator,
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: widget.label,
+              hintText: widget.hint,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            ),
           ),
         ),
       ),
       actions: [
-        AppButton.text(label: 'Cancel', onPressed: () => Navigator.pop(context), isFullWidth: false),
-        AppButton.filled(label: 'OK', size: AppButtonSize.sm, isFullWidth: false,
+        AppButton.outlined(
+          label: 'Cancel',
+          onPressed: () => Navigator.pop(context),
+          size: AppButtonSize.md,
+        ),
+        AppButton.filled(
+          label: 'OK',
+          size: AppButtonSize.md,
           onPressed: () {
             if (_key.currentState?.validate() ?? true) {
               Navigator.pop(context, _ctrl.text);
@@ -289,19 +496,33 @@ class _LoadingDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.xl),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: AppSpacing.lg),
-            Text(message, style: Theme.of(context).textTheme.bodyLarge),
-          ],
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      child: Center(
+        child: Container(
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          decoration: BoxDecoration(
+            color: cs.surface,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+            border: Border.all(color: cs.outlineVariant.withOpacity(0.5)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(strokeWidth: 3),
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                message,
+                style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
         ),
       ),
-    );
+    ).animate().fadeIn(duration: 200.ms);
   }
 }
 
@@ -311,21 +532,26 @@ class _StatusDialog extends StatelessWidget {
   final Color color;
   final IconData icon;
 
-  const _StatusDialog({required this.title, this.message,
-      required this.closeLabel, required this.color, required this.icon});
+  const _StatusDialog({
+    required this.title,
+    this.message,
+    required this.closeLabel,
+    required this.color,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      icon: Icon(icon, color: color, size: 48),
-      title: Text(title),
-      content: message != null ? Text(message!) : null,
+    return _DialogContainer(
+      icon: Icon(icon, color: color, size: 28),
+      iconContainerColor: color,
+      title: title,
+      content: message != null ? Text(message!) : const SizedBox.shrink(),
       actions: [
         AppButton.filled(
           label: closeLabel,
           onPressed: () => Navigator.pop(context),
-          size: AppButtonSize.sm,
-          isFullWidth: false,
+          size: AppButtonSize.md,
           backgroundColor: color,
         ),
       ],
@@ -338,8 +564,13 @@ class _ErrorDialog extends StatefulWidget {
   final String? message, details;
   final VoidCallback? onRetry;
 
-  const _ErrorDialog({required this.title, this.message, this.details,
-      required this.closeLabel, this.onRetry});
+  const _ErrorDialog({
+    required this.title,
+    this.message,
+    this.details,
+    required this.closeLabel,
+    this.onRetry,
+  });
 
   @override
   State<_ErrorDialog> createState() => _ErrorDialogState();
@@ -351,22 +582,26 @@ class _ErrorDialogState extends State<_ErrorDialog> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return AlertDialog(
-      icon: Icon(Icons.error_outline, color: colors.error, size: 48),
-      title: Text(widget.title),
+    return _DialogContainer(
+      icon: Icon(Icons.error_outline, color: colors.error, size: 28),
+      iconContainerColor: colors.error,
+      isDestructive: true,
+      title: widget.title,
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (widget.message != null) Text(widget.message!),
+          if (widget.message != null)
+            Text(widget.message!, textAlign: TextAlign.center),
           if (widget.details != null) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             GestureDetector(
               onTap: () => setState(() => _showDetails = !_showDetails),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Technical details',
-                      style: TextStyle(color: colors.primary, fontSize: 13)),
+                      style: TextStyle(color: colors.primary, fontSize: 13, fontWeight: FontWeight.w600)),
                   Icon(_showDetails ? Icons.expand_less : Icons.expand_more,
                       size: 16, color: colors.primary),
                 ],
@@ -375,23 +610,39 @@ class _ErrorDialogState extends State<_ErrorDialog> {
             if (_showDetails)
               Container(
                 margin: const EdgeInsets.only(top: 8),
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: colors.surfaceVariant,
-                  borderRadius: BorderRadius.circular(8),
+                  color: colors.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                  border: Border.all(color: colors.outlineVariant.withOpacity(0.5)),
                 ),
-                child: Text(widget.details!,
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 11)),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    widget.details!,
+                    style: TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 11,
+                      color: colors.onSurfaceVariant,
+                    ),
+                  ),
+                ),
               ),
           ],
         ],
       ),
       actions: [
         if (widget.onRetry != null)
-          AppButton.tonal(label: 'Retry', onPressed: widget.onRetry,
-              size: AppButtonSize.sm, isFullWidth: false),
-        AppButton.text(label: widget.closeLabel,
-            onPressed: () => Navigator.pop(context), isFullWidth: false),
+          AppButton.tonal(
+            label: 'Retry',
+            onPressed: widget.onRetry,
+            size: AppButtonSize.md,
+          ),
+        AppButton.outlined(
+          label: widget.closeLabel,
+          onPressed: () => Navigator.pop(context),
+          size: AppButtonSize.md,
+        ),
       ],
     );
   }

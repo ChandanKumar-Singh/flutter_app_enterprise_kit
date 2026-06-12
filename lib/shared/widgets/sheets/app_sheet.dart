@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 
@@ -24,19 +26,25 @@ class AppSheet {
     Color? backgroundColor,
     EdgeInsetsGeometry? padding,
     double? height,
+    bool enableBlur = true,
   }) {
     return showModalBottomSheet<T>(
       context: context,
       isDismissible: isDismissible,
       isScrollControlled: isScrollControlled || height != null,
       useSafeArea: true,
-      backgroundColor: backgroundColor,
-      showDragHandle: showDragHandle,
-      builder: (ctx) => _StandardSheet(
-        title: title,
-        padding: padding,
-        height: height,
-        child: child,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (ctx) => _ModernSheetContainer(
+        enableBlur: enableBlur,
+        backgroundColor: backgroundColor,
+        showDragHandle: showDragHandle,
+        child: _StandardSheet(
+          title: title,
+          padding: padding,
+          height: height,
+          child: child,
+        ),
       ),
     );
   }
@@ -112,20 +120,26 @@ class AppSheet {
     VoidCallback? onConfirm,
     bool showDragHandle = true,
     Color? backgroundColor,
+    bool enableBlur = true,
   }) {
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      backgroundColor: backgroundColor,
-      showDragHandle: showDragHandle,
-      builder: (ctx) => _DialogSheet(
-        title: title,
-        actions: actions,
-        confirmLabel: confirmLabel,
-        cancelLabel: cancelLabel,
-        onConfirm: onConfirm,
-        child: child,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (ctx) => _ModernSheetContainer(
+        enableBlur: enableBlur,
+        backgroundColor: backgroundColor,
+        showDragHandle: showDragHandle,
+        child: _DialogSheet(
+          title: title,
+          actions: actions,
+          confirmLabel: confirmLabel,
+          cancelLabel: cancelLabel,
+          onConfirm: onConfirm,
+          child: child,
+        ),
       ),
     );
   }
@@ -137,16 +151,24 @@ class AppSheet {
     String? message,
     required List<AppSheetAction<T>> actions,
     AppSheetAction<T>? cancelAction,
+    Color? backgroundColor,
+    bool enableBlur = true,
   }) {
     return showModalBottomSheet<T>(
       context: context,
       useSafeArea: true,
-      showDragHandle: false,
-      builder: (ctx) => _ActionSheet<T>(
-        title: title,
-        message: message,
-        actions: actions,
-        cancelAction: cancelAction,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (ctx) => _ModernSheetContainer(
+        enableBlur: enableBlur,
+        backgroundColor: backgroundColor,
+        showDragHandle: false,
+        child: _ActionSheet<T>(
+          title: title,
+          message: message,
+          actions: actions,
+          cancelAction: cancelAction,
+        ),
       ),
     );
   }
@@ -154,24 +176,32 @@ class AppSheet {
   // ── 6. Confirm Sheet ──────────────────────────────────────────────────────
   static Future<bool?> confirm(
     BuildContext context, {
-    required String title,
-    required String message,
+    String title = 'Confirm Action',
+    String message = 'Are you sure you want to proceed?',
     String confirmLabel = 'Confirm',
     String cancelLabel = 'Cancel',
     bool isDestructive = false,
     Widget? icon,
+    Color? backgroundColor,
+    bool enableBlur = true,
   }) {
     return showModalBottomSheet<bool>(
       context: context,
       useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) => _ConfirmSheet(
-        title: title,
-        message: message,
-        confirmLabel: confirmLabel,
-        cancelLabel: cancelLabel,
-        isDestructive: isDestructive,
-        icon: icon,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      builder: (ctx) => _ModernSheetContainer(
+        enableBlur: enableBlur,
+        backgroundColor: backgroundColor,
+        showDragHandle: true,
+        child: _ConfirmSheet(
+          title: title,
+          message: message,
+          confirmLabel: confirmLabel,
+          cancelLabel: cancelLabel,
+          isDestructive: isDestructive,
+          icon: icon,
+        ),
       ),
     );
   }
@@ -197,6 +227,72 @@ class AppSheetAction<T> {
   });
 }
 
+// ─── Modern Sheet Container ──────────────────────────────────────────────────
+
+class _ModernSheetContainer extends StatelessWidget {
+  final Widget child;
+  final bool enableBlur;
+  final Color? backgroundColor;
+  final bool showDragHandle;
+
+  const _ModernSheetContainer({
+    required this.child,
+    this.enableBlur = true,
+    this.backgroundColor,
+    this.showDragHandle = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final bg = backgroundColor ?? cs.surface;
+
+    Widget container = Container(
+      decoration: BoxDecoration(
+        color: enableBlur ? bg.withOpacity(0.9) : bg,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        border: Border(
+          top: BorderSide(color: cs.outlineVariant.withOpacity(0.4)),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (showDragHandle) ...[
+            const SizedBox(height: 10),
+            Center(
+              child: Container(
+                width: 38,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: cs.outlineVariant.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+          child,
+        ],
+      ),
+    );
+
+    if (enableBlur) {
+      container = ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          child: container,
+        ),
+      );
+    }
+
+    return container;
+  }
+}
+
 // ─── Shared Header ─────────────────────────────────────────────────────────────
 class _SheetHeader extends StatelessWidget {
   final String title;
@@ -219,8 +315,12 @@ class _SheetHeader extends StatelessWidget {
       child: Row(
         children: [
           if (leading != null) ...[leading!, const SizedBox(width: 8)],
-          Expanded(child: Text(title, style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w600))),
+          Expanded(
+            child: Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
           ...?actions,
         ],
       ),
@@ -297,8 +397,12 @@ class _DialogSheet extends StatelessWidget {
   final VoidCallback? onConfirm;
 
   const _DialogSheet({
-    required this.title, required this.child, this.actions,
-    this.confirmLabel, this.cancelLabel, this.onConfirm,
+    required this.title,
+    required this.child,
+    this.actions,
+    this.confirmLabel,
+    this.cancelLabel,
+    this.onConfirm,
   });
 
   @override
@@ -378,19 +482,25 @@ class _ActionSheet<T> extends StatelessWidget {
               ),
             ),
           const Divider(height: 1),
-          ...actions.map((action) => ListTile(
-            leading: action.icon != null
-                ? Icon(action.icon, color: action.isDestructive ? colors.error : null)
-                : null,
-            title: Text(action.label,
-                style: TextStyle(
-                    color: action.isDestructive ? colors.error : null,
-                    fontWeight: FontWeight.w500)),
-            onTap: () {
-              action.onTap?.call();
-              Navigator.pop(context, action.value);
-            },
-          )),
+          ...actions.asMap().entries.map((entry) {
+            final idx = entry.key;
+            final action = entry.value;
+            return ListTile(
+              leading: action.icon != null
+                  ? Icon(action.icon, color: action.isDestructive ? colors.error : null)
+                  : null,
+              title: Text(action.label,
+                  style: TextStyle(
+                      color: action.isDestructive ? colors.error : null,
+                      fontWeight: FontWeight.w500)),
+              onTap: () {
+                action.onTap?.call();
+                Navigator.pop(context, action.value);
+              },
+            ).animate(delay: Duration(milliseconds: 40 * idx))
+             .fadeIn(duration: 200.ms)
+             .slideY(begin: 0.1, end: 0, duration: 200.ms, curve: Curves.easeOut);
+          }),
           if (cancelAction != null) ...[
             const Divider(height: 8),
             ListTile(
@@ -416,9 +526,12 @@ class _ConfirmSheet extends StatelessWidget {
   final Widget? icon;
 
   const _ConfirmSheet({
-    required this.title, required this.message,
-    required this.confirmLabel, required this.cancelLabel,
-    required this.isDestructive, this.icon,
+    required this.title,
+    required this.message,
+    required this.confirmLabel,
+    required this.cancelLabel,
+    required this.isDestructive,
+    this.icon,
   });
 
   @override
