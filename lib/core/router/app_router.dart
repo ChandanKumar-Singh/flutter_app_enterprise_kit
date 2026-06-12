@@ -19,6 +19,8 @@ import 'package:enterprise_kit/features/showcase/animations_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/loaders_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/pdf_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/states_showcase_page.dart';
+import 'package:enterprise_kit/features/showcase/components_showcase_page.dart';
+import 'package:enterprise_kit/features/showcase/theme_config_page.dart';
 
 class AppRouter {
   AppRouter._();
@@ -57,6 +59,8 @@ class AppRouter {
           GoRoute(path: 'loaders',    builder: (_, __) => const LoadersShowcasePage()),
           GoRoute(path: 'pdf',        builder: (_, __) => const PdfShowcasePage()),
           GoRoute(path: 'states',     builder: (_, __) => const StatesShowcasePage()),
+          GoRoute(path: 'components', builder: (_, __) => const ComponentsShowcasePage()),
+          GoRoute(path: 'theme-config', builder: (_, __) => const ThemeConfigPage()),
         ],
       ),
     ],

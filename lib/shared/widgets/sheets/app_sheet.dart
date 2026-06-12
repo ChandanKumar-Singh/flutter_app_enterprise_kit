@@ -221,7 +221,7 @@ class _SheetHeader extends StatelessWidget {
           if (leading != null) ...[leading!, const SizedBox(width: 8)],
           Expanded(child: Text(title, style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600))),
-          if (actions != null) ...actions!,
+          ...?actions,
         ],
       ),
     );

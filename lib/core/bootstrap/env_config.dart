@@ -11,21 +11,21 @@ class EnvConfig {
   static late bool showDebugOverlay;
 
   static final _configs = {
-    AppFlavor.development: _EnvData(
+    AppFlavor.development: const _EnvData(
       baseUrl: 'https://api-dev.enterprise.com/v1',
       wsUrl: 'wss://ws-dev.enterprise.com',
       enableLogging: true,
       enableDebugBanner: true,
       showDebugOverlay: true,
     ),
-    AppFlavor.staging: _EnvData(
+    AppFlavor.staging: const _EnvData(
       baseUrl: 'https://api-staging.enterprise.com/v1',
       wsUrl: 'wss://ws-staging.enterprise.com',
       enableLogging: true,
       enableDebugBanner: false,
       showDebugOverlay: false,
     ),
-    AppFlavor.production: _EnvData(
+    AppFlavor.production: const _EnvData(
       baseUrl: 'https://api.enterprise.com/v1',
       wsUrl: 'wss://ws.enterprise.com',
       enableLogging: false,

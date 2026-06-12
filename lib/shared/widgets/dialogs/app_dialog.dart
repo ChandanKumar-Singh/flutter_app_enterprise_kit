@@ -83,7 +83,7 @@ class AppDialog {
       );
       return future.whenComplete(() {
         if (context.mounted) Navigator.of(context).pop();
-      }).then((v) => v).catchError((_) => null);
+      }).then<T?>((v) => v).catchError((_) => null);
     }
     return showDialog<T>(
       context: context,

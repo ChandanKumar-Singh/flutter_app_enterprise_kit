@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_colors.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
-import 'package:enterprise_kit/core/theme/tokens/app_typography.dart';
 
 class ThemeShowcasePage extends StatelessWidget {
   const ThemeShowcasePage({super.key});

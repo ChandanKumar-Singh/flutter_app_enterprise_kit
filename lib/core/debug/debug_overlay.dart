@@ -23,33 +23,36 @@ class DebugOverlay extends ConsumerWidget {
     if (!kDebugMode && !EnvConfig.showDebugOverlay) return child;
     final visible = ref.watch(_debugVisibleProvider);
 
-    return Stack(
-      children: [
-        child,
-        Positioned(
-          right: 8,
-          bottom: 100,
-          child: GestureDetector(
-            onTap: () => ref.read(_debugVisibleProvider.notifier).toggle(),
-            child: Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: Colors.black87,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.orange, width: 2),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Stack(
+        children: [
+          child,
+          Positioned(
+            right: 8,
+            bottom: 100,
+            child: GestureDetector(
+              onTap: () => ref.read(_debugVisibleProvider.notifier).toggle(),
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: Colors.black87,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.orange, width: 2),
+                ),
+                child: const Icon(Icons.bug_report, color: Colors.orange, size: 20),
               ),
-              child: const Icon(Icons.bug_report, color: Colors.orange, size: 20),
             ),
           ),
-        ),
-        if (visible)
-          Positioned.fill(
-            child: _DebugPanel(
-              onClose: () => ref.read(_debugVisibleProvider.notifier).hide(),
+          if (visible)
+            Positioned.fill(
+              child: _DebugPanel(
+                onClose: () => ref.read(_debugVisibleProvider.notifier).hide(),
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -151,17 +151,16 @@ enum _Variant {
 class _AppTextVariant extends AppText {
   final _Variant _variant;
   const _AppTextVariant(super.text, {
-    required _Variant variant,
+    required this._variant,
     super.color,
     super.maxLines,
     super.textAlign,
-  }) : _variant = variant;
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final colors = theme.colorScheme;
 
     TextStyle? base = switch (_variant) {
       _Variant.displayLarge  => textTheme.displayLarge,

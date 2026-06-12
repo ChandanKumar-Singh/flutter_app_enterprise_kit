@@ -44,6 +44,13 @@ class ShowcaseHomePage extends StatelessWidget {
             ],
           ),
           _ShowcaseSection(
+            title: 'Enterprise Components (NEW)',
+            items: [
+              _ShowcaseItem('Toasts, Banners, Gradients', Icons.notifications_active, RouteNames.showcaseComponents),
+              _ShowcaseItem('Theme Configuration', Icons.tune, RouteNames.showcaseThemeConfig),
+            ],
+          ),
+          _ShowcaseSection(
             title: 'System',
             items: [
               _ShowcaseItem('Theme', Icons.palette, RouteNames.showcaseTheme),

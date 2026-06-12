@@ -105,7 +105,6 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
   int _currentPage = 1;
   int _totalPages = 0;
   bool _showSearch = false;
-  final _searchController = PdfTextSearchResult();
 
   @override
   void dispose() {
@@ -231,7 +230,7 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
           ),
           IconButton(
             icon: const Icon(Icons.chevron_left),
-            onPressed: _currentPage > 1 ? () => _controller.previousPage() : null,
+            onPressed: _currentPage > 1 ? _controller.previousPage : null,
             tooltip: 'Previous',
           ),
           Expanded(
@@ -242,7 +241,7 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
           IconButton(
             icon: const Icon(Icons.chevron_right),
             onPressed: _currentPage < _totalPages
-                ? () => _controller.nextPage() : null,
+                ? _controller.nextPage : null,
             tooltip: 'Next',
           ),
           IconButton(

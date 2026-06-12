@@ -20,5 +20,7 @@ abstract class RouteNames {
   static const showcaseAnimations = '/showcase/animations';
   static const showcaseLoaders    = '/showcase/loaders';
   static const showcasePdf        = '/showcase/pdf';
-  static const showcaseStates     = '/showcase/states';
+  static const showcaseStates      = '/showcase/states';
+  static const showcaseComponents  = '/showcase/components';
+  static const showcaseThemeConfig = '/showcase/theme-config';
 }
