@@ -7,6 +7,8 @@ import 'package:enterprise_kit/core/bootstrap/app_flavor.dart';
 import 'package:enterprise_kit/core/bootstrap/env_config.dart';
 import 'package:enterprise_kit/core/di/injection.dart';
 import 'package:enterprise_kit/core/debug/app_logger.dart';
+import 'package:enterprise_kit/core/services/app_analytics_service.dart';
+import 'package:enterprise_kit/core/services/app_device_info_service.dart';
 import 'package:enterprise_kit/app.dart';
 
 class AppBootstrap {
@@ -36,6 +38,12 @@ class AppBootstrap {
 
         // 4. DI
         await configureDependencies();
+
+        // 5a. Device info (async, non-blocking for rest of boot)
+        unawaited(AppDeviceInfoService.instance.initialize());
+
+        // 5b. Analytics (no-op in debug, real backend injected in prod)
+        AppAnalyticsService.init();
 
         // 5. Flutter error handler
         FlutterError.onError = (details) {

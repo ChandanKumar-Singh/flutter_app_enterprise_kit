@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:enterprise_kit/core/permissions/app_permission_manager.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/sheets/app_snapping_sheet.dart';
 import 'package:enterprise_kit/shared/widgets/overlays/app_context_preview.dart';
@@ -20,14 +21,29 @@ class AdvancedShowcasePage extends StatefulWidget {
 }
 
 class _AdvancedShowcasePageState extends State<AdvancedShowcasePage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tab;
-  final _scrollCtrl = ScrollController();
+  late ScrollController _scrollCtrl;
+  bool _isCollapsed = false;
+
+  static const _tabs = [
+    (icon: Icons.layers_rounded, label: 'Sheets'),
+    (icon: Icons.touch_app_rounded, label: 'Previews'),
+    (icon: Icons.open_in_new_rounded, label: 'Popovers'),
+    (icon: Icons.music_note_rounded, label: 'Player'),
+    (icon: Icons.photo_rounded, label: 'Media'),
+    (icon: Icons.security_rounded, label: 'Permissions'),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _tab = TabController(length: 5, vsync: this);
+    _tab = TabController(length: _tabs.length, vsync: this);
+    _scrollCtrl = ScrollController()
+      ..addListener(() {
+        final collapsed = _scrollCtrl.offset > 60;
+        if (collapsed != _isCollapsed) setState(() => _isCollapsed = collapsed);
+      });
   }
 
   @override
@@ -40,53 +56,67 @@ class _AdvancedShowcasePageState extends State<AdvancedShowcasePage>
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: cs.surface,
       body: NestedScrollView(
         controller: _scrollCtrl,
-        headerSliverBuilder: (ctx, _) => [
+        headerSliverBuilder: (ctx, innerBoxIsScrolled) => [
           SliverAppBar(
-            expandedHeight: 130,
+            expandedHeight: 150,
             pinned: true,
+            forceElevated: innerBoxIsScrolled,
             backgroundColor: cs.surface,
             surfaceTintColor: Colors.transparent,
-            scrolledUnderElevation: 0.5,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.fromLTRB(16, 0, 16, 50),
-              title: Text('Advanced Components',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [const Color(0xFF7C3AED), cs.primary],
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 60, 16, 0),
-                  child: Text(
-                    'Giant-app UX/UI patterns',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white.withOpacity(0.6)),
-                  ),
+            scrolledUnderElevation: 1,
+            // Title visible when collapsed — adapts to scroll state
+            title: AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: _isCollapsed ? 1.0 : 0.0,
+              child: Text(
+                'Advanced Components',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: cs.onSurface,
                 ),
               ),
             ),
-            bottom: TabBar(
-              controller: _tab,
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
-              indicatorColor: cs.primary,
-              labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
-              tabs: const [
-                Tab(text: 'Sheets'),
-                Tab(text: 'Previews'),
-                Tab(text: 'Popovers'),
-                Tab(text: 'Mini Player'),
-                Tab(text: 'Media Picker'),
-              ],
+            flexibleSpace: FlexibleSpaceBar(
+              // titlePadding: null disables the built-in title; we render our own
+              titlePadding: EdgeInsets.zero,
+              background: _HeaderBackground(isCollapsed: _isCollapsed),
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: ColoredBox(
+                color: cs.surface,
+                child: TabBar(
+                  controller: _tab,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  dividerColor: cs.outlineVariant,
+                  indicatorColor: cs.primary,
+                  labelColor: cs.primary,
+                  unselectedLabelColor: cs.onSurfaceVariant,
+                  labelStyle: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                  tabs: _tabs
+                      .map((t) => Tab(
+                            height: 46,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(t.icon, size: 14),
+                                const SizedBox(width: 6),
+                                Text(t.label),
+                              ],
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
             ),
           ),
         ],
@@ -98,6 +128,83 @@ class _AdvancedShowcasePageState extends State<AdvancedShowcasePage>
             _PopoverTab(),
             _MiniPlayerTab(),
             _MediaPickerTab(),
+            const _PermissionsTab(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Header Background ────────────────────────────────────────────────────────
+
+class _HeaderBackground extends StatelessWidget {
+  final bool isCollapsed;
+  const _HeaderBackground({required this.isCollapsed});
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 200),
+      opacity: isCollapsed ? 0.0 : 1.0,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [const Color(0xFF7C3AED), cs.primary],
+          ),
+        ),
+        child: Stack(
+          children: [
+            // Decorative circles
+            Positioned(
+              right: -20, top: -20,
+              child: Container(
+                width: 120, height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.06),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 60, bottom: 30,
+              child: Container(
+                width: 60, height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.08),
+                ),
+              ),
+            ),
+            // Title text
+            Positioned(
+              left: 16, bottom: 60,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Advanced Components',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Giant-app UX patterns · Uber · Spotify · Instagram',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: Colors.white.withOpacity(0.65),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -110,26 +217,25 @@ class _AdvancedShowcasePageState extends State<AdvancedShowcasePage>
 class _SheetsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _SectionHeader('AppSnappingSheet', 'Uber / Airbnb multi-snap sheets'),
+        const _SectionHeader(
+          'AppSnappingSheet',
+          'Uber / Airbnb multi-snap elastic sheets',
+          Icons.layers_rounded,
+          Color(0xFF1B1B2F),
+        ),
         const SizedBox(height: 12),
 
-        // Uber-style map sheet
         _DemoCard(
           label: 'Uber-style Map Sheet',
-          description: 'Multi-snap (35%, 60%, 92%) with scrim + rubber-band physics',
+          description: 'Multi-snap (35% → 60% → 92%) with scrim + rubber-band physics',
           icon: Icons.map_rounded,
           color: const Color(0xFF1B1B2F),
           onTap: () => _showMapSheet(context),
         ),
-
         const SizedBox(height: 10),
-
-        // Filter sheet
         _DemoCard(
           label: 'Filter Panel Sheet',
           description: 'Chips + range slider — AppFilterSheet preset',
@@ -146,10 +252,7 @@ class _SheetsTab extends StatelessWidget {
             rangeFormatter: (v) => v.toStringAsFixed(1),
           ),
         ),
-
         const SizedBox(height: 10),
-
-        // Options sheet
         _DemoCard(
           label: 'Options Sheet',
           description: 'iOS-style action list — AppOptionSheet preset',
@@ -163,7 +266,8 @@ class _SheetsTab extends StatelessWidget {
               const AppOptionItem(icon: Icons.link_rounded, label: 'Copy Link'),
               const AppOptionItem(icon: Icons.share_rounded, label: 'Share Sheet'),
               const AppOptionItem(icon: Icons.bookmark_border_rounded, label: 'Save'),
-              const AppOptionItem(icon: Icons.report_rounded, label: 'Report', isDestructive: true),
+              const AppOptionItem(
+                  icon: Icons.report_rounded, label: 'Report', isDestructive: true),
             ],
           ),
         ),
@@ -210,7 +314,8 @@ class _FakeMapBackground extends StatelessWidget {
           Positioned.fill(
             child: GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8),
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8),
               itemCount: 64,
               itemBuilder: (_, i) => Container(
                 margin: const EdgeInsets.all(1),
@@ -223,22 +328,28 @@ class _FakeMapBackground extends StatelessWidget {
               ),
             ),
           ),
-          // Fake roads
-          ...List.generate(4, (i) => Positioned(
-            top: 50.0 + i * 80,
-            left: 0, right: 0,
-            height: 8,
-            child: Container(color: Colors.white.withOpacity(0.7)),
-          )),
-          ...List.generate(3, (i) => Positioned(
-            left: 60.0 + i * 90,
-            top: 0, bottom: 0,
-            width: 8,
-            child: Container(color: Colors.white.withOpacity(0.7)),
-          )),
-          // Location pin
+          ...List.generate(
+              4,
+              (i) => Positioned(
+                    top: 50.0 + i * 80,
+                    left: 0,
+                    right: 0,
+                    height: 8,
+                    child: Container(color: Colors.white.withOpacity(0.7)),
+                  )),
+          ...List.generate(
+              3,
+              (i) => Positioned(
+                    left: 60.0 + i * 90,
+                    top: 0,
+                    bottom: 0,
+                    width: 8,
+                    child: Container(color: Colors.white.withOpacity(0.7)),
+                  )),
           const Positioned(
-            top: 120, left: 0, right: 0,
+            top: 120,
+            left: 0,
+            right: 0,
             child: Center(
               child: Icon(Icons.location_on_rounded, color: Colors.red, size: 40),
             ),
@@ -253,14 +364,18 @@ class _MapResultTile extends StatelessWidget {
   final int index;
   const _MapResultTile({required this.index});
 
+  static const _names = [
+    'Burger Palace', 'Spice Garden', 'The Pasta Place',
+    'Sushi Wave', 'Green Bowl', 'Taco Town'
+  ];
+  static const _distances = ['0.4 km', '0.8 km', '1.2 km', '1.5 km', '1.9 km', '2.3 km'];
+  static const _times = ['12 min', '18 min', '22 min', '28 min', '35 min', '40 min'];
+  static const _ratings = [4.7, 4.3, 4.5, 4.8, 4.1, 4.6];
+
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final names = ['Burger Palace', 'Spice Garden', 'The Pasta Place', 'Sushi Wave', 'Green Bowl', 'Taco Town'];
-    final distances = ['0.4 km', '0.8 km', '1.2 km', '1.5 km', '1.9 km', '2.3 km'];
-    final times = ['12 min', '18 min', '22 min', '28 min', '35 min', '40 min'];
-    final ratings = [4.7, 4.3, 4.5, 4.8, 4.1, 4.6];
-
+    final i = index % _names.length;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -275,9 +390,11 @@ class _MapResultTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Container(
-                width: 52, height: 52,
+                width: 52,
+                height: 52,
                 color: const Color(0xFFFF6B35).withOpacity(0.15),
-                child: Icon(Icons.restaurant_rounded, color: const Color(0xFFFF6B35), size: 24),
+                child:
+                    const Icon(Icons.restaurant_rounded, color: Color(0xFFFF6B35), size: 24),
               ),
             ),
             const SizedBox(width: 12),
@@ -285,19 +402,22 @@ class _MapResultTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(names[index % names.length],
-                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+                  Text(_names[i],
+                      style:
+                          const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                   const SizedBox(height: 2),
-                  Row(
-                    children: [
-                      Icon(Icons.star_rounded, color: Colors.amber, size: 13),
-                      const SizedBox(width: 3),
-                      Text('${ratings[index % ratings.length]}',
-                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: cs.onSurfaceVariant)),
-                      Text('  •  ${distances[index % distances.length]}  •  ${times[index % times.length]}',
-                          style: TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
-                    ],
-                  ),
+                  Row(children: [
+                    const Icon(Icons.star_rounded, color: Colors.amber, size: 13),
+                    const SizedBox(width: 3),
+                    Text('${_ratings[i]}',
+                        style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: cs.onSurfaceVariant)),
+                    Text('  ·  ${_distances[i]}  ·  ${_times[i]}',
+                        style:
+                            TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
+                  ]),
                 ],
               ),
             ),
@@ -319,61 +439,63 @@ class _ContextPreviewTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _SectionHeader('AppContextPreview', 'Instagram / Telegram 3D-touch haptic preview'),
-        const SizedBox(height: 4),
+        const _SectionHeader(
+          'AppContextPreview',
+          'Instagram / Telegram 3D-touch haptic long-press preview',
+          Icons.touch_app_rounded,
+          Color(0xFF833AB4),
+        ),
+        const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: cs.primaryContainer.withOpacity(0.3),
+            color: cs.primaryContainer.withOpacity(0.35),
             borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+            border: Border.all(color: cs.primary.withOpacity(0.2)),
           ),
           child: Row(
             children: [
               Icon(Icons.touch_app_rounded, size: 14, color: cs.primary),
               const SizedBox(width: 8),
-              Text('Long-press any card below', style: TextStyle(color: cs.primary, fontSize: 12, fontWeight: FontWeight.w600)),
+              Text('Long-press any card below',
+                  style: TextStyle(
+                      color: cs.primary, fontSize: 12, fontWeight: FontWeight.w600)),
             ],
           ),
         ),
         const SizedBox(height: 16),
-
         ...List.generate(4, (i) {
-          final titles = ['Margherita Pizza', 'Chicken Tikka', 'Sushi Platter', 'Avocado Toast'];
-          final prices = ['₹299', '₹449', '₹599', '₹199'];
-          final descriptions = [
+          const titles = ['Margherita Pizza', 'Chicken Tikka', 'Sushi Platter', 'Avocado Toast'];
+          const prices = ['₹299', '₹449', '₹599', '₹199'];
+          const descriptions = [
             'Classic Italian pizza with fresh mozzarella and basil',
             'Grilled chicken in aromatic spices, served with mint chutney',
             'Fresh sashimi and rolls, artfully plated with wasabi',
             'Toasted sourdough with smashed avocado and poached egg',
           ];
-          final colors = [const Color(0xFFFF6B35), const Color(0xFFFF9800), const Color(0xFF2196F3), const Color(0xFF4CAF50)];
-
+          const colors = [
+            Color(0xFFFF6B35), Color(0xFFFF9800), Color(0xFF2196F3), Color(0xFF4CAF50)
+          ];
           return Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: AppContextPreview(
               previewHeight: 260,
               actions: [
                 AppQuickAction(
-                  icon: Icons.add_shopping_cart_rounded,
-                  label: 'Add to Cart',
-                  onTap: () {},
-                ),
+                    icon: Icons.add_shopping_cart_rounded,
+                    label: 'Add to Cart',
+                    onTap: () {}),
                 AppQuickAction(
-                  icon: Icons.favorite_border_rounded,
-                  label: 'Save',
-                  onTap: () {},
-                ),
+                    icon: Icons.favorite_border_rounded,
+                    label: 'Save',
+                    onTap: () {}),
                 AppQuickAction(
-                  icon: Icons.share_rounded,
-                  label: 'Share',
-                  onTap: () {},
-                ),
+                    icon: Icons.share_rounded, label: 'Share', onTap: () {}),
                 AppQuickAction(
-                  icon: Icons.report_rounded,
-                  label: 'Report',
-                  isDestructive: true,
-                  onTap: () {},
-                ),
+                    icon: Icons.report_rounded,
+                    label: 'Report',
+                    isDestructive: true,
+                    onTap: () {}),
               ],
               preview: _FoodPreviewCard(
                 title: titles[i],
@@ -382,11 +504,8 @@ class _ContextPreviewTab extends StatelessWidget {
                 color: colors[i],
               ),
               child: _FoodListItem(
-                title: titles[i],
-                price: prices[i],
-                color: colors[i],
-              ),
-            ).animate(delay: Duration(milliseconds: 60 * i)).fadeIn(duration: 250.ms).slideY(begin: 0.04),
+                  title: titles[i], price: prices[i], color: colors[i]),
+            ).animate(delay: Duration(milliseconds: 60 * i)).fadeIn(duration: 250.ms),
           );
         }),
       ],
@@ -395,12 +514,13 @@ class _ContextPreviewTab extends StatelessWidget {
 }
 
 class _FoodPreviewCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String price;
+  final String title, description, price;
   final Color color;
-
-  const _FoodPreviewCard({required this.title, required this.description, required this.price, required this.color});
+  const _FoodPreviewCard(
+      {required this.title,
+      required this.description,
+      required this.price,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -408,33 +528,33 @@ class _FoodPreviewCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Image area
         Container(
           height: 160,
           color: color.withOpacity(0.2),
-          child: Center(
-            child: Icon(Icons.restaurant_menu_rounded, color: color, size: 64),
-          ),
+          child: Center(child: Icon(Icons.restaurant_menu_rounded, color: color, size: 64)),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
+              Text(title,
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18)),
               const SizedBox(height: 6),
-              Text(description, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
+              Text(description,
+                  style: TextStyle(color: cs.onSurfaceVariant, fontSize: 13)),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(price, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 20)),
+                  Text(price,
+                      style: TextStyle(
+                          color: color, fontWeight: FontWeight.w900, fontSize: 20)),
                   FilledButton(
                     onPressed: null,
                     style: FilledButton.styleFrom(
-                      backgroundColor: color,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
+                        backgroundColor: color,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
                     child: const Text('Add', style: TextStyle(color: Colors.white)),
                   ),
                 ],
@@ -448,8 +568,7 @@ class _FoodPreviewCard extends StatelessWidget {
 }
 
 class _FoodListItem extends StatelessWidget {
-  final String title;
-  final String price;
+  final String title, price;
   final Color color;
   const _FoodListItem({required this.title, required this.price, required this.color});
 
@@ -466,11 +585,11 @@ class _FoodListItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 48, height: 48,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(10),
-            ),
+                color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10)),
             child: Icon(Icons.fastfood_rounded, color: color, size: 22),
           ),
           const SizedBox(width: 12),
@@ -480,7 +599,9 @@ class _FoodListItem extends StatelessWidget {
               children: [
                 Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
                 const SizedBox(height: 2),
-                Text(price, style: TextStyle(color: color, fontWeight: FontWeight.w600, fontSize: 13)),
+                Text(price,
+                    style: TextStyle(
+                        color: color, fontWeight: FontWeight.w600, fontSize: 13)),
               ],
             ),
           ),
@@ -491,7 +612,7 @@ class _FoodListItem extends StatelessWidget {
   }
 }
 
-// ─── Tab 3: Popovers ──────────────────────────────────────────────────────────
+// ─── Tab 3: Popovers + AppBar ─────────────────────────────────────────────────
 
 class _PopoverTab extends StatelessWidget {
   @override
@@ -501,10 +622,13 @@ class _PopoverTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _SectionHeader('AppPopover', 'Anchor-positioned floating cards with auto-flip'),
+        const _SectionHeader(
+          'AppPopover',
+          'Anchor-positioned floating cards with auto-flip',
+          Icons.open_in_new_rounded,
+          Color(0xFF0891B2),
+        ),
         const SizedBox(height: 16),
-
-        // Row of popover buttons
         Wrap(
           spacing: 12,
           runSpacing: 12,
@@ -520,10 +644,17 @@ class _PopoverTab extends StatelessWidget {
             ),
             AppMenuPopover(
               items: [
-                AppPopoverMenuItem(icon: Icons.edit_rounded, label: 'Edit', onTap: () {}),
-                AppPopoverMenuItem(icon: Icons.copy_rounded, label: 'Duplicate', onTap: () {}),
-                AppPopoverMenuItem(icon: Icons.share_rounded, label: 'Share', onTap: () {}),
-                AppPopoverMenuItem(icon: Icons.delete_rounded, label: 'Delete', isDestructive: true, onTap: () {}),
+                AppPopoverMenuItem(
+                    icon: Icons.edit_rounded, label: 'Edit', onTap: () {}),
+                AppPopoverMenuItem(
+                    icon: Icons.copy_rounded, label: 'Duplicate', onTap: () {}),
+                AppPopoverMenuItem(
+                    icon: Icons.share_rounded, label: 'Share', onTap: () {}),
+                AppPopoverMenuItem(
+                    icon: Icons.delete_rounded,
+                    label: 'Delete',
+                    isDestructive: true,
+                    onTap: () {}),
               ],
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.more_horiz_rounded, size: 16),
@@ -534,23 +665,62 @@ class _PopoverTab extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 24),
-
-        _SectionHeader('AppAppBar', 'Glassmorphic adaptive bar — transparent → blur on scroll'),
+        const SizedBox(height: 28),
+        const _SectionHeader(
+          'AppAppBar',
+          'Glassmorphic adaptive bar — transparent → blur on scroll',
+          Icons.web_asset_rounded,
+          Color(0xFF7C3AED),
+        ),
         const SizedBox(height: 12),
-
         Container(
-          height: 200,
+          height: 220,
           decoration: BoxDecoration(
+            color: cs.surfaceContainerLow,
             borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
             border: Border.all(color: cs.outlineVariant),
           ),
           clipBehavior: Clip.antiAlias,
           child: const _AppBarPreview(),
         ),
-      ].animate(interval: 80.ms).fadeIn(duration: 250.ms).slideY(begin: 0.04),
+
+        const SizedBox(height: 28),
+        const _SectionHeader(
+          'AppBarScrollBehavior',
+          'Four scroll-linked behavior modes',
+          Icons.view_agenda_rounded,
+          Color(0xFF16A34A),
+        ),
+        const SizedBox(height: 12),
+        ...AppBarScrollBehavior.values.map((b) => Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _DemoCard(
+                label: b.name.replaceAllMapped(
+                    RegExp(r'([A-Z])'), (m) => ' ${m[0]}').trim().toUpperCase(),
+                description: _behaviorDesc(b),
+                icon: _behaviorIcon(b),
+                color: cs.primary,
+                onTap: () {},
+              ),
+            )),
+      ].animate(interval: 60.ms).fadeIn(duration: 250.ms).slideY(begin: 0.04),
     );
   }
+
+  String _behaviorDesc(AppBarScrollBehavior b) => switch (b) {
+        AppBarScrollBehavior.transparent => 'Always transparent — overlays content',
+        AppBarScrollBehavior.glassmorphic => 'Blur ramps 0→16 over 60px scroll',
+        AppBarScrollBehavior.solid => 'Opaque from first scroll pixel',
+        AppBarScrollBehavior.hideOnScrollDown =>
+          'Slides out on scroll-down, returns on scroll-up',
+      };
+
+  IconData _behaviorIcon(AppBarScrollBehavior b) => switch (b) {
+        AppBarScrollBehavior.transparent => Icons.blur_off_rounded,
+        AppBarScrollBehavior.glassmorphic => Icons.blur_on_rounded,
+        AppBarScrollBehavior.solid => Icons.rectangle_rounded,
+        AppBarScrollBehavior.hideOnScrollDown => Icons.swap_vert_rounded,
+      };
 }
 
 class _InfoPopoverContent extends StatelessWidget {
@@ -561,15 +731,15 @@ class _InfoPopoverContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            Icon(Icons.star_rounded, color: Colors.amber, size: 16),
-            const SizedBox(width: 6),
-            const Text('4.8 Rating', style: TextStyle(fontWeight: FontWeight.w800)),
-          ],
-        ),
+        Row(children: [
+          const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+          const SizedBox(width: 6),
+          const Text('4.8 Rating',
+              style: TextStyle(fontWeight: FontWeight.w800)),
+        ]),
         const SizedBox(height: 6),
-        Text('Based on 1,240 reviews', style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12)),
+        Text('Based on 1,240 reviews',
+            style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12)),
         const SizedBox(height: 10),
         _RatingRow('Food', 4.9),
         _RatingRow('Service', 4.7),
@@ -589,36 +759,34 @@ class _RatingRow extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        children: [
-          SizedBox(width: 64, child: Text(label, style: const TextStyle(fontSize: 11))),
-          Expanded(
-            child: LinearProgressIndicator(
-              value: rating / 5,
-              backgroundColor: cs.outlineVariant,
-              valueColor: const AlwaysStoppedAnimation(Colors.amber),
-              minHeight: 4,
-              borderRadius: BorderRadius.circular(2),
-            ),
+      child: Row(children: [
+        SizedBox(
+            width: 64, child: Text(label, style: const TextStyle(fontSize: 11))),
+        Expanded(
+          child: LinearProgressIndicator(
+            value: rating / 5,
+            backgroundColor: cs.outlineVariant,
+            valueColor: const AlwaysStoppedAnimation(Colors.amber),
+            minHeight: 4,
+            borderRadius: BorderRadius.circular(2),
           ),
-          const SizedBox(width: 8),
-          Text(rating.toString(), style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
-        ],
-      ),
+        ),
+        const SizedBox(width: 8),
+        Text(rating.toString(),
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700)),
+      ]),
     );
   }
 }
 
 class _AppBarPreview extends StatefulWidget {
   const _AppBarPreview();
-
   @override
   State<_AppBarPreview> createState() => _AppBarPreviewState();
 }
 
 class _AppBarPreviewState extends State<_AppBarPreview> {
   final _sc = ScrollController();
-
   @override
   void dispose() {
     _sc.dispose();
@@ -627,26 +795,25 @@ class _AppBarPreviewState extends State<_AppBarPreview> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ListView.builder(
-          controller: _sc,
-          itemCount: 20,
-          itemBuilder: (_, i) => ListTile(
-            title: Text('Item $i'),
-            subtitle: Text('Scroll to see glassmorphic effect'),
-          ),
+    return Stack(children: [
+      ListView.builder(
+        controller: _sc,
+        itemCount: 20,
+        itemBuilder: (_, i) => ListTile(
+          title: Text('Item $i'),
+          subtitle: const Text('Scroll to see glassmorphic effect'),
         ),
-        AppAppBar(
-          title: 'Glassmorphic Bar',
-          behavior: AppBarScrollBehavior.glassmorphic,
-          scrollController: _sc,
-          actions: [
-            IconButton(icon: const Icon(Icons.search_rounded), onPressed: null),
-          ],
-        ),
-      ],
-    );
+      ),
+      AppAppBar(
+        title: 'Glassmorphic Bar',
+        behavior: AppBarScrollBehavior.glassmorphic,
+        scrollController: _sc,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.search_rounded), onPressed: null),
+        ],
+      ),
+    ]);
   }
 }
 
@@ -658,135 +825,144 @@ class _MiniPlayerTab extends StatefulWidget {
 }
 
 class _MiniPlayerTabState extends State<_MiniPlayerTab> {
-  var _track = const AppMiniPlayerData(
-    title: 'Blinding Lights',
-    subtitle: 'The Weeknd • After Hours',
-    accentColor: Color(0xFFE91E63),
-    isPlaying: false,
-    duration: Duration(minutes: 3, seconds: 20),
-    position: Duration(minutes: 1, seconds: 12),
-  );
+  var _track = _kTracks[0];
   bool _visible = true;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
-    return Stack(
-      children: [
-        ListView(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 180),
-          children: [
-            _SectionHeader('AppMiniPlayer', 'Spotify / YouTube persistent mini-player'),
-            const SizedBox(height: 12),
-
-            // Track selector
-            ...List.generate(_tracks.length, (i) {
-              final t = _tracks[i];
-              final isActive = _track.title == t.title;
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: GestureDetector(
-                  onTap: () => setState(() => _track = t),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isActive ? _track.accentColor!.withOpacity(0.1) : cs.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-                      border: Border.all(
-                        color: isActive ? _track.accentColor!.withOpacity(0.4) : cs.outlineVariant,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 44, height: 44,
-                          decoration: BoxDecoration(
-                            color: t.accentColor!.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(Icons.music_note_rounded, color: t.accentColor, size: 20),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(t.title, style: const TextStyle(fontWeight: FontWeight.w700)),
-                              Text(t.subtitle, style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12)),
-                            ],
-                          ),
-                        ),
-                        if (isActive) Icon(Icons.equalizer_rounded, color: t.accentColor, size: 20),
-                      ],
+    return Stack(children: [
+      ListView(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 180),
+        children: [
+          const _SectionHeader(
+            'AppMiniPlayer',
+            'Spotify / YouTube persistent mini-player with gestures',
+            Icons.music_note_rounded,
+            Color(0xFF1DB954),
+          ),
+          const SizedBox(height: 12),
+          ..._kTracks.asMap().entries.map((e) {
+            final i = e.key;
+            final t = e.value;
+            final isActive = _track.title == t.title;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: GestureDetector(
+                onTap: () => setState(() => _track = t),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isActive
+                        ? _track.accentColor!.withOpacity(0.1)
+                        : cs.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                    border: Border.all(
+                      color: isActive
+                          ? _track.accentColor!.withOpacity(0.4)
+                          : cs.outlineVariant,
+                      width: isActive ? 1.5 : 1.0,
                     ),
                   ),
-                ).animate(delay: Duration(milliseconds: 60 * i)).fadeIn(duration: 250.ms).slideY(begin: 0.04),
-              );
-            }),
-
-            const SizedBox(height: 12),
-            Center(
-              child: TextButton.icon(
-                icon: const Icon(Icons.visibility_off_rounded, size: 14),
-                label: const Text('Hide player'),
-                onPressed: () => setState(() => _visible = false),
+                  child: Row(children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: t.accentColor!.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(Icons.music_note_rounded,
+                          color: t.accentColor, size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(t.title,
+                              style: const TextStyle(fontWeight: FontWeight.w700)),
+                          Text(t.subtitle,
+                              style: TextStyle(
+                                  color: cs.onSurfaceVariant, fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                    if (isActive)
+                      Icon(Icons.equalizer_rounded,
+                          color: t.accentColor, size: 20),
+                  ]),
+                ).animate(delay: Duration(milliseconds: 60 * i)).fadeIn(duration: 250.ms),
               ),
+            );
+          }),
+          const SizedBox(height: 8),
+          Center(
+            child: TextButton.icon(
+              icon: Icon(_visible
+                  ? Icons.visibility_off_rounded
+                  : Icons.visibility_rounded, size: 14),
+              label: Text(_visible ? 'Hide player' : 'Show player'),
+              onPressed: () => setState(() => _visible = !_visible),
             ),
-            if (!_visible)
-              Center(
-                child: TextButton.icon(
-                  icon: const Icon(Icons.visibility_rounded, size: 14),
-                  label: const Text('Show player'),
-                  onPressed: () => setState(() => _visible = true),
-                ),
-              ),
-          ],
-        ),
-
-        // Mini Player
-        if (_visible)
-          AppMiniPlayer(
-            data: _track,
-            bottomPadding: 0,
-            onPlayPause: () => setState(() => _track = _track.copyWith(isPlaying: !_track.isPlaying)),
-            onNext: () {
-              final idx = _tracks.indexWhere((t) => t.title == _track.title);
-              setState(() => _track = _tracks[(idx + 1) % _tracks.length]);
-            },
-            onPrevious: () {
-              final idx = _tracks.indexWhere((t) => t.title == _track.title);
-              setState(() => _track = _tracks[(idx - 1 + _tracks.length) % _tracks.length]);
-            },
-            onLike: () => setState(() => _track = _track.copyWith(isLiked: !_track.isLiked)),
-            onDismiss: () => setState(() => _visible = false),
           ),
-      ],
-    );
+        ],
+      ),
+
+      // Mini Player overlay
+      if (_visible)
+        AppMiniPlayer(
+          data: _track,
+          bottomPadding: 0,
+          onPlayPause: () =>
+              setState(() => _track = _track.copyWith(isPlaying: !_track.isPlaying)),
+          onNext: () {
+            final idx = _kTracks.indexWhere((t) => t.title == _track.title);
+            setState(() => _track = _kTracks[(idx + 1) % _kTracks.length]);
+          },
+          onPrevious: () {
+            final idx = _kTracks.indexWhere((t) => t.title == _track.title);
+            setState(
+                () => _track = _kTracks[(idx - 1 + _kTracks.length) % _kTracks.length]);
+          },
+          onLike: () =>
+              setState(() => _track = _track.copyWith(isLiked: !_track.isLiked)),
+          onDismiss: () => setState(() => _visible = false),
+        ),
+    ]);
   }
 }
 
-final _tracks = [
-  const AppMiniPlayerData(
+const _kTracks = [
+  AppMiniPlayerData(
     title: 'Blinding Lights',
-    subtitle: 'The Weeknd • After Hours',
+    subtitle: 'The Weeknd · After Hours',
     accentColor: Color(0xFFE91E63),
     duration: Duration(minutes: 3, seconds: 20),
     position: Duration(minutes: 1, seconds: 12),
   ),
-  const AppMiniPlayerData(
+  AppMiniPlayerData(
     title: 'Levitating',
-    subtitle: 'Dua Lipa • Future Nostalgia',
+    subtitle: 'Dua Lipa · Future Nostalgia',
     accentColor: Color(0xFF7C4DFF),
     duration: Duration(minutes: 3, seconds: 23),
     position: Duration(seconds: 45),
   ),
-  const AppMiniPlayerData(
+  AppMiniPlayerData(
     title: 'Stay',
     subtitle: 'The Kid LAROI, Justin Bieber',
     accentColor: Color(0xFF00BCD4),
     duration: Duration(minutes: 2, seconds: 21),
     position: Duration(minutes: 1),
+  ),
+  AppMiniPlayerData(
+    title: 'As It Was',
+    subtitle: 'Harry Styles · Harry\'s House',
+    accentColor: Color(0xFFFF6B35),
+    duration: Duration(minutes: 2, seconds: 37),
+    position: Duration(seconds: 30),
   ),
 ];
 
@@ -808,131 +984,368 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _SectionHeader('AppMediaPicker', 'Universal multi-source picker (camera / gallery / files)'),
+        const _SectionHeader(
+          'AppMediaPicker',
+          'Universal multi-source picker — camera · gallery · files',
+          Icons.photo_library_rounded,
+          Color(0xFFEC4899),
+        ),
         const SizedBox(height: 16),
-
-        // Gallery multi-select
         _DemoCard(
           label: 'Gallery Multi-Select',
-          description: 'Pick up to 5 images from gallery, max 10MB each',
+          description: 'Pick up to 5 images from gallery, max 10 MB each',
           icon: Icons.photo_library_rounded,
           color: const Color(0xFF4CAF50),
           onTap: () async {
-            final files = await AppMediaPicker.pick(
-              context,
-              sources: [AppMediaSource.gallery],
-              limit: 5,
-              maxSizeInMb: 10,
-            );
+            final files = await AppMediaPicker.pick(context,
+                sources: [AppMediaSource.gallery], limit: 5, maxSizeInMb: 10);
             if (mounted) setState(() => _picked = files);
           },
         ),
-
         const SizedBox(height: 10),
-
-        // Camera
         _DemoCard(
           label: 'Camera Capture',
           description: 'Single photo from camera, high quality',
           icon: Icons.camera_alt_rounded,
           color: const Color(0xFF2196F3),
           onTap: () async {
-            final files = await AppMediaPicker.pick(
-              context,
-              sources: [AppMediaSource.camera],
-              imageQuality: ImageQuality.high,
-            );
+            final files = await AppMediaPicker.pick(context,
+                sources: [AppMediaSource.camera],
+                imageQuality: ImageQuality.high);
             if (mounted) setState(() => _picked = files);
           },
         ),
-
         const SizedBox(height: 10),
-
-        // Any source
         _DemoCard(
           label: 'Multi-Source Sheet',
           description: 'Camera + Gallery + Files — shows source selector',
           icon: Icons.add_photo_alternate_rounded,
           color: const Color(0xFFFF5722),
           onTap: () async {
-            final files = await AppMediaPicker.pick(
-              context,
-              sources: AppMediaSource.values,
-              limit: 3,
-              title: 'Upload Document',
-              subtitle: 'Choose source',
-            );
+            final files = await AppMediaPicker.pick(context,
+                sources: AppMediaSource.values,
+                limit: 3,
+                title: 'Upload Document',
+                subtitle: 'Choose source');
             if (mounted) setState(() => _docs = files);
           },
         ),
 
-        // Results
+        // Picked images
         if (_picked.isNotEmpty) ...[
           const SizedBox(height: 20),
-          _SectionHeader('Picked Images', '${_picked.length} file(s)'),
+          _SectionHeader('Picked Images', '${_picked.length} file(s)',
+              Icons.image_rounded, const Color(0xFF4CAF50)),
           const SizedBox(height: 10),
           SizedBox(
             height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: _picked.map((f) => AppMediaFilePreview(
-                file: f,
-                onRemove: () => setState(() => _picked.remove(f)),
-              )).toList(),
+              children: _picked
+                  .map((f) => AppMediaFilePreview(
+                      file: f,
+                      onRemove: () => setState(() => _picked.remove(f))))
+                  .toList(),
             ),
           ),
         ],
 
+        // Picked docs
         if (_docs.isNotEmpty) ...[
           const SizedBox(height: 20),
-          _SectionHeader('Picked Files', '${_docs.length} file(s)'),
+          _SectionHeader('Picked Files', '${_docs.length} file(s)',
+              Icons.folder_open_rounded, const Color(0xFFFF5722)),
           const SizedBox(height: 10),
           ..._docs.map((f) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: cs.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-                border: Border.all(color: cs.outlineVariant),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.insert_drive_file_rounded, color: cs.primary),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(f.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-                        Text('${f.sizeInMb.toStringAsFixed(2)} MB • .${f.extension}',
-                            style: TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
-                      ],
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: cs.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+                    border: Border.all(color: cs.outlineVariant),
+                  ),
+                  child: Row(children: [
+                    Icon(Icons.insert_drive_file_rounded, color: cs.primary),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(f.name,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w600)),
+                          Text(
+                              '${f.sizeInMb.toStringAsFixed(2)} MB · .${f.extension}',
+                              style: TextStyle(
+                                  fontSize: 11, color: cs.onSurfaceVariant)),
+                        ],
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close_rounded, size: 16),
-                    onPressed: () => setState(() => _docs.remove(f)),
-                  ),
-                ],
-              ),
-            ),
-          )),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded, size: 16),
+                      onPressed: () => setState(() => _docs.remove(f)),
+                    ),
+                  ]),
+                ),
+              )),
         ],
 
         const SizedBox(height: 24),
-
-        // AppMediaPickerField form demo
-        _SectionHeader('AppMediaPickerField', 'Drop-in form field with thumbnail grid'),
+        const _SectionHeader('AppMediaPickerField',
+            'Drop-in form field with live thumbnail grid',
+            Icons.grid_view_rounded, Color(0xFF7C3AED)),
         const SizedBox(height: 12),
         AppMediaPickerField(
           label: 'Attach Documents',
           sources: AppMediaSource.values.toList(),
           limit: 4,
         ),
-
         const SizedBox(height: 40),
       ].animate(interval: 60.ms).fadeIn(duration: 250.ms).slideY(begin: 0.04),
+    );
+  }
+}
+
+// ─── Tab 6: Permissions ───────────────────────────────────────────────────────
+
+class _PermissionsTab extends StatelessWidget {
+  const _PermissionsTab();
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    // Grouped permission types for showcase
+    const groups = [
+      (
+        label: 'Camera & Media',
+        color: Color(0xFF2196F3),
+        icon: Icons.camera_alt_rounded,
+        types: [
+          AppPermissionType.camera,
+          AppPermissionType.microphone,
+          AppPermissionType.photoLibrary,
+          AppPermissionType.photoLibraryAdd,
+        ],
+      ),
+      (
+        label: 'Location',
+        color: Color(0xFF4CAF50),
+        icon: Icons.location_on_rounded,
+        types: [
+          AppPermissionType.locationWhenInUse,
+          AppPermissionType.locationAlways,
+        ],
+      ),
+      (
+        label: 'Connectivity',
+        color: Color(0xFF00BCD4),
+        icon: Icons.bluetooth_rounded,
+        types: [
+          AppPermissionType.notifications,
+          AppPermissionType.bluetooth,
+          AppPermissionType.nearbyWifi,
+        ],
+      ),
+      (
+        label: 'Device & Data',
+        color: Color(0xFF9C27B0),
+        icon: Icons.storage_rounded,
+        types: [
+          AppPermissionType.contacts,
+          AppPermissionType.storage,
+          AppPermissionType.calendarRead,
+          AppPermissionType.activityRecognition,
+        ],
+      ),
+    ];
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const _SectionHeader(
+          'AppPermissionManager',
+          'Enterprise-grade platform-aware permission system',
+          Icons.security_rounded,
+          Color(0xFF7C3AED),
+        ),
+        const SizedBox(height: 8),
+
+        // Info banner
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xFF7C3AED).withOpacity(0.1),
+                const Color(0xFF2563EB).withOpacity(0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+            border:
+                Border.all(color: const Color(0xFF7C3AED).withOpacity(0.25)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                const Icon(Icons.info_outline_rounded,
+                    size: 14, color: Color(0xFF7C3AED)),
+                const SizedBox(width: 6),
+                Text('Platform-aware permission resolution',
+                    style: TextStyle(
+                        color: const Color(0xFF7C3AED),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700)),
+              ]),
+              const SizedBox(height: 4),
+              Text(
+                'Android API 33+ uses granular media permissions · iOS 14+ supports limited photo access · Android 12+ splits Bluetooth',
+                style: TextStyle(color: cs.onSurfaceVariant, fontSize: 11),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        // Request All button
+        SizedBox(
+          width: double.infinity,
+          child: FilledButton.icon(
+            icon: const Icon(Icons.verified_user_rounded, size: 16),
+            label: const Text('Request Common Permissions'),
+            onPressed: () => AppPermissionManager.requestAll(
+              context,
+              [
+                AppPermissionType.camera,
+                AppPermissionType.microphone,
+                AppPermissionType.notifications,
+                AppPermissionType.locationWhenInUse,
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Permission groups
+        ...groups.map((g) => _PermissionGroup(
+              label: g.label,
+              color: g.color,
+              icon: g.icon,
+              types: g.types,
+            )),
+
+        const SizedBox(height: 24),
+
+        // Settings shortcut
+        Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: cs.surfaceContainerLow,
+            borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+            border: Border.all(color: cs.outlineVariant),
+          ),
+          child: Row(children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: cs.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(Icons.settings_rounded, color: cs.primary, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Open App Settings',
+                      style: TextStyle(fontWeight: FontWeight.w700)),
+                  Text('Manage permissions manually in system settings',
+                      style: TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
+                ],
+              ),
+            ),
+            FilledButton.tonal(
+              onPressed: () => AppPermissionManager.openSettings(),
+              child: const Text('Open'),
+            ),
+          ]),
+        ),
+        const SizedBox(height: 40),
+      ].animate(interval: 60.ms).fadeIn(duration: 250.ms).slideY(begin: 0.04),
+    );
+  }
+}
+
+class _PermissionGroup extends StatelessWidget {
+  final String label;
+  final Color color;
+  final IconData icon;
+  final List<AppPermissionType> types;
+
+  const _PermissionGroup({
+    required this.label,
+    required this.color,
+    required this.icon,
+    required this.types,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Container(
+              width: 4,
+              height: 16,
+              decoration: BoxDecoration(
+                  color: color, borderRadius: BorderRadius.circular(2)),
+            ),
+            const SizedBox(width: 8),
+            Icon(icon, size: 16, color: color),
+            const SizedBox(width: 6),
+            Text(label,
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                    color: cs.onSurface)),
+          ]),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: cs.surface,
+              borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+              border: Border.all(color: cs.outlineVariant),
+            ),
+            child: Column(
+              children: types.asMap().entries.map((e) {
+                final i = e.key;
+                final type = e.value;
+                final isLast = i == types.length - 1;
+                return Column(children: [
+                  AppPermissionTile(
+                    type: type,
+                    onGranted: () {},
+                  ),
+                  if (!isLast)
+                    Divider(
+                        height: 1,
+                        indent: 56,
+                        color: cs.outlineVariant),
+                ]);
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -942,25 +1355,48 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
 class _SectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  const _SectionHeader(this.title, this.subtitle);
+  final IconData icon;
+  final Color color;
+
+  const _SectionHeader(this.title, this.subtitle, this.icon, this.color);
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 17)),
-        const SizedBox(height: 2),
-        Text(subtitle, style: TextStyle(fontSize: 12, color: cs.onSurfaceVariant)),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                  style:
+                      const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+              const SizedBox(height: 2),
+              Text(subtitle,
+                  style:
+                      TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
+            ],
+          ),
+        ),
       ],
     );
   }
 }
 
 class _DemoCard extends StatelessWidget {
-  final String label;
-  final String description;
+  final String label, description;
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
@@ -976,11 +1412,13 @@ class _DemoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
         borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
         child: Container(
           padding: const EdgeInsets.all(14),
@@ -989,30 +1427,33 @@ class _DemoCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
             border: Border.all(color: cs.outlineVariant),
           ),
-          child: Row(
-            children: [
-              Container(
-                width: 44, height: 44,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color, size: 22),
+          child: Row(children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(label, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
-                    const SizedBox(height: 2),
-                    Text(description, style: TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
-                  ],
-                ),
+              child: Icon(icon, color: color, size: 22),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(label,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 14)),
+                  const SizedBox(height: 2),
+                  Text(description,
+                      style:
+                          TextStyle(fontSize: 11, color: cs.onSurfaceVariant)),
+                ],
               ),
-              Icon(Icons.play_circle_outline_rounded, color: color, size: 22),
-            ],
-          ),
+            ),
+            Icon(Icons.play_circle_outline_rounded, color: color, size: 22),
+          ]),
         ),
       ),
     );
