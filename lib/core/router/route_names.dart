@@ -36,4 +36,7 @@ abstract class RouteNames {
   static const showcaseWizard        = '/showcase/wizard';
   static const showcaseSearch        = '/showcase/search';
   static const showcaseChartsV2      = '/showcase/charts-v2';
+
+  // Sprint 3 — Navigation framework
+  static const showcaseNavigation    = '/showcase/navigation';
 }

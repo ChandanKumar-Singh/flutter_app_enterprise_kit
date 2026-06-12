@@ -372,6 +372,21 @@ class _ShowcaseItem {
 
 const _sections = [
   _ShowcaseSection(
+    title: 'Navigation Framework ✦ Sprint 3',
+    accentColor: Color(0xFF0891B2),
+    items: [
+      _ShowcaseItem(
+        'AppNavigationWorkspace',
+        Icons.space_dashboard_rounded,
+        '/showcase/navigation',
+        Color(0xFF0891B2),
+        description:
+            'AWS/Azure-style shell · 72↔280px drawer · tree · permissions · search · recents · favourites',
+        isNew: true,
+      ),
+    ],
+  ),
+  _ShowcaseSection(
     title: 'Infrastructure & Services ✦ Sprint 2',
     accentColor: Color(0xFF7C3AED),
     items: [
