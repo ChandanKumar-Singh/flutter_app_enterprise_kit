@@ -274,7 +274,7 @@ class _SectionCard extends StatelessWidget {
                           top: i == 0 ? const Radius.circular(AppSpacing.radiusLg) : Radius.zero,
                           bottom: isLast ? const Radius.circular(AppSpacing.radiusLg) : Radius.zero,
                         ),
-                        onTap: () => context.go(item.route),
+                        onTap: () => context.push(item.route),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                           child: Row(

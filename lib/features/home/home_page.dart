@@ -159,7 +159,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       title: 'Featured Packages',
                       subtitle: 'Most-used enterprise components',
                       actionLabel: 'Food UI →',
-                      onAction: () => context.go(RouteNames.showcaseFood),
+                      onAction: () => context.push(RouteNames.showcaseFood),
                     ).animate().fadeIn(delay: 270.ms, duration: 350.ms),
 
                     _RestaurantStyleStrip()
@@ -170,7 +170,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       title: 'Live Dashboard',
                       subtitle: 'Real-time business metrics',
                       actionLabel: 'Full Report',
-                      onAction: () => context.go(RouteNames.showcase),
+                      onAction: () => context.push(RouteNames.showcase),
                     ).animate().fadeIn(delay: 280.ms, duration: 350.ms),
 
                     _StatsSection()
@@ -181,7 +181,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       title: 'Featured Components',
                       subtitle: 'Handpicked for you',
                       actionLabel: 'See All',
-                      onAction: () => context.go(RouteNames.showcase),
+                      onAction: () => context.push(RouteNames.showcase),
                     ).animate().fadeIn(delay: 330.ms, duration: 350.ms),
 
                     _FeaturedScroll()
@@ -219,7 +219,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               currentIndex: _navIndex,
               onIndexChanged: (i) {
                 setState(() => _navIndex = i);
-                if (i == 1) context.go(RouteNames.showcase);
+                if (i == 1) context.push(RouteNames.showcase);
               },
               items: const [
                 AppBottomNavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
@@ -393,7 +393,7 @@ class _RestaurantStyleStrip extends StatelessWidget {
         itemBuilder: (context, i) {
           final item = _items[i];
           return GestureDetector(
-            onTap: () => context.go(item.route),
+            onTap: () => context.push(item.route),
             child: Container(
               width: 185,
               decoration: BoxDecoration(
@@ -560,7 +560,7 @@ class _CategoryCard extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return GestureDetector(
-      onTap: () => context.go(cat.route),
+      onTap: () => context.push(cat.route),
       child: Container(
         decoration: BoxDecoration(
           color: cat.color.withOpacity(isDark ? 0.15 : 0.08),
@@ -738,7 +738,7 @@ class _FeaturedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.go(item.route),
+      onTap: () => context.push(item.route),
       child: Hero(
         tag: 'featured_${item.title}',
         child: Container(
@@ -878,7 +878,7 @@ class _ShowcaseTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-        onTap: () => context.go(entry.route),
+        onTap: () => context.push(entry.route),
         child: Container(
           decoration: BoxDecoration(
             color: cs.surface,
@@ -968,11 +968,11 @@ class _QuickActionsRow extends StatelessWidget {
         );
       }),
       _QuickAction('Theme\nConfig', Icons.palette_rounded, const Color(0xFF7C3AED),
-          () => context.go(RouteNames.showcaseThemeConfig)),
+          () => context.push(RouteNames.showcaseThemeConfig)),
       _QuickAction('Components\nShowcase', Icons.widgets_rounded, const Color(0xFF0891B2),
-          () => context.go(RouteNames.showcaseComponents)),
+          () => context.push(RouteNames.showcaseComponents)),
       _QuickAction('All\nShowcase', Icons.grid_view_rounded, const Color(0xFF16A34A),
-          () => context.go(RouteNames.showcase)),
+          () => context.push(RouteNames.showcase)),
     ];
 
     return Padding(

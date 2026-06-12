@@ -60,6 +60,9 @@ class ConnectivityNotifier extends AsyncNotifier<ConnectivityState> {
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
   StreamSubscription<InternetStatus>? _internetSub;
 
+  // Track creation time to ignore startup/splash connectivity glitches
+  final DateTime _createdAt = DateTime.now();
+
   @override
   Future<ConnectivityState> build() async {
     ref.onDispose(() {
@@ -67,49 +70,69 @@ class ConnectivityNotifier extends AsyncNotifier<ConnectivityState> {
       _internetSub?.cancel();
     });
 
-    // Initial check
+    // 1. Initial check (fetch connections status first time/splash)
     final connectivity = Connectivity();
     final initial = await connectivity.checkConnectivity();
     final hasInternet = await InternetConnection().hasInternetAccess;
 
-    // Listen to connectivity changes
-    _connectivitySub = connectivity.onConnectivityChanged.listen((
-      results,
-    ) async {
-      final internet =
-          results.any((r) => r != ConnectivityResult.none) &&
-          await InternetConnection().hasInternetAccess;
-      state = AsyncData(
-        ConnectivityState(
-          status: internet
-              ? NetworkStatus.connected
-              : NetworkStatus.disconnected,
-          types: results,
-          hasInternet: internet,
-        ),
-      );
-    });
-
-    // Listen to internet status changes
-    _internetSub = InternetConnection().onStatusChange.listen((status) async {
-      final current = state.value;
-      state = AsyncData(
-        (current ?? const ConnectivityState()).copyWith(
-          status: status == InternetStatus.connected
-              ? NetworkStatus.connected
-              : NetworkStatus.disconnected,
-          hasInternet: status == InternetStatus.connected,
-        ),
-      );
-    });
-
-    return ConnectivityState(
+    final initialState = ConnectivityState(
       status: hasInternet
           ? NetworkStatus.connected
           : NetworkStatus.disconnected,
       types: initial,
       hasInternet: hasInternet,
     );
+
+    // 2. Subscribe to listen to updates after fetching initial status
+    _subscribeToChanges(connectivity, initialState);
+
+    return initialState;
+  }
+
+  void _subscribeToChanges(Connectivity connectivity, ConnectivityState initialState) {
+    _connectivitySub = connectivity.onConnectivityChanged.listen((results) async {
+      final internet =
+          results.any((r) => r != ConnectivityResult.none) &&
+          await InternetConnection().hasInternetAccess;
+      final newState = ConnectivityState(
+        status: internet ? NetworkStatus.connected : NetworkStatus.disconnected,
+        types: results,
+        hasInternet: internet,
+      );
+      _updateStateIfChanged(newState);
+    });
+
+    _internetSub = InternetConnection().onStatusChange.listen((status) {
+      final current = state.value ?? initialState;
+      final newState = current.copyWith(
+        status: status == InternetStatus.connected
+            ? NetworkStatus.connected
+            : NetworkStatus.disconnected,
+        hasInternet: status == InternetStatus.connected,
+      );
+      _updateStateIfChanged(newState);
+    });
+  }
+
+  void _updateStateIfChanged(ConnectivityState newState) {
+    final current = state.value;
+    if (current == null) {
+      state = AsyncData(newState);
+      return;
+    }
+
+    // If new status is same as older, do not update (avoids redundant updates and toasts)
+    if (current == newState) {
+      return;
+    }
+
+    // Ignore transitions to disconnected within the first 2 seconds of initialization
+    // to prevent startup/splash false offline alerts caused by stream initialization glitches
+    if (DateTime.now().difference(_createdAt).inSeconds < 2 && newState.isDisconnected) {
+      return;
+    }
+
+    state = AsyncData(newState);
   }
 
   Future<bool> checkNow() async {
