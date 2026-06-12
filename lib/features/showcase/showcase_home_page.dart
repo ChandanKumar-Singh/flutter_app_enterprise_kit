@@ -384,6 +384,9 @@ const _sections = [
       _ShowcaseItem('UI Kit (Product Cards & More)', Icons.style_rounded, RouteNames.showcaseUiKit, Color(0xFFEC4899),
         description: 'Product cards, feature cards, promo banners, floating nav',
         isNew: true),
+      _ShowcaseItem('Food & Restaurant UI', Icons.restaurant_rounded, RouteNames.showcaseFood, Color(0xFFDC2626),
+        description: 'Restaurant cards, food wheel, filters, offer banners — Zomato style',
+        isNew: true),
     ],
   ),
   _ShowcaseSection(

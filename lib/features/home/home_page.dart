@@ -9,6 +9,8 @@ import 'package:enterprise_kit/core/theme/theme_config.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/banners/app_promo_banner.dart';
 import 'package:enterprise_kit/shared/widgets/cards/app_product_card.dart';
+import 'package:enterprise_kit/shared/widgets/cards/app_restaurant_card.dart';
+import 'package:enterprise_kit/shared/widgets/food/app_food_widgets.dart';
 import 'package:enterprise_kit/shared/widgets/navigation/app_bottom_nav.dart';
 
 // ─── Home Page ────────────────────────────────────────────────────────────────
@@ -81,8 +83,45 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ── Location header
+                    AppLocationHeader(
+                      city: 'Bangalore',
+                      area: 'Enterprise Kit',
+                      subtitle: 'Flutter • Production-ready',
+                      onTap: () {},
+                      trailing: IconButton(
+                        icon: Badge(
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          smallSize: 7,
+                          child: Icon(Icons.notifications_outlined,
+                              color: Theme.of(context).colorScheme.onSurface, size: 22),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ).animate().fadeIn(duration: 300.ms),
+
                     // ── Search
-                    _SearchSection().animate().fadeIn(duration: 350.ms).slideY(begin: 0.08, duration: 350.ms),
+                    AppTopSearchBar(
+                      hint: 'Search components, patterns...',
+                      location: '100+ parts',
+                      onTap: () {},
+                    ).animate().fadeIn(delay: 60.ms, duration: 350.ms),
+
+                    const SizedBox(height: 8),
+
+                    // ── Filter bar
+                    AppFilterBar(
+                      filters: const [
+                        AppFilterChip(label: 'All', leadingIcon: Icons.grid_view_rounded),
+                        AppFilterChip(label: 'New', leadingIcon: Icons.new_releases_rounded),
+                        AppFilterChip(label: 'Cards & Lists'),
+                        AppFilterChip(label: 'Overlays'),
+                        AppFilterChip(label: 'Forms'),
+                        AppFilterChip(label: 'Media'),
+                      ],
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      onSelected: (_) {},
+                    ).animate().fadeIn(delay: 80.ms, duration: 300.ms),
 
                     const SizedBox(height: 4),
 
@@ -92,20 +131,39 @@ class _HomePageState extends ConsumerState<HomePage> {
                       items: _promoBanners,
                     ).animate().fadeIn(delay: 100.ms, duration: 400.ms),
 
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 10),
 
                     // ── Trust strip
                     appInfoStripDefault()
                         .animate().fadeIn(delay: 150.ms, duration: 350.ms),
 
+                    const SizedBox(height: 4),
+
+                    // ── Food Category Wheel
+                    AppFoodCategoryWheel(
+                      title: "Browse Components",
+                      categories: _componentCategories,
+                    ).animate().fadeIn(delay: 170.ms, duration: 350.ms),
+
                     // ── Categories
                     AppSectionHeader(
-                      title: 'Browse Categories',
-                      subtitle: 'What are you looking for?',
+                      title: 'Quick Navigation',
+                      subtitle: 'All component sections',
                     ).animate().fadeIn(delay: 200.ms, duration: 350.ms),
 
                     _CategoryGrid()
                         .animate().fadeIn(delay: 250.ms, duration: 350.ms),
+
+                    // ── Restaurant-style Featured Cards
+                    AppSectionHeader(
+                      title: 'Featured Packages',
+                      subtitle: 'Most-used enterprise components',
+                      actionLabel: 'Food UI →',
+                      onAction: () => context.go(RouteNames.showcaseFood),
+                    ).animate().fadeIn(delay: 270.ms, duration: 350.ms),
+
+                    _RestaurantStyleStrip()
+                        .animate().fadeIn(delay: 290.ms, duration: 350.ms),
 
                     // ── Stats section
                     AppSectionHeader(
@@ -191,7 +249,7 @@ class _TopBar extends ConsumerWidget {
     final notifier = ref.read(themeConfigProvider.notifier);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 8, 12, 8),
+      padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 6, 12, 6),
       decoration: BoxDecoration(
         color: scrolled ? cs.surface : Colors.transparent,
         border: scrolled
@@ -306,48 +364,146 @@ class _ThemeToggle extends StatelessWidget {
   }
 }
 
-// ─── Search Section ───────────────────────────────────────────────────────────
-class _SearchSection extends StatelessWidget {
+// ─── Restaurant Style Strip ───────────────────────────────────────────────────
+class _RestaurantStyleStrip extends StatelessWidget {
+  static final _items = [
+    _PkgItem('Overlay System', 'Toast • Banner • Dialog', 4.9, '100% safe', RouteNames.showcaseComponents,
+        const [Color(0xFF1D4ED8), Color(0xFF7C3AED)]),
+    _PkgItem('Theme Engine', 'Dynamic colors & dark mode', 4.8, 'Light/Dark', RouteNames.showcaseThemeConfig,
+        const [Color(0xFF7C3AED), Color(0xFFEC4899)]),
+    _PkgItem('Data Components', 'Table • Chart • Paginator', 4.7, 'Sort & filter', RouteNames.showcaseComponents,
+        const [Color(0xFF0891B2), Color(0xFF16A34A)]),
+    _PkgItem('Media Viewer', 'Images • PDF • Hero', 4.6, 'Cached & smooth', RouteNames.showcaseImages,
+        const [Color(0xFFD97706), Color(0xFFDC2626)]),
+    _PkgItem('Forms & Inputs', 'Text • Date • OTP • Select', 4.8, 'Validated', RouteNames.showcaseInputs,
+        const [Color(0xFF16A34A), Color(0xFF0891B2)]),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: 48,
-          decoration: BoxDecoration(
-            color: cs.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
-            border: Border.all(color: cs.outlineVariant),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Icon(Icons.search_rounded, size: 20, color: cs.onSurfaceVariant),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'Search components, patterns...',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: cs.onSurfaceVariant.withOpacity(0.7),
+    return SizedBox(
+      height: 130,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        physics: const BouncingScrollPhysics(),
+        itemCount: _items.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        itemBuilder: (context, i) {
+          final item = _items[i];
+          return GestureDetector(
+            onTap: () => context.go(item.route),
+            child: Container(
+              width: 185,
+              decoration: BoxDecoration(
+                color: cs.surface,
+                borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                border: Border.all(color: cs.outlineVariant),
+                boxShadow: [
+                  BoxShadow(
+                    color: cs.shadow.withOpacity(0.07),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
                   ),
-                ),
+                ],
               ),
-              Container(
-                height: 30,
-                width: 1,
-                color: cs.outlineVariant,
-                margin: const EdgeInsets.symmetric(horizontal: 8),
+              clipBehavior: Clip.antiAlias,
+              child: Stack(
+                children: [
+                  // Gradient strip at top
+                  Positioned(
+                    top: 0, left: 0, right: 0,
+                    child: Container(
+                      height: 4,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: item.colors),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 16, 14, 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                item.name,
+                                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: cs.onSurface,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF16A34A),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.star_rounded, size: 9, color: Colors.white),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    item.rating.toStringAsFixed(1),
+                                    style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          item.sub,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: cs.onSurfaceVariant,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const Spacer(),
+                        Row(
+                          children: [
+                            Icon(Icons.verified_rounded, size: 12, color: item.colors.first),
+                            const SizedBox(width: 4),
+                            Text(
+                              item.badge,
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: item.colors.first,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Icon(Icons.tune_rounded, size: 18, color: cs.primary),
-            ],
-          ),
-        ),
+            )
+            .animate(delay: Duration(milliseconds: 50 * i))
+            .fadeIn(duration: 300.ms)
+            .slideX(begin: 0.04, duration: 300.ms),
+          );
+        },
       ),
     );
   }
+}
+
+class _PkgItem {
+  final String name, sub, badge, route;
+  final double rating;
+  final List<Color> colors;
+  const _PkgItem(this.name, this.sub, this.rating, this.badge, this.route, this.colors);
 }
 
 // ─── Category Grid ────────────────────────────────────────────────────────────
@@ -453,7 +609,7 @@ class _StatsSection extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
-        childAspectRatio: 1.7,
+        childAspectRatio: 0.9,
         children: [
           AppStatCard(
             label: 'Components',
@@ -707,6 +863,7 @@ const _showcaseSections = [
   _ShowcaseEntry('Components', Icons.widgets_outlined, RouteNames.showcaseComponents, Color(0xFF0891B2), badge: 'NEW'),
   _ShowcaseEntry('Config', Icons.tune_outlined, RouteNames.showcaseThemeConfig, Color(0xFF7C3AED), badge: 'NEW'),
   _ShowcaseEntry('UI Kit', Icons.style_outlined, RouteNames.showcaseUiKit, Color(0xFFEC4899), badge: 'NEW'),
+  _ShowcaseEntry('Food UI', Icons.restaurant_outlined, RouteNames.showcaseFood, Color(0xFFDC2626), badge: 'NEW'),
 ];
 
 class _ShowcaseTile extends StatelessWidget {
@@ -874,6 +1031,20 @@ class _QuickAction {
   final VoidCallback onTap;
   const _QuickAction(this.label, this.icon, this.color, this.onTap);
 }
+
+// ─── Component Categories (used in AppFoodCategoryWheel) ─────────────────────
+final _componentCategories = [
+  AppFoodCategory(label: 'Buttons', icon: Icons.smart_button_rounded, color: const Color(0xFF2563EB)),
+  AppFoodCategory(label: 'Cards', icon: Icons.credit_card_rounded, color: const Color(0xFF7C3AED)),
+  AppFoodCategory(label: 'Dialogs', icon: Icons.open_in_new_rounded, color: const Color(0xFF0891B2)),
+  AppFoodCategory(label: 'Inputs', icon: Icons.text_fields_rounded, color: const Color(0xFF16A34A)),
+  AppFoodCategory(label: 'Charts', icon: Icons.bar_chart_rounded, color: const Color(0xFFD97706)),
+  AppFoodCategory(label: 'Themes', icon: Icons.palette_rounded, color: const Color(0xFFDC2626)),
+  AppFoodCategory(label: 'Media', icon: Icons.image_rounded, color: const Color(0xFF4F46E5)),
+  AppFoodCategory(label: 'Overlays', icon: Icons.layers_rounded, color: const Color(0xFFEC4899)),
+  AppFoodCategory(label: 'Loaders', icon: Icons.hourglass_top_rounded, color: const Color(0xFF64748B)),
+  AppFoodCategory(label: 'Food UI', icon: Icons.restaurant_rounded, color: const Color(0xFFDC2626)),
+];
 
 // ─── Promo Banner Data ────────────────────────────────────────────────────────
 final _promoBanners = [
