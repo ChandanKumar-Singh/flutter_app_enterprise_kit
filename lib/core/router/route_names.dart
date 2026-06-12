@@ -23,4 +23,5 @@ abstract class RouteNames {
   static const showcaseStates      = '/showcase/states';
   static const showcaseComponents  = '/showcase/components';
   static const showcaseThemeConfig = '/showcase/theme-config';
+  static const showcaseUiKit       = '/showcase/ui-kit';
 }

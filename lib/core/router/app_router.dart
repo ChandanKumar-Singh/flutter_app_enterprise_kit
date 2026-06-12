@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:enterprise_kit/core/router/route_names.dart';
@@ -21,6 +22,42 @@ import 'package:enterprise_kit/features/showcase/pdf_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/states_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/components_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/theme_config_page.dart';
+import 'package:enterprise_kit/features/showcase/ui_kit_showcase_page.dart';
+
+/// Shared fade+slide transition used across all routes.
+CustomTransitionPage<T> _fadeSlide<T>(BuildContext context, GoRouterState state, Widget child) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 280),
+    reverseTransitionDuration: const Duration(milliseconds: 220),
+    transitionsBuilder: (ctx, animation, secondary, c) {
+      final fade = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+      final slide = Tween<Offset>(begin: const Offset(0.04, 0), end: Offset.zero)
+          .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic));
+      return FadeTransition(
+        opacity: fade,
+        child: SlideTransition(position: slide, child: c),
+      );
+    },
+  );
+}
+
+/// Shared bottom-up slide transition for sub-pages.
+CustomTransitionPage<T> _slideUp<T>(BuildContext context, GoRouterState state, Widget child) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 320),
+    reverseTransitionDuration: const Duration(milliseconds: 260),
+    transitionsBuilder: (ctx, animation, secondary, c) {
+      final curve = CurvedAnimation(parent: animation, curve: Curves.easeOutQuint);
+      final slide = Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero).animate(curve);
+      final fade = CurvedAnimation(parent: animation, curve: Curves.easeOut);
+      return FadeTransition(opacity: fade, child: SlideTransition(position: slide, child: c));
+    },
+  );
+}
 
 class AppRouter {
   AppRouter._();
@@ -32,35 +69,36 @@ class AppRouter {
       GoRoute(
         path: RouteNames.splash,
         name: 'splash',
-        builder: (_, __) => const SplashPage(),
+        pageBuilder: (c, s) => _fadeSlide(c, s, const SplashPage()),
       ),
       GoRoute(
         path: RouteNames.home,
         name: 'home',
-        builder: (_, __) => const HomePage(),
+        pageBuilder: (c, s) => _fadeSlide(c, s, const HomePage()),
       ),
       GoRoute(
         path: RouteNames.showcase,
         name: 'showcase',
-        builder: (_, __) => const ShowcaseHomePage(),
+        pageBuilder: (c, s) => _fadeSlide(c, s, const ShowcaseHomePage()),
         routes: [
-          GoRoute(path: 'buttons',    builder: (_, __) => const ButtonsShowcasePage()),
-          GoRoute(path: 'cards',      builder: (_, __) => const CardsShowcasePage()),
-          GoRoute(path: 'dialogs',    builder: (_, __) => const DialogsShowcasePage()),
-          GoRoute(path: 'sheets',     builder: (_, __) => const SheetsShowcasePage()),
-          GoRoute(path: 'inputs',     builder: (_, __) => const InputsShowcasePage()),
-          GoRoute(path: 'theme',      builder: (_, __) => const ThemeShowcasePage()),
-          GoRoute(path: 'images',     builder: (_, __) => const ImagesShowcasePage()),
-          GoRoute(path: 'typography', builder: (_, __) => const TypographyShowcasePage()),
-          GoRoute(path: 'charts',     builder: (_, __) => const ChartsShowcasePage()),
-          GoRoute(path: 'network',    builder: (_, __) => const NetworkShowcasePage()),
-          GoRoute(path: 'utils',      builder: (_, __) => const UtilsShowcasePage()),
-          GoRoute(path: 'animations', builder: (_, __) => const AnimationsShowcasePage()),
-          GoRoute(path: 'loaders',    builder: (_, __) => const LoadersShowcasePage()),
-          GoRoute(path: 'pdf',        builder: (_, __) => const PdfShowcasePage()),
-          GoRoute(path: 'states',     builder: (_, __) => const StatesShowcasePage()),
-          GoRoute(path: 'components', builder: (_, __) => const ComponentsShowcasePage()),
-          GoRoute(path: 'theme-config', builder: (_, __) => const ThemeConfigPage()),
+          GoRoute(path: 'buttons',    pageBuilder: (c, s) => _slideUp(c, s, const ButtonsShowcasePage())),
+          GoRoute(path: 'cards',      pageBuilder: (c, s) => _slideUp(c, s, const CardsShowcasePage())),
+          GoRoute(path: 'dialogs',    pageBuilder: (c, s) => _slideUp(c, s, const DialogsShowcasePage())),
+          GoRoute(path: 'sheets',     pageBuilder: (c, s) => _slideUp(c, s, const SheetsShowcasePage())),
+          GoRoute(path: 'inputs',     pageBuilder: (c, s) => _slideUp(c, s, const InputsShowcasePage())),
+          GoRoute(path: 'theme',      pageBuilder: (c, s) => _slideUp(c, s, const ThemeShowcasePage())),
+          GoRoute(path: 'images',     pageBuilder: (c, s) => _slideUp(c, s, const ImagesShowcasePage())),
+          GoRoute(path: 'typography', pageBuilder: (c, s) => _slideUp(c, s, const TypographyShowcasePage())),
+          GoRoute(path: 'charts',     pageBuilder: (c, s) => _slideUp(c, s, const ChartsShowcasePage())),
+          GoRoute(path: 'network',    pageBuilder: (c, s) => _slideUp(c, s, const NetworkShowcasePage())),
+          GoRoute(path: 'utils',      pageBuilder: (c, s) => _slideUp(c, s, const UtilsShowcasePage())),
+          GoRoute(path: 'animations', pageBuilder: (c, s) => _slideUp(c, s, const AnimationsShowcasePage())),
+          GoRoute(path: 'loaders',    pageBuilder: (c, s) => _slideUp(c, s, const LoadersShowcasePage())),
+          GoRoute(path: 'pdf',        pageBuilder: (c, s) => _slideUp(c, s, const PdfShowcasePage())),
+          GoRoute(path: 'states',     pageBuilder: (c, s) => _slideUp(c, s, const StatesShowcasePage())),
+          GoRoute(path: 'components', pageBuilder: (c, s) => _slideUp(c, s, const ComponentsShowcasePage())),
+          GoRoute(path: 'theme-config', pageBuilder: (c, s) => _slideUp(c, s, const ThemeConfigPage())),
+          GoRoute(path: 'ui-kit',     pageBuilder: (c, s) => _slideUp(c, s, const UiKitShowcasePage())),
         ],
       ),
     ],

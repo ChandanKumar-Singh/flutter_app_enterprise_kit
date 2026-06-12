@@ -10,23 +10,38 @@ import 'package:enterprise_kit/core/toast/app_toast.dart';
 import 'package:enterprise_kit/shared/widgets/banners/app_banner.dart';
 import 'package:enterprise_kit/l10n/l10n.dart';
 
-class EnterpriseApp extends ConsumerWidget {
+class EnterpriseApp extends ConsumerStatefulWidget {
   const EnterpriseApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<EnterpriseApp> createState() => _EnterpriseAppState();
+}
+
+class _EnterpriseAppState extends ConsumerState<EnterpriseApp> {
+  /// True only after we have confirmed going offline mid-session.
+  /// Prevents the "Back online" toast from firing on cold start when the
+  /// connectivity provider briefly emits a disconnected state before
+  /// completing its initial internet reachability check.
+  bool _wentOfflineDuringSession = false;
+
+  @override
+  Widget build(BuildContext context) {
     final config = ref.watch(themeConfigProvider);
     final lightTheme = ref.watch(appLightThemeProvider);
     final darkTheme = ref.watch(appDarkThemeProvider);
 
-    // Watch connectivity — show/hide offline banner automatically
     ref.listen(connectivityProvider, (prev, next) {
       final wasConnected = prev?.value?.isConnected;
       final isConnected = next.value?.isConnected;
+
       if (wasConnected == true && isConnected == false) {
+        // Went offline during an active session — show the banner
+        _wentOfflineDuringSession = true;
         AppBannerController.instance.dismissByType(AppBannerType.offline);
         AppBannerController.instance.offline();
-      } else if (wasConnected == false && isConnected == true) {
+      } else if (_wentOfflineDuringSession && isConnected == true) {
+        // Came back online after a real mid-session disconnect
+        _wentOfflineDuringSession = false;
         AppBannerController.instance.dismissByType(AppBannerType.offline);
         AppToastController.instance.success(
           'Back online',
