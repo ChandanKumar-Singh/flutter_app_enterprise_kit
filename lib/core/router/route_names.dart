@@ -26,4 +26,14 @@ abstract class RouteNames {
   static const showcaseUiKit       = '/showcase/ui-kit';
   static const showcaseFood        = '/showcase/food';
   static const showcaseAdvanced    = '/showcase/advanced';
+
+  // Sprint 2 — new services & components
+  static const showcaseNotifications = '/showcase/notifications';
+  static const showcaseFeatureFlags  = '/showcase/feature-flags';
+  static const showcaseBiometric     = '/showcase/biometric';
+  static const showcaseEncStorage    = '/showcase/encrypted-storage';
+  static const showcaseRepository    = '/showcase/repository';
+  static const showcaseWizard        = '/showcase/wizard';
+  static const showcaseSearch        = '/showcase/search';
+  static const showcaseChartsV2      = '/showcase/charts-v2';
 }

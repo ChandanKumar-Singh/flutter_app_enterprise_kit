@@ -372,6 +372,21 @@ class _ShowcaseItem {
 
 const _sections = [
   _ShowcaseSection(
+    title: 'Infrastructure & Services ✦ Sprint 2',
+    accentColor: Color(0xFF7C3AED),
+    items: [
+      _ShowcaseItem(
+        'All Services & Components',
+        Icons.rocket_launch_rounded,
+        '/showcase/services',
+        Color(0xFF7C3AED),
+        description:
+            'Notifications · Feature Flags · Biometric · Enc Storage · Cache · Wizard · Search · Charts',
+        isNew: true,
+      ),
+    ],
+  ),
+  _ShowcaseSection(
     title: 'Enterprise (New)',
     accentColor: Color(0xFF7C3AED),
     items: [

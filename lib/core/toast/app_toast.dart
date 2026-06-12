@@ -189,6 +189,7 @@ class _AppToastOverlayState extends State<AppToastOverlay> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: _centerToasts
                     .map((e) => Padding(
+                          key: ValueKey(e.id),
                           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 4),
                           child: _ToastCard(entry: e, onDismiss: () => _removeToast(e.id)),
                         ))
@@ -220,6 +221,7 @@ class _ToastStack extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: toasts.map((e) => Padding(
+        key: ValueKey(e.id),
         padding: const EdgeInsets.only(bottom: 8),
         child: _ToastCard(entry: e, onDismiss: () => onRemove(e.id), slideFromTop: slideFromTop),
       )).toList(),

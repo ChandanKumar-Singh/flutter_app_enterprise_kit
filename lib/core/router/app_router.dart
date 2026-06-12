@@ -25,6 +25,7 @@ import 'package:enterprise_kit/features/showcase/theme_config_page.dart';
 import 'package:enterprise_kit/features/showcase/ui_kit_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/food_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/advanced_showcase_page.dart';
+import 'package:enterprise_kit/features/showcase/services_showcase_page.dart';
 
 /// Shared fade+slide transition used across all routes.
 CustomTransitionPage<T> _fadeSlide<T>(BuildContext context, GoRouterState state, Widget child) {
@@ -103,6 +104,16 @@ class AppRouter {
           GoRoute(path: 'ui-kit',     pageBuilder: (c, s) => _slideUp(c, s, const UiKitShowcasePage())),
           GoRoute(path: 'food',       pageBuilder: (c, s) => _slideUp(c, s, const FoodShowcasePage())),
           GoRoute(path: 'advanced',   pageBuilder: (c, s) => _slideUp(c, s, const AdvancedShowcasePage())),
+          // Sprint 2 — services, infrastructure & components
+          GoRoute(path: 'services',       pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'notifications',  pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'feature-flags',  pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'biometric',      pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'encrypted-storage', pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'repository',     pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'wizard',         pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'search',         pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
+          GoRoute(path: 'charts-v2',      pageBuilder: (c, s) => _slideUp(c, s, const ServicesShowcasePage())),
         ],
       ),
     ],

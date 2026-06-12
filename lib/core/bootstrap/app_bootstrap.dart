@@ -9,6 +9,10 @@ import 'package:enterprise_kit/core/di/injection.dart';
 import 'package:enterprise_kit/core/debug/app_logger.dart';
 import 'package:enterprise_kit/core/services/app_analytics_service.dart';
 import 'package:enterprise_kit/core/services/app_device_info_service.dart';
+import 'package:enterprise_kit/core/notifications/app_notification_service.dart';
+import 'package:enterprise_kit/core/data/app_cache_manager.dart';
+import 'package:enterprise_kit/core/storage/app_encrypted_storage.dart';
+import 'package:enterprise_kit/core/feature_flags/app_feature_flags.dart';
 import 'package:enterprise_kit/app.dart';
 
 class AppBootstrap {
@@ -45,7 +49,19 @@ class AppBootstrap {
         // 5b. Analytics (no-op in debug, real backend injected in prod)
         AppAnalyticsService.init();
 
-        // 5. Flutter error handler
+        // 5c. Cache manager (L1+L2 strategy layer)
+        await AppCacheManager.instance.initialize();
+
+        // 5d. Encrypted storage
+        await AppEncryptedStorage.instance.initialize();
+
+        // 5e. Feature flags (fetch async, non-blocking)
+        unawaited(AppFeatureFlags.instance.fetch());
+
+        // 5f. Notifications
+        await AppNotificationService.instance.initialize();
+
+        // 6. Flutter error handler
         FlutterError.onError = (details) {
           FlutterError.presentError(details);
           AppLogger.instance.e(
