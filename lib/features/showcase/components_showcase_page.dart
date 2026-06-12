@@ -5,6 +5,7 @@ import 'package:enterprise_kit/core/toast/app_toast.dart';
 import 'package:enterprise_kit/shared/widgets/banners/app_banner.dart';
 import 'package:enterprise_kit/shared/widgets/gradients/app_gradient.dart';
 import 'package:enterprise_kit/shared/widgets/pagination/app_paginator.dart';
+import 'package:enterprise_kit/shared/widgets/pagination/pagination_wrapper.dart';
 import 'package:enterprise_kit/shared/widgets/rating/app_rating.dart';
 import 'package:enterprise_kit/shared/widgets/table/app_table.dart';
 import 'package:enterprise_kit/shared/widgets/tags/app_tag.dart';
@@ -28,7 +29,7 @@ class _ComponentsShowcasePageState extends State<ComponentsShowcasePage>
   @override
   void initState() {
     super.initState();
-    _tabs = TabController(length: 7, vsync: this);
+    _tabs = TabController(length: 8, vsync: this);
     _paginatorCtrl = AppPaginatorController(
       fetcher: (page, size) async {
         await Future.delayed(const Duration(milliseconds: 600));
@@ -71,6 +72,7 @@ class _ComponentsShowcasePageState extends State<ComponentsShowcasePage>
             Tab(text: 'Rating'),
             Tab(text: 'Timeline'),
             Tab(text: 'Table'),
+            Tab(text: 'Pagination'),
           ],
         ),
       ),
@@ -84,6 +86,7 @@ class _ComponentsShowcasePageState extends State<ComponentsShowcasePage>
           _RatingShowcase(rating: _rating, onChanged: (v) => setState(() => _rating = v)),
           _TimelineShowcase(),
           _TableShowcase(ctrl: _paginatorCtrl),
+          _PaginationWrapperShowcase(),
         ],
       ),
     );
@@ -718,6 +721,140 @@ class _ShowcaseRow extends StatelessWidget {
       spacing: 8,
       runSpacing: 8,
       children: children,
+    );
+  }
+}
+
+// ─── Pagination Wrapper Showcase ──────────────────────────────────────────────
+class _PaginationWrapperShowcase extends StatefulWidget {
+  @override
+  State<_PaginationWrapperShowcase> createState() => _PaginationWrapperShowcaseState();
+}
+
+class _PaginationWrapperShowcaseState extends State<_PaginationWrapperShowcase> {
+  final PaginationController<String> _controller = PaginationController<String>();
+  final TextEditingController _searchCtrl = TextEditingController();
+  bool _simulateError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCtrl.addListener(() {
+      final query = _searchCtrl.text.trim().toLowerCase();
+      if (query.isEmpty) {
+        _controller.clearFilter();
+      } else {
+        _controller.updateFilteredList(
+          (items) => items.where((item) => item.toLowerCase().contains(query)).toList(),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<List<String>> _fetchData(int page, int pageSize) async {
+    await Future.delayed(const Duration(milliseconds: 800)); // Simulate network latency
+    if (_simulateError && page > 1) {
+      throw Exception('Simulated load more network failure');
+    }
+    return List.generate(
+      pageSize,
+      (index) => 'Page $page - Product Item #${(page - 1) * pageSize + index + 1}',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        // Control Bar
+        Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            children: [
+              TextField(
+                controller: _searchCtrl,
+                decoration: InputDecoration(
+                  labelText: 'Search items locally',
+                  prefixIcon: const Icon(Icons.search_rounded),
+                  suffixIcon: _searchCtrl.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear_rounded),
+                          onPressed: () => _searchCtrl.clear(),
+                        )
+                      : null,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppSpacing.radiusMd)),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _simulateError,
+                        onChanged: (v) => setState(() => _simulateError = v ?? false),
+                      ),
+                      Text('Simulate Load More Error', style: TextStyle(fontSize: 12, color: colors.onSurface)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton.filledTonal(
+                        icon: const Icon(Icons.arrow_upward_rounded, size: 18),
+                        tooltip: 'Scroll to top',
+                        onPressed: _controller.scrollToTop,
+                      ),
+                      const SizedBox(width: AppSpacing.xs),
+                      IconButton.filledTonal(
+                        icon: const Icon(Icons.refresh_rounded, size: 18),
+                        tooltip: 'Refresh',
+                        onPressed: _controller.refresh,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        // Pagination List
+        Expanded(
+          child: PaginationWrapper<String>.builder(
+            controller: _controller,
+            fetchData: _fetchData,
+            pageSize: 10,
+            debugMode: true,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            separated: true,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (context, item) => Card(
+              margin: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.radiusLg)),
+              elevation: 0,
+              color: colors.surfaceContainerLow ?? colors.surfaceVariant.withOpacity(0.15),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: colors.primary.withOpacity(0.1),
+                  child: Icon(Icons.shopping_bag_outlined, color: colors.primary, size: 20),
+                ),
+                title: Text(item, style: const TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: const Text('Enterprise ready catalog item'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

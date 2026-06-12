@@ -387,6 +387,9 @@ const _sections = [
       _ShowcaseItem('Food & Restaurant UI', Icons.restaurant_rounded, RouteNames.showcaseFood, Color(0xFFDC2626),
         description: 'Restaurant cards, food wheel, filters, offer banners — Zomato style',
         isNew: true),
+      _ShowcaseItem('Advanced Giant-App UX', Icons.auto_awesome_rounded, RouteNames.showcaseAdvanced, Color(0xFF7C3AED),
+        description: 'Snapping sheets, context preview, popovers, mini-player, media picker',
+        isNew: true),
     ],
   ),
   _ShowcaseSection(

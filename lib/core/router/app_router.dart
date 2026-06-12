@@ -24,6 +24,7 @@ import 'package:enterprise_kit/features/showcase/components_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/theme_config_page.dart';
 import 'package:enterprise_kit/features/showcase/ui_kit_showcase_page.dart';
 import 'package:enterprise_kit/features/showcase/food_showcase_page.dart';
+import 'package:enterprise_kit/features/showcase/advanced_showcase_page.dart';
 
 /// Shared fade+slide transition used across all routes.
 CustomTransitionPage<T> _fadeSlide<T>(BuildContext context, GoRouterState state, Widget child) {
@@ -101,6 +102,7 @@ class AppRouter {
           GoRoute(path: 'theme-config', pageBuilder: (c, s) => _slideUp(c, s, const ThemeConfigPage())),
           GoRoute(path: 'ui-kit',     pageBuilder: (c, s) => _slideUp(c, s, const UiKitShowcasePage())),
           GoRoute(path: 'food',       pageBuilder: (c, s) => _slideUp(c, s, const FoodShowcasePage())),
+          GoRoute(path: 'advanced',   pageBuilder: (c, s) => _slideUp(c, s, const AdvancedShowcasePage())),
         ],
       ),
     ],

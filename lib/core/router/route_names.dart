@@ -25,4 +25,5 @@ abstract class RouteNames {
   static const showcaseThemeConfig = '/showcase/theme-config';
   static const showcaseUiKit       = '/showcase/ui-kit';
   static const showcaseFood        = '/showcase/food';
+  static const showcaseAdvanced    = '/showcase/advanced';
 }
