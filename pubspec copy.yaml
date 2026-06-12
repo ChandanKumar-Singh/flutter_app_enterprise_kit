@@ -1,0 +1,170 @@
+name: enterprise_kit
+description: Enterprise Flutter Kit — 0 to 100. Every widget, tool, theme, utility, and pattern.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+# ─── flutter pub add equivalents documented inline ───────────────────────────
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # ── State Management ──────────────────────────────────────────────────────
+  flutter_riverpod: ^2.5.1         # flutter pub add flutter_riverpod
+  riverpod_annotation: ^2.3.5      # flutter pub add riverpod_annotation
+  hooks_riverpod: ^2.5.1           # flutter pub add hooks_riverpod
+  flutter_hooks: ^0.20.5           # flutter pub add flutter_hooks
+
+  # ── Navigation ───────────────────────────────────────────────────────────
+  go_router: ^14.2.7               # flutter pub add go_router
+
+  # ── Networking ───────────────────────────────────────────────────────────
+  dio: ^5.6.0                      # flutter pub add dio
+  retrofit: ^4.1.0                 # flutter pub add retrofit
+  pretty_dio_logger: ^1.3.1        # flutter pub add pretty_dio_logger
+
+  # ── Serialization / Code Gen ─────────────────────────────────────────────
+  freezed_annotation: ^2.4.1      # flutter pub add freezed_annotation
+  json_annotation: ^4.9.0         # flutter pub add json_annotation
+
+  # ── Storage ──────────────────────────────────────────────────────────────
+  hive_flutter: ^1.1.0             # flutter pub add hive_flutter
+  flutter_secure_storage: ^9.2.2   # flutter pub add flutter_secure_storage
+  shared_preferences: ^2.3.2       # flutter pub add shared_preferences
+  path_provider: ^2.1.4            # flutter pub add path_provider
+
+  # ── DI ───────────────────────────────────────────────────────────────────
+  get_it: ^7.7.0                   # flutter pub add get_it
+  injectable: ^2.4.4               # flutter pub add injectable
+
+  # ── UI / Theming ─────────────────────────────────────────────────────────
+  google_fonts: ^6.2.1             # flutter pub add google_fonts
+  flutter_svg: ^2.0.10+1           # flutter pub add flutter_svg
+  lottie: ^3.1.2                   # flutter pub add lottie
+  shimmer: ^3.0.0                  # flutter pub add shimmer
+  cached_network_image: ^3.4.1     # flutter pub add cached_network_image
+  photo_view: ^0.15.0              # flutter pub add photo_view
+  animations: ^2.0.11              # flutter pub add animations
+  flutter_animate: ^4.5.0          # flutter pub add flutter_animate
+  gap: ^3.0.1                      # flutter pub add gap
+
+  # ── Bottom Sheets (enhanced) ─────────────────────────────────────────────
+  modal_bottom_sheet: ^3.0.0       # flutter pub add modal_bottom_sheet
+
+  # ── Charts ───────────────────────────────────────────────────────────────
+  fl_chart: ^0.69.0                # flutter pub add fl_chart
+
+  # ── PDF ──────────────────────────────────────────────────────────────────
+  syncfusion_flutter_pdfviewer: ^26.2.14   # flutter pub add syncfusion_flutter_pdfviewer
+  pdf: ^3.11.1                     # flutter pub add pdf
+
+  # ── Media ────────────────────────────────────────────────────────────────
+  image_picker: ^1.1.2             # flutter pub add image_picker
+  file_picker: ^8.1.2              # flutter pub add file_picker
+  video_player: ^2.9.2             # flutter pub add video_player
+  chewie: ^1.8.5                   # flutter pub add chewie
+
+  # ── Permissions ──────────────────────────────────────────────────────────
+  permission_handler: ^11.3.1      # flutter pub add permission_handler
+
+  # ── Connectivity ─────────────────────────────────────────────────────────
+  connectivity_plus: ^6.1.0        # flutter pub add connectivity_plus
+  internet_connection_checker_plus: ^2.5.1  # flutter pub add internet_connection_checker_plus
+
+  # ── Device Info ──────────────────────────────────────────────────────────
+  device_info_plus: ^10.1.2        # flutter pub add device_info_plus
+  package_info_plus: ^8.1.1        # flutter pub add package_info_plus
+
+  # ── Utilities ────────────────────────────────────────────────────────────
+  intl: ^0.19.0                    # flutter pub add intl
+  uuid: ^4.5.1                     # flutter pub add uuid
+  url_launcher: ^6.3.1             # flutter pub add url_launcher
+  share_plus: ^10.0.3              # flutter pub add share_plus
+  open_filex: ^4.6.0               # flutter pub add open_filex
+  logger: ^2.4.0                   # flutter pub add logger
+  equatable: ^2.0.5                # flutter pub add equatable
+  dartz: ^0.10.1                   # flutter pub add dartz
+  collection: ^1.18.0              # flutter pub add collection
+  rxdart: ^0.28.0                  # flutter pub add rxdart
+  timeago: ^3.7.0                  # flutter pub add timeago
+  crypto: ^3.0.3                   # flutter pub add crypto
+
+  # ── Localization ─────────────────────────────────────────────────────────
+  # Built-in via flutter_localizations + intl
+
+  # ── WebView ──────────────────────────────────────────────────────────────
+  webview_flutter: ^4.10.0         # flutter pub add webview_flutter
+
+  # ── Notifications ────────────────────────────────────────────────────────
+  flutter_local_notifications: ^17.2.3  # flutter pub add flutter_local_notifications
+
+  # ── Deep Links ───────────────────────────────────────────────────────────
+  app_links: ^6.4.0                # flutter pub add app_links
+
+  # ── In-App Review ────────────────────────────────────────────────────────
+  in_app_review: ^2.0.9            # flutter pub add in_app_review
+
+  # ── Biometrics ───────────────────────────────────────────────────────────
+  local_auth: ^2.3.0               # flutter pub add local_auth
+
+  # ── Encrypt ──────────────────────────────────────────────────────────────
+  encrypt: ^5.0.3                  # flutter pub add encrypt
+
+  # ── Markdown ─────────────────────────────────────────────────────────────
+  flutter_markdown: ^0.7.4         # flutter pub add flutter_markdown
+
+  # ── Clipboard ────────────────────────────────────────────────────────────
+  # Built-in via flutter/services
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+  # Code generation
+  build_runner: ^2.4.12
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
+  injectable_generator: ^2.6.2
+  riverpod_generator: ^2.4.3
+  retrofit_generator: ^8.1.0
+  hive_generator: ^2.0.1
+
+  # Testing
+  mocktail: ^1.0.4
+  golden_toolkit: ^0.15.0
+
+  # Linting
+  very_good_analysis: ^6.0.0
+  custom_lint: ^0.6.7
+  riverpod_lint: ^2.3.13
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
+    - assets/lottie/
+    - assets/svg/
+    - assets/mock/
+    - assets/pdf/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700

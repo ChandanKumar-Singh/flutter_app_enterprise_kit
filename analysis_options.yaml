@@ -1,0 +1,27 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+  errors:
+    invalid_annotation_target: ignore
+  plugins:
+    - custom_lint
+
+linter:
+  rules:
+    - always_use_package_imports
+    - avoid_print
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - use_super_parameters
+    - avoid_redundant_argument_values
+    - cancel_subscriptions
+    - close_sinks
+    - prefer_final_locals
+    - unnecessary_lambdas
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_dynamic_calls
+    - avoid_returning_null_for_future
