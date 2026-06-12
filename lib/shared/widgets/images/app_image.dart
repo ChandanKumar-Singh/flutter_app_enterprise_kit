@@ -285,7 +285,7 @@ class _FullScreenImageViewer extends StatelessWidget {
         break;
     }
 
-    Widget image = provider != null
+    final Widget image = provider != null
         ? InteractiveViewer(
             child: Hero(
               tag: heroTag ?? url ?? assetPath ?? 'full_image',
@@ -301,7 +301,7 @@ class _FullScreenImageViewer extends StatelessWidget {
         foregroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.close, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),

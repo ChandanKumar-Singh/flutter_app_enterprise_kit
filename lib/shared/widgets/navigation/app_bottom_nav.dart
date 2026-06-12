@@ -46,7 +46,6 @@ class AppFloatingBottomNav extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     Widget nav = Container(
-      margin: margin,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
         color: isDark
@@ -55,7 +54,6 @@ class AppFloatingBottomNav extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppSpacing.radiusXxl),
         border: Border.all(
           color: isDark ? cs.outlineVariant.withOpacity(0.5) : cs.outlineVariant,
-          width: 1,
         ),
         boxShadow: [
           BoxShadow(
@@ -93,6 +91,13 @@ class AppFloatingBottomNav extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: nav,
         ),
+      );
+    }
+
+    if (margin != EdgeInsets.zero) {
+      nav = Padding(
+        padding: margin,
+        child: nav,
       );
     }
 
@@ -266,7 +271,6 @@ class AppSectionHeader extends StatelessWidget {
     return Padding(
       padding: padding,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (leading != null) ...[leading!, const SizedBox(width: 10)],
           Expanded(

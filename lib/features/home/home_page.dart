@@ -146,7 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ).animate().fadeIn(delay: 170.ms, duration: 350.ms),
 
                     // ── Categories
-                    AppSectionHeader(
+                    const AppSectionHeader(
                       title: 'Quick Navigation',
                       subtitle: 'All component sections',
                     ).animate().fadeIn(delay: 200.ms, duration: 350.ms),
@@ -197,7 +197,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         .animate().fadeIn(delay: 400.ms, duration: 350.ms),
 
                     // ── Recent / Quick access
-                    AppSectionHeader(
+                    const AppSectionHeader(
                       title: 'Quick Actions',
                     ).animate().fadeIn(delay: 430.ms, duration: 350.ms),
 
@@ -367,16 +367,16 @@ class _ThemeToggle extends StatelessWidget {
 // ─── Restaurant Style Strip ───────────────────────────────────────────────────
 class _RestaurantStyleStrip extends StatelessWidget {
   static final _items = [
-    _PkgItem('Overlay System', 'Toast • Banner • Dialog', 4.9, '100% safe', RouteNames.showcaseComponents,
-        const [Color(0xFF1D4ED8), Color(0xFF7C3AED)]),
-    _PkgItem('Theme Engine', 'Dynamic colors & dark mode', 4.8, 'Light/Dark', RouteNames.showcaseThemeConfig,
-        const [Color(0xFF7C3AED), Color(0xFFEC4899)]),
-    _PkgItem('Data Components', 'Table • Chart • Paginator', 4.7, 'Sort & filter', RouteNames.showcaseComponents,
-        const [Color(0xFF0891B2), Color(0xFF16A34A)]),
-    _PkgItem('Media Viewer', 'Images • PDF • Hero', 4.6, 'Cached & smooth', RouteNames.showcaseImages,
-        const [Color(0xFFD97706), Color(0xFFDC2626)]),
-    _PkgItem('Forms & Inputs', 'Text • Date • OTP • Select', 4.8, 'Validated', RouteNames.showcaseInputs,
-        const [Color(0xFF16A34A), Color(0xFF0891B2)]),
+    const _PkgItem('Overlay System', 'Toast • Banner • Dialog', 4.9, '100% safe', RouteNames.showcaseComponents,
+        [Color(0xFF1D4ED8), Color(0xFF7C3AED)]),
+    const _PkgItem('Theme Engine', 'Dynamic colors & dark mode', 4.8, 'Light/Dark', RouteNames.showcaseThemeConfig,
+        [Color(0xFF7C3AED), Color(0xFFEC4899)]),
+    const _PkgItem('Data Components', 'Table • Chart • Paginator', 4.7, 'Sort & filter', RouteNames.showcaseComponents,
+        [Color(0xFF0891B2), Color(0xFF16A34A)]),
+    const _PkgItem('Media Viewer', 'Images • PDF • Hero', 4.6, 'Cached & smooth', RouteNames.showcaseImages,
+        [Color(0xFFD97706), Color(0xFFDC2626)]),
+    const _PkgItem('Forms & Inputs', 'Text • Date • OTP • Select', 4.8, 'Validated', RouteNames.showcaseInputs,
+        [Color(0xFF16A34A), Color(0xFF0891B2)]),
   ];
 
   @override
@@ -611,41 +611,41 @@ class _StatsSection extends StatelessWidget {
         crossAxisSpacing: 10,
         childAspectRatio: 0.9,
         children: [
-          AppStatCard(
+          const AppStatCard(
             label: 'Components',
             value: '100+',
             subValue: 'Production ready',
             trend: '+12 new',
             trendUp: true,
             icon: Icons.widgets_rounded,
-            color: const Color(0xFF2563EB),
+            color: Color(0xFF2563EB),
           ).animate().fadeIn(delay: 100.ms).slideX(begin: -0.05),
-          AppStatCard(
+          const AppStatCard(
             label: 'Theme Presets',
             value: '10',
             subValue: 'Colors + custom',
             trend: 'All new',
             trendUp: true,
             icon: Icons.palette_rounded,
-            color: const Color(0xFF7C3AED),
+            color: Color(0xFF7C3AED),
           ).animate().fadeIn(delay: 150.ms).slideX(begin: 0.05),
-          AppStatCard(
+          const AppStatCard(
             label: 'Showcase Pages',
             value: '17',
             subValue: 'With live demos',
             trend: '+3 new',
             trendUp: true,
             icon: Icons.photo_library_rounded,
-            color: const Color(0xFF0891B2),
+            color: Color(0xFF0891B2),
           ).animate().fadeIn(delay: 200.ms).slideX(begin: -0.05),
-          AppStatCard(
+          const AppStatCard(
             label: 'Packages',
             value: '40+',
             subValue: 'Pre-integrated',
             trend: 'Stable',
             trendUp: true,
             icon: Icons.inventory_2_rounded,
-            color: const Color(0xFF16A34A),
+            color: Color(0xFF16A34A),
           ).animate().fadeIn(delay: 250.ms).slideX(begin: 0.05),
         ],
       ),
@@ -656,45 +656,45 @@ class _StatsSection extends StatelessWidget {
 // ─── Featured Scroll ──────────────────────────────────────────────────────────
 class _FeaturedScroll extends StatelessWidget {
   static final _items = [
-    _FeaturedItem(
+    const _FeaturedItem(
       'Toast & Banners',
       'Global notification system',
-      [const Color(0xFF1D4ED8), const Color(0xFF7C3AED)],
+      [Color(0xFF1D4ED8), Color(0xFF7C3AED)],
       RouteNames.showcaseComponents,
       'Overlay • Alert • Feedback',
     ),
-    _FeaturedItem(
+    const _FeaturedItem(
       'Theme Config',
       '10 presets, fonts, radius',
-      [const Color(0xFF7C3AED), const Color(0xFFEC4899)],
+      [Color(0xFF7C3AED), Color(0xFFEC4899)],
       RouteNames.showcaseThemeConfig,
       'Light • Dark • Custom',
     ),
-    _FeaturedItem(
+    const _FeaturedItem(
       'Data Table',
       'Sort, filter, paginate',
-      [const Color(0xFF0891B2), const Color(0xFF2563EB)],
+      [Color(0xFF0891B2), Color(0xFF2563EB)],
       RouteNames.showcaseComponents,
       'Columns • Selection • Sort',
     ),
-    _FeaturedItem(
+    const _FeaturedItem(
       'Asset Viewer',
       'Images, video, files',
-      [const Color(0xFFD97706), const Color(0xFFDC2626)],
+      [Color(0xFFD97706), Color(0xFFDC2626)],
       RouteNames.showcaseImages,
       'Gallery • Hero • Cache',
     ),
-    _FeaturedItem(
+    const _FeaturedItem(
       'Pagination',
       'Any list or grid',
-      [const Color(0xFF16A34A), const Color(0xFF0891B2)],
+      [Color(0xFF16A34A), Color(0xFF0891B2)],
       RouteNames.showcaseComponents,
       'Infinite • Refresh • Skeleton',
     ),
-    _FeaturedItem(
+    const _FeaturedItem(
       'UI Kit',
       'Product cards, promo banners',
-      [const Color(0xFFEC4899), const Color(0xFFD97706)],
+      [Color(0xFFEC4899), Color(0xFFD97706)],
       RouteNames.showcaseUiKit,
       'Cards • Nav • Banners',
     ),
@@ -1034,16 +1034,16 @@ class _QuickAction {
 
 // ─── Component Categories (used in AppFoodCategoryWheel) ─────────────────────
 final _componentCategories = [
-  AppFoodCategory(label: 'Buttons', icon: Icons.smart_button_rounded, color: const Color(0xFF2563EB)),
-  AppFoodCategory(label: 'Cards', icon: Icons.credit_card_rounded, color: const Color(0xFF7C3AED)),
-  AppFoodCategory(label: 'Dialogs', icon: Icons.open_in_new_rounded, color: const Color(0xFF0891B2)),
-  AppFoodCategory(label: 'Inputs', icon: Icons.text_fields_rounded, color: const Color(0xFF16A34A)),
-  AppFoodCategory(label: 'Charts', icon: Icons.bar_chart_rounded, color: const Color(0xFFD97706)),
-  AppFoodCategory(label: 'Themes', icon: Icons.palette_rounded, color: const Color(0xFFDC2626)),
-  AppFoodCategory(label: 'Media', icon: Icons.image_rounded, color: const Color(0xFF4F46E5)),
-  AppFoodCategory(label: 'Overlays', icon: Icons.layers_rounded, color: const Color(0xFFEC4899)),
-  AppFoodCategory(label: 'Loaders', icon: Icons.hourglass_top_rounded, color: const Color(0xFF64748B)),
-  AppFoodCategory(label: 'Food UI', icon: Icons.restaurant_rounded, color: const Color(0xFFDC2626)),
+  const AppFoodCategory(label: 'Buttons', icon: Icons.smart_button_rounded, color: Color(0xFF2563EB)),
+  const AppFoodCategory(label: 'Cards', icon: Icons.credit_card_rounded, color: Color(0xFF7C3AED)),
+  const AppFoodCategory(label: 'Dialogs', icon: Icons.open_in_new_rounded, color: Color(0xFF0891B2)),
+  const AppFoodCategory(label: 'Inputs', icon: Icons.text_fields_rounded, color: Color(0xFF16A34A)),
+  const AppFoodCategory(label: 'Charts', icon: Icons.bar_chart_rounded, color: Color(0xFFD97706)),
+  const AppFoodCategory(label: 'Themes', icon: Icons.palette_rounded, color: Color(0xFFDC2626)),
+  const AppFoodCategory(label: 'Media', icon: Icons.image_rounded, color: Color(0xFF4F46E5)),
+  const AppFoodCategory(label: 'Overlays', icon: Icons.layers_rounded, color: Color(0xFFEC4899)),
+  const AppFoodCategory(label: 'Loaders', icon: Icons.hourglass_top_rounded, color: Color(0xFF64748B)),
+  const AppFoodCategory(label: 'Food UI', icon: Icons.restaurant_rounded, color: Color(0xFFDC2626)),
 ];
 
 // ─── Promo Banner Data ────────────────────────────────────────────────────────
