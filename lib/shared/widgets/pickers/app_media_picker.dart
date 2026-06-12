@@ -6,8 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:enterprise_kit/core/permissions/app_permission_manager.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
+import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
+import 'package:enterprise_kit/shared/widgets/sheets/app_sheet.dart';
 
 // ─── Enums & Models ───────────────────────────────────────────────────────────
 
@@ -279,68 +281,18 @@ class AppMediaPicker {
   }
 
   // ── Permissions ──────────────────────────────────────────────────────────
+  // Delegates entirely to AppPermissionManager for correct platform/version handling.
 
   static Future<bool> _checkPermission(BuildContext ctx, AppMediaSource src) async {
-    final permission = switch (src) {
-      AppMediaSource.camera   => Permission.camera,
-      AppMediaSource.gallery  => Platform.isIOS ? Permission.photos : Permission.photos,
-      AppMediaSource.file     => null,
+    final permType = switch (src) {
+      AppMediaSource.camera  => AppPermissionType.camera,
+      AppMediaSource.gallery => AppPermissionType.photoLibrary,
+      AppMediaSource.file    => null,
     };
-    if (permission == null) return true;
+    if (permType == null) return true;
 
-    final status = await permission.request();
-    if (status.isGranted || status.isLimited) return true;
-
-    if (status.isPermanentlyDenied && ctx.mounted) {
-      await _showPermissionDialog(ctx, src);
-    }
-    return false;
-  }
-
-  static Future<void> _showPermissionDialog(BuildContext ctx, AppMediaSource src) async {
-    await showDialog<void>(
-      context: ctx,
-      builder: (context) {
-        final cs = Theme.of(context).colorScheme;
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.radiusXl)),
-          title: Row(
-            children: [
-              Container(
-                width: 36, height: 36,
-                decoration: BoxDecoration(
-                  color: cs.errorContainer,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(src.icon, color: cs.error, size: 20),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                '${src.label} Access Required',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-              ),
-            ],
-          ),
-          content: Text(
-            'Please enable ${src.label.toLowerCase()} permission in your device settings to continue.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('Cancel', style: TextStyle(color: cs.onSurfaceVariant)),
-            ),
-            FilledButton(
-              onPressed: () {
-                Navigator.pop(context);
-                openAppSettings();
-              },
-              child: const Text('Open Settings'),
-            ),
-          ],
-        );
-      },
-    );
+    final result = await AppPermissionManager.request(ctx, permType);
+    return result.isGranted;
   }
 
   // ── Source Selector Sheet ─────────────────────────────────────────────────
@@ -349,11 +301,13 @@ class AppMediaPicker {
     BuildContext context,
     AppMediaPickerConfig cfg,
   ) async {
-    return showModalBottomSheet<AppMediaSource>(
-      context: context,
+    return AppSheet.show<AppMediaSource>(
+      context,
+      showDragHandle: false,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => _SourceSelectorSheet(config: cfg),
+      padding: EdgeInsets.zero,
+      child: _SourceSelectorSheet(config: cfg),
     );
   }
 
@@ -451,21 +405,11 @@ class _SourceSelectorSheet extends StatelessWidget {
                   const SizedBox(height: 4),
 
                   // Cancel
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-                        ),
-                      ),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(color: cs.onSurfaceVariant, fontWeight: FontWeight.w600),
-                      ),
-                    ),
+                  AppButton.text(
+                    label: 'Cancel',
+                    onPressed: () => Navigator.pop(context),
+                    size: AppButtonSize.md,
+                    isFullWidth: true,
                   ),
                 ],
               ),

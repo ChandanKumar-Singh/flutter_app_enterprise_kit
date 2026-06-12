@@ -34,9 +34,9 @@ class AppSheet {
       showDragHandle: showDragHandle,
       builder: (ctx) => _StandardSheet(
         title: title,
-        child: child,
         padding: padding,
         height: height,
+        child: child,
       ),
     );
   }
@@ -121,11 +121,11 @@ class AppSheet {
       showDragHandle: showDragHandle,
       builder: (ctx) => _DialogSheet(
         title: title,
-        child: child,
         actions: actions,
         confirmLabel: confirmLabel,
         cancelLabel: cancelLabel,
         onConfirm: onConfirm,
+        child: child,
       ),
     );
   }

@@ -78,6 +78,7 @@ class AppSnappingSheet extends StatefulWidget {
       backgroundColor: Colors.transparent,
       isDismissible: isDismissible,
       enableDrag: false,
+      showDragHandle: false, // prevent Material 3 theme default from adding a second handle
       builder: (ctx) => AppSnappingSheet(
         contentBuilder: contentBuilder,
         header: header,
@@ -374,6 +375,7 @@ class AppOptionSheet extends StatelessWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      showDragHandle: false,
       builder: (ctx) => AppOptionSheet(
         title: title,
         subtitle: subtitle,
@@ -502,6 +504,7 @@ class AppFilterSheet extends StatefulWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      showDragHandle: false,
       builder: (ctx) => AppFilterSheet(
         filterTags: filterTags,
         initialSelected: initialSelected,

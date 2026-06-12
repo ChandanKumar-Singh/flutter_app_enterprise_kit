@@ -66,5 +66,37 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>We need camera access to let you take photos, capture profile images, and scan documents directly in the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to let you select and upload images or documents.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need permission to save photos and generated documents directly to your photo library.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access to record audio messages and enable voice control features.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used to find nearby services, show delivery status, and provide location-based features.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need location access even in the background to provide real-time alerts and delivery tracking alerts.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need location access even in the background to provide real-time alerts and tracking features.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We need contact access to help you invite colleagues or share documents with contacts on your list.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to your calendar to read and add bookings and check conflicts.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>We need full access to your calendar to schedule appointments and view conflict checks.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>We need calendar write access to add reminders and event bookings directly.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We need access to Bluetooth to connect to nearby support devices and accessories.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>We need access to Bluetooth to search and discover nearby peripheral hardware and accessories.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>We need speech recognition access to enable voice typing and speech command search features.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>We need physical activity access to measure steps and track health/fitness metrics.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use tracking to deliver personalized ads and content tailored to your preferences.</string>
 </dict>
 </plist>
