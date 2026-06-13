@@ -42,4 +42,7 @@ abstract class RouteNames {
 
   // Sprint 4 — Notification Center
   static const showcaseNotificationCenter  = '/showcase/notification-center';
+
+  // Sprint 5 — API Client Service
+  static const showcaseApiClient = '/showcase/api-client';
 }

@@ -390,6 +390,21 @@ class _ShowcaseItem {
 
 const _sections = [
   _ShowcaseSection(
+    title: 'API Client Service ✦ Sprint 5',
+    accentColor: Color(0xFF6366F1),
+    items: [
+      _ShowcaseItem(
+        'AppApiClientService',
+        Iconsax.code_circle,
+        '/showcase/api-client',
+        Color(0xFF6366F1),
+        description:
+            'Dio-based · GET/POST/PUT/PATCH/DELETE/MULTIPART · auth · cache · retry · timeout · live demo with JSONPlaceholder',
+        isNew: true,
+      ),
+    ],
+  ),
+  _ShowcaseSection(
     title: 'Notification Center ✦ Sprint 4',
     accentColor: Color(0xFF7C3AED),
     items: [
