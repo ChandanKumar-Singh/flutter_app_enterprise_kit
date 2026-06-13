@@ -14,6 +14,10 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:enterprise_kit/core/network/api_client_service.dart';
 import 'package:enterprise_kit/core/network/app_api_request.dart';
+import 'package:enterprise_kit/core/network/app_api_client_config.dart';
+import 'package:enterprise_kit/core/network/mock_api_client_service.dart';
+import 'package:enterprise_kit/core/network/app_api_service_registry.dart';
+import 'package:enterprise_kit/core/network/i_api_client_service.dart';
 
 // ─── Simple model ─────────────────────────────────────────────────────────────
 
@@ -108,7 +112,7 @@ class _ApiShowcasePageState extends State<ApiShowcasePage>
   @override
   void initState() {
     super.initState();
-    _tabs = TabController(length: 5, vsync: this);
+    _tabs = TabController(length: 6, vsync: this);
     // Point the shared service at JSONPlaceholder for this demo.
     _svc.updateBaseUrl('https://jsonplaceholder.typicode.com');
   }
@@ -513,6 +517,7 @@ class _ApiShowcasePageState extends State<ApiShowcasePage>
               Tab(text: 'ERRORS'),
               Tab(text: 'CONFIG'),
               Tab(text: 'LOG'),
+            Tab(text: 'CLIENTS'),
             ],
           ),
           controlBar: _ControlBar(
@@ -598,6 +603,7 @@ class _ApiShowcasePageState extends State<ApiShowcasePage>
             },
           ),
           _LogTab(entries: _log),
+          const _ClientsTab(),
         ],
       ),
     );
@@ -1872,5 +1878,447 @@ class _ApiAppBarBottom extends StatelessWidget implements PreferredSizeWidget {
         tabBar.preferredSize.height +
             46.0 + // _ControlBar estimated height
             (errorBanner != null ? 36.0 : 0.0), // _ErrorBanner estimated height
+      );
+}
+
+// ─── CLIENTS tab ─────────────────────────────────────────────────────────────
+// Live demo of 3 independent client instances all running simultaneously.
+
+class _ClientsTab extends StatefulWidget {
+  const _ClientsTab();
+
+  @override
+  State<_ClientsTab> createState() => _ClientsTabState();
+}
+
+class _ClientsTabState extends State<_ClientsTab> {
+  // Three independent clients — fully separate Dio instances + caches
+  late final AppApiClientService _showcaseClient;
+  late final AppApiClientService _dataEnvelopeClient;
+  late final MockApiClientService _mockClient;
+
+  String? _showcaseResult;
+  String? _envelopeResult;
+  String? _mockResult;
+  bool _loadingShowcase = false;
+  bool _loadingEnvelope = false;
+  bool _loadingMock     = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Client 1: JSONPlaceholder — no auth, ready to use
+    _showcaseClient = AppApiClientService(
+      config: AppApiClientConfig.jsonPlaceholder(),
+    );
+
+    // Client 2: Simulate a backend that wraps all responses in { "data": <payload> }
+    // We point it at JSONPlaceholder but apply a passthrough transformer since
+    // JSONPlaceholder doesn't actually wrap — this shows HOW you'd configure it.
+    _dataEnvelopeClient = AppApiClientService(
+      config: AppApiClientConfig.withDataEnvelope(
+        baseUrl: 'https://jsonplaceholder.typicode.com',
+        label: 'data-envelope-demo',
+      ),
+    );
+
+    // Client 3: Pure mock — no network, instant responses
+    _mockClient = MockApiClientService(
+      delay: const Duration(milliseconds: 300),
+    )
+      ..stub('users/1',    {'id': 1, 'name': 'Alice Wonderland', 'role': 'admin'})
+      ..stub('users/2',    {'id': 2, 'name': 'Bob Builder', 'role': 'editor'})
+      ..stubList('products', [
+        {'id': 1, 'name': 'Enterprise Kit', 'price': 299.0},
+        {'id': 2, 'name': 'Flutter Pro',    'price': 149.0},
+      ])
+      ..stubError('secret', AppApiError.forbidden, message: 'Admin only');
+
+    // Also register in the global registry so the whole app can use them
+    AppApiServiceRegistry.registerAll({
+      AppApiServiceRegistry.kShowcase: _showcaseClient,
+      AppApiServiceRegistry.kMock:     _mockClient,
+    });
+  }
+
+  @override
+  void dispose() {
+    // Note: AppApiServiceRegistry retains references — don't unregister
+    // unless you're tearing down the whole app.
+    super.dispose();
+  }
+
+  Future<void> _callShowcase() async {
+    setState(() { _loadingShowcase = true; _showcaseResult = null; });
+    final result = await _showcaseClient.get<Map<String, dynamic>>(
+      'posts/5',
+      isAuth:   false,
+      canCache: true,
+      fromJson: (json) => json as Map<String, dynamic>,
+      tag:      'showcase/posts/5',
+    );
+    setState(() {
+      _loadingShowcase = false;
+      _showcaseResult = result.when(
+        success: (s) => '✓ [${s.statusCode}${s.fromCache ? ' CACHE' : ''}]\n'
+                        '"${s.data['title']}"',
+        failure: (f) => '✗ ${f.error.label}: ${f.message}',
+      );
+    });
+  }
+
+  Future<void> _callEnvelopeClient() async {
+    setState(() { _loadingEnvelope = true; _envelopeResult = null; });
+    // With responseTransformer: AppApiTransformers.dataKey, if the response were
+    // { "data": {...} } the transformer unwraps it automatically before fromJson.
+    // JSONPlaceholder returns raw objects, so transformer returns them as-is.
+    final result = await _dataEnvelopeClient.get<Map<String, dynamic>>(
+      'users/1',
+      isAuth:   false,
+      fromJson: (json) => json as Map<String, dynamic>,
+      tag:      'envelope/users/1',
+    );
+    setState(() {
+      _loadingEnvelope = false;
+      _envelopeResult = result.when(
+        success: (s) => '✓ [${s.statusCode}] transformer: dataKey\n'
+                        'name=${s.data['name']}, email=${s.data['email']}',
+        failure: (f) => '✗ ${f.error.label}: ${f.message}',
+      );
+    });
+  }
+
+  Future<void> _callMock() async {
+    setState(() { _loadingMock = true; _mockResult = null; });
+    final result = await _mockClient.get<Map<String, dynamic>>(
+      'users/1',
+      fromJson: (json) => json as Map<String, dynamic>,
+    );
+    setState(() {
+      _loadingMock = false;
+      _mockResult = result.when(
+        success: (s) => '✓ INSTANT (no network)\n'
+                        'name=${s.data['name']}, role=${s.data['role']}',
+        failure: (f) => '✗ ${f.error.label}: ${f.message}',
+      );
+    });
+  }
+
+  Future<void> _callMockForbidden() async {
+    setState(() { _loadingMock = true; _mockResult = null; });
+    final result = await _mockClient.get<dynamic>('secret');
+    setState(() {
+      _loadingMock = false;
+      _mockResult = result.when(
+        success: (s) => '✓ ${s.data}',
+        failure: (f) => '✗ ${f.error.label} [${f.statusCode}]: ${f.message}',
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? const Color(0xFF0F172A) : Colors.white;
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const _InfoCard(
+          'Three fully independent client instances — separate Dio engines, '
+          'separate caches, separate configs. They all implement IApiClientService '
+          'so they\'re swappable anywhere in the app.',
+        ),
+        const SizedBox(height: 16),
+
+        // ── Registry status ──────────────────────────────────────────────────
+        _Card(
+          color: cardBg,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _CardHeader('Registry', Iconsax.archive_book, const Color(0xFF6366F1)),
+              const SizedBox(height: 10),
+              Text(
+                'Registered keys: ${AppApiServiceRegistry.registeredKeys.join(', ')}',
+                style: const TextStyle(fontSize: 11, fontFamily: 'monospace', color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // ── Client 1: Showcase (real network) ─────────────────────────────────
+        _ClientDemoCard(
+          label:       'AppApiClientService',
+          sublabel:    'config: AppApiClientConfig.jsonPlaceholder()',
+          description: 'Real network · GET posts/5 · cache enabled · no auth',
+          color:       const Color(0xFF3B82F6),
+          icon:        Iconsax.global,
+          loading:     _loadingShowcase,
+          result:      _showcaseResult,
+          codeSnippet:
+              'final client = AppApiClientService(\n'
+              '  config: AppApiClientConfig.jsonPlaceholder(),\n'
+              ');\n'
+              'await client.get<Map>(\'posts/5\', canCache: true);',
+          actions: [
+            _ApiButton(
+              label:   'Call GET posts/5',
+              icon:    Iconsax.send_2,
+              color:   const Color(0xFF3B82F6),
+              loading: _loadingShowcase,
+              onTap:   _callShowcase,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // ── Client 2: Data-envelope backend ──────────────────────────────────
+        _ClientDemoCard(
+          label:       'AppApiClientService',
+          sublabel:    'config: AppApiClientConfig.withDataEnvelope(...)',
+          description: 'responseTransformer unwraps { "data": <payload> } automatically '
+                       'before fromJson runs — zero change in calling code.',
+          color:       const Color(0xFF10B981),
+          icon:        Iconsax.code_1,
+          loading:     _loadingEnvelope,
+          result:      _envelopeResult,
+          codeSnippet:
+              'final client = AppApiClientService(\n'
+              '  config: AppApiClientConfig.withDataEnvelope(\n'
+              '    baseUrl: \'https://api.myapp.com\',\n'
+              '  ),\n'
+              ');\n'
+              '// response { "data": {...} } → unwrapped automatically',
+          actions: [
+            _ApiButton(
+              label:   'Call GET users/1',
+              icon:    Iconsax.send_2,
+              color:   const Color(0xFF10B981),
+              loading: _loadingEnvelope,
+              onTap:   _callEnvelopeClient,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // ── Client 3: Mock ────────────────────────────────────────────────────
+        _ClientDemoCard(
+          label:       'MockApiClientService',
+          sublabel:    'implements IApiClientService',
+          description: 'No network. Instant stub responses. Same interface — '
+                       'drop-in for tests, CI, offline demos.',
+          color:       const Color(0xFF8B5CF6),
+          icon:        Iconsax.cpu,
+          loading:     _loadingMock,
+          result:      _mockResult,
+          codeSnippet:
+              'final mock = MockApiClientService()\n'
+              '  ..stub(\'users/1\', {\'name\': \'Alice\'})\n'
+              '  ..stubError(\'secret\', AppApiError.forbidden);\n'
+              '\n'
+              '// Identical call-site — only the client changes\n'
+              'await mock.get<Map>(\'users/1\', fromJson: ...);',
+          actions: [
+            _ApiButton(
+              label:   'Get user (stub)',
+              icon:    Iconsax.user,
+              color:   const Color(0xFF8B5CF6),
+              loading: _loadingMock,
+              onTap:   _callMock,
+            ),
+            const SizedBox(width: 8),
+            _ApiButton(
+              label:   'Forbidden stub',
+              icon:    Iconsax.lock,
+              color:   const Color(0xFFDC2626),
+              loading: _loadingMock,
+              onTap:   _callMockForbidden,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // ── Architecture diagram ──────────────────────────────────────────────
+        _Card(
+          color: cardBg,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _CardHeader('Architecture', Iconsax.hierarchy, const Color(0xFFF59E0B)),
+              const SizedBox(height: 12),
+              _ArchRow('IApiClientService',        '← interface',          const Color(0xFF6366F1)),
+              _ArchRow('  AppApiClientService',    '← implements + wraps ApiClient (Dio)', const Color(0xFF3B82F6)),
+              _ArchRow('    MyBackendService',     '← extends AppApiClientService', const Color(0xFF10B981)),
+              _ArchRow('  MockApiClientService',   '← implements (no network)',     const Color(0xFF8B5CF6)),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              _ArchRow('AppApiClientConfig',       '← per-client config + responseTransformer', const Color(0xFFF59E0B)),
+              _ArchRow('AppApiServiceRegistry',    '← named key-value store for instances',     const Color(0xFFEC4899)),
+              const SizedBox(height: 8),
+              const Text(
+                'Use extend when: same Dio mechanics, different base URL / interceptors.\n'
+                'Use implement when: completely different transport (mock, GraphQL, gRPC, local DB).',
+                style: TextStyle(fontSize: 11, color: Colors.grey, height: 1.5),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ClientDemoCard extends StatelessWidget {
+  final String label, sublabel, description, codeSnippet;
+  final Color color;
+  final IconData icon;
+  final bool loading;
+  final String? result;
+  final List<Widget> actions;
+
+  const _ClientDemoCard({
+    required this.label,
+    required this.sublabel,
+    required this.description,
+    required this.codeSnippet,
+    required this.color,
+    required this.icon,
+    required this.loading,
+    required this.result,
+    required this.actions,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF0F172A) : Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withOpacity(0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, size: 14, color: color),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(label,
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: color)),
+                    Text(sublabel,
+                        style: const TextStyle(fontSize: 10, color: Colors.grey, fontFamily: 'monospace'),
+                        overflow: TextOverflow.ellipsis),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(description,
+              style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.4)),
+          const SizedBox(height: 10),
+
+          // Code snippet
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.black.withOpacity(0.4)
+                  : Colors.black.withOpacity(0.03),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.withOpacity(0.15)),
+            ),
+            child: Text(
+              codeSnippet,
+              style: TextStyle(
+                fontSize: 10,
+                fontFamily: 'monospace',
+                color: isDark ? Colors.white70 : const Color(0xFF374151),
+                height: 1.5,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+
+          Wrap(spacing: 8, runSpacing: 8, children: actions),
+
+          if (result != null) ...[
+            const SizedBox(height: 10),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: result!.startsWith('✓')
+                    ? const Color(0xFF10B981).withOpacity(0.08)
+                    : const Color(0xFFDC2626).withOpacity(0.08),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: result!.startsWith('✓')
+                      ? const Color(0xFF10B981).withOpacity(0.3)
+                      : const Color(0xFFDC2626).withOpacity(0.3),
+                ),
+              ),
+              child: Text(
+                result!,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontFamily: 'monospace',
+                  color: result!.startsWith('✓')
+                      ? const Color(0xFF10B981)
+                      : const Color(0xFFDC2626),
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _ArchRow extends StatelessWidget {
+  final String name, desc;
+  final Color color;
+  const _ArchRow(this.name, this.desc, this.color);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 6),
+        child: Row(
+          children: [
+            Text(name,
+                style: TextStyle(
+                    fontSize: 11,
+                    fontFamily: 'monospace',
+                    fontWeight: FontWeight.w600,
+                    color: color)),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(desc,
+                  style: const TextStyle(fontSize: 10, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis),
+            ),
+          ],
+        ),
       );
 }

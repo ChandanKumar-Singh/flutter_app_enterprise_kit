@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:enterprise_kit/core/bootstrap/env_config.dart';
+import 'package:enterprise_kit/core/network/app_api_client_config.dart';
 import 'package:enterprise_kit/core/network/interceptors/auth_interceptor.dart';
 import 'package:enterprise_kit/core/network/interceptors/retry_interceptor.dart';
 import 'package:enterprise_kit/core/network/interceptors/logging_interceptor.dart';
@@ -15,74 +15,62 @@ class ApiClient {
   late final CacheInterceptor cacheInterceptor;
   late final MetricsInterceptor metricsInterceptor;
 
-  ApiClient() {
+  final AppApiClientConfig config;
+
+  ApiClient({AppApiClientConfig? config})
+      : config = config ?? AppApiClientConfig.production() {
+    _init();
+  }
+
+  void _init() {
     cacheInterceptor   = CacheInterceptor();
     metricsInterceptor = MetricsInterceptor();
 
     dio = Dio(
       BaseOptions(
-        baseUrl: EnvConfig.baseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 60),
-        sendTimeout: const Duration(seconds: 30),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-Client': 'flutter',
-          'X-Platform': 'mobile',
-        },
+        baseUrl:        _trailingSlash(config.baseUrl),
+        connectTimeout: config.connectTimeout,
+        receiveTimeout: config.receiveTimeout,
+        sendTimeout:    config.sendTimeout,
+        headers:        Map<String, dynamic>.from(config.defaultHeaders),
       ),
     );
 
     dio.interceptors.addAll([
-      ConnectivityInterceptor(),
-      AuthInterceptor(),
-      cacheInterceptor,
-      RetryInterceptor(dio: dio),
-      metricsInterceptor,
+      if (config.enableConnectivityCheck) ConnectivityInterceptor(),
+      if (config.enableAuth)              AuthInterceptor(),
+      if (config.enableCache)             cacheInterceptor,
+      if (config.enableRetry)             RetryInterceptor(
+        dio:        dio,
+        maxRetries: config.maxRetries,
+        delays:     config.retryDelays,
+      ),
+      if (config.enableMetrics)   metricsInterceptor,
       ErrorInterceptor(),
-      if (EnvConfig.enableLogging) LoggingInterceptor(),
+      if (config.enableLogging)   LoggingInterceptor(),
     ]);
   }
 
   // ─── Runtime config ──────────────────────────────────────────────────────────
 
-  /// Change base URL at runtime (e.g. switch env, white-label tenant).
-  void updateBaseUrl(String url) =>
-      dio.options.baseUrl = url.endsWith('/') ? url : '$url/';
-
-  /// Merge additional default headers (applied to every request).
-  void updateHeaders(Map<String, String> headers) =>
-      dio.options.headers.addAll(headers);
-
-  /// Remove a single default header (e.g. after sign-out).
+  void updateBaseUrl(String url) => dio.options.baseUrl = _trailingSlash(url);
+  void updateHeaders(Map<String, String> headers) => dio.options.headers.addAll(headers);
   void removeHeader(String key) => dio.options.headers.remove(key);
 
-  /// Override connect / receive / send timeouts at runtime.
   void updateTimeout({Duration? connect, Duration? receive, Duration? send}) {
     if (connect != null) dio.options.connectTimeout = connect;
     if (receive != null) dio.options.receiveTimeout = receive;
     if (send != null)    dio.options.sendTimeout    = send;
   }
 
-  /// Convenience: set bearer token in default headers.
   void setAuthToken(String token) =>
       dio.options.headers['Authorization'] = 'Bearer $token';
 
-  /// Remove bearer token from default headers.
   void clearAuthToken() => dio.options.headers.remove('Authorization');
-
-  /// Wipe the entire in-memory response cache.
   void clearCache() => cacheInterceptor.clearAll();
-
-  /// Wipe cache for a single key.
   void clearCacheKey(String key) => cacheInterceptor.clearKey(key);
 
-  /// Add an interceptor dynamically (e.g. for A/B tracking, tenant-specific headers).
-  void addInterceptor(Interceptor interceptor) =>
-      dio.interceptors.add(interceptor);
-
-  /// Remove all interceptors of a given type.
+  void addInterceptor(Interceptor interceptor) => dio.interceptors.add(interceptor);
   void removeInterceptorOfType<T extends Interceptor>() =>
       dio.interceptors.removeWhere((i) => i is T);
 
@@ -128,9 +116,7 @@ class ApiClient {
       dio.post<T>(
         path,
         data: formData,
-        options: (options ?? Options()).copyWith(
-          contentType: 'multipart/form-data',
-        ),
+        options: (options ?? Options()).copyWith(contentType: 'multipart/form-data'),
         onSendProgress: onSendProgress,
       );
 
@@ -140,4 +126,9 @@ class ApiClient {
     ProgressCallback? onReceiveProgress,
   }) =>
       dio.download(url, savePath, onReceiveProgress: onReceiveProgress);
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────────
+
+  static String _trailingSlash(String url) =>
+      url.endsWith('/') ? url : '$url/';
 }
