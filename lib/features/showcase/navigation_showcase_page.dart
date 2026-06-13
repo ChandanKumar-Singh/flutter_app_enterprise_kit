@@ -7,18 +7,19 @@ import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/navigation/index.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/core/toast/app_toast.dart';
+import 'package:enterprise_kit/shared/widgets/buttons/app_back_button.dart';
 
 // ── Demo navigation tree ──────────────────────────────────────────────────────
 
-const _kAdminPerm  = 'admin';
+const _kAdminPerm = 'admin';
 const _kDevOpsPerm = 'devops';
 
 final _demoRoots = <AppNavigationNode>[
-  AppNavigationNode.group(
+  const AppNavigationNode.group(
     id: 'infrastructure',
     label: 'Infrastructure',
     icon: Iconsax.cpu,
-    accentColor: const Color(0xFF0891B2),
+    accentColor: Color(0xFF0891B2),
     children: [
       AppNavigationNode.leaf(
         id: 'clusters',
@@ -26,13 +27,13 @@ final _demoRoots = <AppNavigationNode>[
         description: 'Kubernetes cluster management',
         icon: Iconsax.hierarchy,
         route: '/infra/clusters',
-        accentColor: const Color(0xFF0891B2),
+        accentColor: Color(0xFF0891B2),
       ),
       AppNavigationNode.group(
         id: 'databases',
         label: 'Databases',
         icon: Iconsax.archive,
-        accentColor: const Color(0xFF7C3AED),
+        accentColor: Color(0xFF7C3AED),
         children: [
           AppNavigationNode.leaf(
             id: 'db-postgres',
@@ -79,7 +80,7 @@ final _demoRoots = <AppNavigationNode>[
         description: 'VPCs, subnets, load balancers',
         icon: Iconsax.routing,
         route: '/infra/networking',
-        accentColor: const Color(0xFF16A34A),
+        accentColor: Color(0xFF16A34A),
       ),
       AppNavigationNode.leaf(
         id: 'monitoring',
@@ -88,16 +89,16 @@ final _demoRoots = <AppNavigationNode>[
         icon: Iconsax.activity,
         route: '/infra/monitoring',
         badge: '!',
-        accentColor: const Color(0xFFDC2626),
+        accentColor: Color(0xFFDC2626),
       ),
     ],
   ),
 
-  AppNavigationNode.group(
+  const AppNavigationNode.group(
     id: 'applications',
     label: 'Applications',
     icon: Iconsax.element_4,
-    accentColor: const Color(0xFF7C3AED),
+    accentColor: Color(0xFF7C3AED),
     children: [
       AppNavigationNode.leaf(
         id: 'app-mobile',
@@ -128,16 +129,16 @@ final _demoRoots = <AppNavigationNode>[
         route: '/apps/admin',
         permissions: AppNavigationPermissions({_kAdminPerm}),
         badge: 'ADMIN',
-        accentColor: const Color(0xFFDC2626),
+        accentColor: Color(0xFFDC2626),
       ),
     ],
   ),
 
-  AppNavigationNode.group(
+  const AppNavigationNode.group(
     id: 'services',
     label: 'Platform Services',
     icon: Iconsax.setting,
-    accentColor: const Color(0xFF16A34A),
+    accentColor: Color(0xFF16A34A),
     children: [
       AppNavigationNode.leaf(
         id: 'svc-auth',
@@ -171,11 +172,11 @@ final _demoRoots = <AppNavigationNode>[
     ],
   ),
 
-  AppNavigationNode.group(
+  const AppNavigationNode.group(
     id: 'security',
     label: 'Security',
     icon: Iconsax.shield,
-    accentColor: const Color(0xFFDC2626),
+    accentColor: Color(0xFFDC2626),
     permissions: AppNavigationPermissions({_kAdminPerm}),
     children: [
       AppNavigationNode.leaf(
@@ -195,11 +196,11 @@ final _demoRoots = <AppNavigationNode>[
     ],
   ),
 
-  AppNavigationNode.group(
+  const AppNavigationNode.group(
     id: 'analytics',
     label: 'Analytics',
     icon: Iconsax.chart,
-    accentColor: const Color(0xFFD97706),
+    accentColor: Color(0xFFD97706),
     children: [
       AppNavigationNode.leaf(
         id: 'ana-dashboards',
@@ -220,24 +221,24 @@ final _demoRoots = <AppNavigationNode>[
 ];
 
 final _demoBottomNodes = <AppNavigationNode>[
-  AppNavigationNode.leaf(
+  const AppNavigationNode.leaf(
     id: 'settings',
     label: 'Settings',
     icon: Iconsax.candle_2,
     route: '/settings',
   ),
-  AppNavigationNode.leaf(
+  const AppNavigationNode.leaf(
     id: 'help',
     label: 'Help & Support',
     icon: Iconsax.info_circle,
     route: '/help',
   ),
-  AppNavigationNode.leaf(
+  const AppNavigationNode.leaf(
     id: 'docs',
     label: 'Documentation',
     icon: Iconsax.book,
     externalUrl: 'https://docs.anandians.dev',
-    accentColor: const Color(0xFF0891B2),
+    accentColor: Color(0xFF0891B2),
   ),
 ];
 
@@ -253,25 +254,29 @@ class NavigationShowcasePage extends StatefulWidget {
 class _NavigationShowcasePageState extends State<NavigationShowcasePage> {
   // Use a local controller so the showcase is self-contained
   final _ctrl = AppNavigationController();
-  bool _hasAdminPerm  = false;
+  bool _hasAdminPerm = false;
   bool _hasDevOpsPerm = false;
-  bool _initialized   = false;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
-    _ctrl.initialize(
-      roots: _demoRoots,
-      userPermissions: {},
-      initialSelectedId: 'clusters',
-    ).then((_) {
-      _ctrl.expand('infrastructure');
-      if (mounted) setState(() => _initialized = true);
-    });
+    _ctrl
+        .initialize(
+          roots: _demoRoots,
+          userPermissions: {},
+          initialSelectedId: 'clusters',
+        )
+        .then((_) {
+          _ctrl.expand('infrastructure');
+          if (mounted) setState(() => _initialized = true);
+        });
     _ctrl.addListener(_rebuild);
   }
 
-  void _rebuild() { if (mounted) setState(() {}); }
+  void _rebuild() {
+    if (mounted) setState(() {});
+  }
 
   @override
   void dispose() {
@@ -290,9 +295,7 @@ class _NavigationShowcasePageState extends State<NavigationShowcasePage> {
   @override
   Widget build(BuildContext context) {
     if (!_initialized) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -369,17 +372,20 @@ class _ControlsBar extends StatelessWidget {
 
     return Container(
       height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+      padding: const EdgeInsets.only(right: AppSpacing.md),
       color: cs.primaryContainer.withOpacity(0.4),
       child: Row(
         children: [
+          const AppBackButton(),
           Icon(Iconsax.candle_2, size: 13, color: cs.primary),
           const SizedBox(width: 6),
-          Text('Permissions:',
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: cs.primary,
-                fontWeight: FontWeight.w700,
-              )),
+          Text(
+            'Permissions:',
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: cs.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           const SizedBox(width: 8),
           _PermChip(
             label: 'admin',
@@ -496,15 +502,19 @@ class _WelcomePage extends StatelessWidget {
         children: [
           Icon(Iconsax.flash, size: 56, color: cs.primary),
           const SizedBox(height: AppSpacing.lg),
-          Text('Anandians Infra Platform',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w800,
-              )),
+          Text(
+            'Anandians Infra Platform',
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
           const SizedBox(height: AppSpacing.sm),
-          Text('Select a section from the navigation.',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: cs.onSurfaceVariant,
-              )),
+          Text(
+            'Select a section from the navigation.',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: cs.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );
@@ -541,23 +551,30 @@ class _NodePage extends StatelessWidget {
                   color: color.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                 ),
-                child: Icon(node.icon ?? Iconsax.document_text,
-                    color: color, size: 22),
+                child: Icon(
+                  node.icon ?? Iconsax.document_text,
+                  color: color,
+                  size: 22,
+                ),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(node.label,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        )),
+                    Text(
+                      node.label,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                     if (node.description != null)
-                      Text(node.description!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: cs.onSurfaceVariant,
-                          )),
+                      Text(
+                        node.description!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: cs.onSurfaceVariant,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -586,11 +603,13 @@ class _NodePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Node Info',
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: cs.onSurfaceVariant,
-                    )),
+                Text(
+                  'Node Info',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: cs.onSurfaceVariant,
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 _InfoRow('ID', node.id),
                 _InfoRow('Route', node.route ?? '—'),
@@ -615,15 +634,16 @@ class _NodePage extends StatelessWidget {
             decoration: BoxDecoration(
               color: color.withOpacity(0.04),
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-              border: Border.all(
-                color: color.withOpacity(0.12),
-              ),
+              border: Border.all(color: color.withOpacity(0.12)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(node.icon ?? Iconsax.monitor,
-                    size: 40, color: color.withOpacity(0.25)),
+                Icon(
+                  node.icon ?? Iconsax.monitor,
+                  size: 40,
+                  color: color.withOpacity(0.25),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   node.label,
@@ -662,9 +682,10 @@ class _InfoRow extends StatelessWidget {
         children: [
           SizedBox(
             width: 72,
-            child: Text(label,
-                style: TextStyle(
-                    color: cs.onSurfaceVariant, fontSize: 12)),
+            child: Text(
+              label,
+              style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12),
+            ),
           ),
           Expanded(
             child: Text(

@@ -32,7 +32,7 @@ class ShowcaseHomePage extends StatelessWidget {
             flexibleSpace: LayoutBuilder(
               builder: (ctx, constraints) {
                 final double currentHeight = constraints.biggest.height;
-                final double topPadding = MediaQuery.of(ctx).padding.top;
+                final double topPadding = MediaQuery.paddingOf(ctx).top;
                 final double collapsedHeight = topPadding + kToolbarHeight;
                 const double expandedHeight = 140.0;
                 final double denominator = expandedHeight - collapsedHeight;

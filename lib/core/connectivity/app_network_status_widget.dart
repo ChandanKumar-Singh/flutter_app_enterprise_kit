@@ -166,7 +166,7 @@ class _DefaultOfflineBanner extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         color: const Color(0xFFB91C1C),
         padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top + 4,
+          top: MediaQuery.paddingOf(context).top + 4,
           bottom: 8,
           left: 16,
           right: 16,

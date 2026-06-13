@@ -189,8 +189,8 @@ class _ContextPreviewOverlayState extends State<_ContextPreviewOverlay>
 
   @override
   Widget build(BuildContext context) {
-    final screenH = MediaQuery.of(context).size.height;
-    final screenW = MediaQuery.of(context).size.width;
+    final screenH = MediaQuery.sizeOf(context).height;
+    final screenW = MediaQuery.sizeOf(context).width;
     final cs = Theme.of(context).colorScheme;
 
     // Position: above trigger if possible

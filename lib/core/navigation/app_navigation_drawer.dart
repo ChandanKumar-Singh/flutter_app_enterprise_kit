@@ -181,127 +181,135 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer>
               ),
             ),
           ),
-          child: SafeArea(
-            top: true,
-            bottom: false,
-            child: Column(
-              children: [
-                // ── Header ────────────────────────────────────────────────────
-                _DrawerHeader(
-                  environment: widget.environment,
-                  controller: ctrl,
-                  expanded: expanded,
-                  widthFactor: _widthFactor.value,
-                  navStack: _navStack,
-                  onBack: _handleBack,
-                ),
-
-                // ── Search ────────────────────────────────────────────────────
-                if (expanded) ...[
-                  _DrawerSearch(controller: ctrl),
-                  const SizedBox(height: 4),
-                ],
-
-                // ── Main content (scrollable with transitions) ────────────────
-                Expanded(
-                  child: ctrl.hasSearch
-                      ? _SearchResults(
-                          controller: ctrl,
-                          onTap: _handleTap,
-                          expanded: expanded,
-                        )
-                      : AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 240),
-                          switchInCurve: Curves.easeOutCubic,
-                          switchOutCurve: Curves.easeInCubic,
-                          transitionBuilder: _buildTransition,
-                          child: ListView(
-                            key: ValueKey(_navStack.length),
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            children: [
-                              // Favourites / Recents ONLY shown at root level
-                              if (_navStack.isEmpty) ...[
-                                if (expanded && ctrl.favouriteNodes.isNotEmpty) ...[
-                                  _ShortcutSection(
-                                    title: 'Favourites',
-                                    icon: Iconsax.star,
-                                    nodes: ctrl.favouriteNodes,
-                                    controller: ctrl,
-                                    onTap: _handleTap,
-                                    expanded: expanded,
-                                  ),
-                                  const _SectionDivider(),
-                                ],
-
-                                if (expanded && ctrl.recentNodes.isNotEmpty) ...[
-                                  _ShortcutSection(
-                                    title: 'Recent',
-                                    icon: Iconsax.clock,
-                                    nodes: ctrl.recentNodes,
-                                    controller: ctrl,
-                                    onTap: _handleTap,
-                                    expanded: expanded,
-                                    trailing: InkWell(
-                                      onTap: ctrl.clearRecents,
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2),
-                                        child: Icon(Iconsax.close_circle,
-                                            size: 12,
-                                            color: cs.onSurfaceVariant),
-                                      ),
-                                    ),
-                                  ),
-                                  const _SectionDivider(),
-                                ],
-                              ],
-
-                              // Current active category or root listing
-                              ...activeNodes.map((node) => _NodeTile(
-                                    node: node,
-                                    depth: 0,
-                                    controller: ctrl,
-                                    onTap: _handleTap,
-                                    onGroupTap: (groupNode) {
-                                      setState(() {
-                                        _isPushing = true;
-                                        _navStack.add(groupNode);
-                                      });
-                                    },
-                                    expanded: expanded,
-                                    widthFactor: _widthFactor.value,
-                                  )),
-                            ],
-                          ),
-                        ),
-                ),
-
-                // ── Bottom nodes ──────────────────────────────────────────────
-                if (widget.bottomNodes.isNotEmpty) ...[
-                  const _SectionDivider(),
-                  ...widget.bottomNodes.map((node) => _NodeTile(
-                        node: node,
-                        depth: 0,
+          child: ClipRect(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                width: _kExpandedWidth,
+                child: SafeArea(
+                  top: true,
+                  bottom: false,
+                  child: Column(
+                    children: [
+                      // ── Header ────────────────────────────────────────────────────
+                      _DrawerHeader(
+                        environment: widget.environment,
                         controller: ctrl,
-                        onTap: _handleTap,
                         expanded: expanded,
                         widthFactor: _widthFactor.value,
-                        iconSize: 18,
-                      )),
-                ],
-
-                // ── User profile ──────────────────────────────────────────────
-                if (widget.user != null) ...[
-                  const _SectionDivider(),
-                  _UserTile(
-                    user: widget.user!,
-                    expanded: expanded,
-                    widthFactor: _widthFactor.value,
+                        navStack: _navStack,
+                        onBack: _handleBack,
+                      ),
+        
+                      // ── Search ────────────────────────────────────────────────────
+                      if (expanded) ...[
+                        _DrawerSearch(controller: ctrl),
+                        const SizedBox(height: 4),
+                      ],
+        
+                      // ── Main content (scrollable with transitions) ────────────────
+                      Expanded(
+                        child: ctrl.hasSearch
+                            ? _SearchResults(
+                                controller: ctrl,
+                                onTap: _handleTap,
+                                expanded: expanded,
+                              )
+                            : AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 240),
+                                switchInCurve: Curves.easeOutCubic,
+                                switchOutCurve: Curves.easeInCubic,
+                                transitionBuilder: _buildTransition,
+                                child: ListView(
+                                  key: ValueKey(_navStack.length),
+                                  padding: const EdgeInsets.symmetric(vertical: 4),
+                                  children: [
+                                    // Favourites / Recents ONLY shown at root level
+                                    if (_navStack.isEmpty) ...[
+                                      if (expanded && ctrl.favouriteNodes.isNotEmpty) ...[
+                                        _ShortcutSection(
+                                          title: 'Favourites',
+                                          icon: Iconsax.star,
+                                          nodes: ctrl.favouriteNodes,
+                                          controller: ctrl,
+                                          onTap: _handleTap,
+                                          expanded: expanded,
+                                        ),
+                                        const _SectionDivider(),
+                                      ],
+        
+                                      if (expanded && ctrl.recentNodes.isNotEmpty) ...[
+                                        _ShortcutSection(
+                                          title: 'Recent',
+                                          icon: Iconsax.clock,
+                                          nodes: ctrl.recentNodes,
+                                          controller: ctrl,
+                                          onTap: _handleTap,
+                                          expanded: expanded,
+                                          trailing: InkWell(
+                                            onTap: ctrl.clearRecents,
+                                            borderRadius: BorderRadius.circular(4),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(2),
+                                              child: Icon(Iconsax.close_circle,
+                                                  size: 12,
+                                                  color: cs.onSurfaceVariant),
+                                            ),
+                                          ),
+                                        ),
+                                        const _SectionDivider(),
+                                      ],
+                                    ],
+        
+                                    // Current active category or root listing
+                                    ...activeNodes.map((node) => _NodeTile(
+                                          node: node,
+                                          depth: 0,
+                                          controller: ctrl,
+                                          onTap: _handleTap,
+                                          onGroupTap: (groupNode) {
+                                            setState(() {
+                                              _isPushing = true;
+                                              _navStack.add(groupNode);
+                                            });
+                                          },
+                                          expanded: expanded,
+                                          widthFactor: _widthFactor.value,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                      ),
+        
+                      // ── Bottom nodes ──────────────────────────────────────────────
+                      if (widget.bottomNodes.isNotEmpty) ...[
+                        const _SectionDivider(),
+                        ...widget.bottomNodes.map((node) => _NodeTile(
+                              node: node,
+                              depth: 0,
+                              controller: ctrl,
+                              onTap: _handleTap,
+                              expanded: expanded,
+                              widthFactor: _widthFactor.value,
+                              iconSize: 18,
+                            )),
+                      ],
+        
+                      // ── User profile ──────────────────────────────────────────────
+                      if (widget.user != null) ...[
+                        const _SectionDivider(),
+                        _UserTile(
+                          user: widget.user!,
+                          expanded: expanded,
+                          widthFactor: _widthFactor.value,
+                        ),
+                      ],
+        
+                      const SizedBox(height: 8),
+                    ],
                   ),
-                ],
-
-                const SizedBox(height: 8),
-              ],
+                ),
+              ),
             ),
           ),
         );

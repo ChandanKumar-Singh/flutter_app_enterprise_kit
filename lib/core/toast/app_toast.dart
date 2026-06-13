@@ -229,16 +229,16 @@ class _AppToastOverlayState extends State<AppToastOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQuery.of(context);
+    final pad = MediaQuery.paddingOf(context);
 
     return Stack(
       children: [
         widget.child,
 
-        // Top
+        // Top — below status bar
         if (_top.isNotEmpty)
           Positioned(
-            top: mq.padding.top + 12,
+            top: pad.top + 12,
             left: 16,
             right: 16,
             child: _ToastColumn(
@@ -264,10 +264,10 @@ class _AppToastOverlayState extends State<AppToastOverlay> {
             ),
           ),
 
-        // Bottom
+        // Bottom — above offline pill (~bottom+58) and nav bar
         if (_bottom.isNotEmpty)
           Positioned(
-            bottom: mq.padding.bottom + 80,
+            bottom: pad.bottom + 80,
             left: 16,
             right: 16,
             child: _ToastColumn(

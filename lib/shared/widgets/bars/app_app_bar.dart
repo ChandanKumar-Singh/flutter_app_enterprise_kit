@@ -133,7 +133,7 @@ class _AppAppBarState extends State<AppAppBar> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final safePad = MediaQuery.of(context).padding.top;
+    final safePad = MediaQuery.paddingOf(context).top;
 
     final fgColor = widget.foregroundColor ?? cs.onSurface;
     final canPop = widget.automaticallyImplyLeading && Navigator.canPop(context);

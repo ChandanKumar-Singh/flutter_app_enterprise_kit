@@ -250,7 +250,7 @@ class _TopBar extends ConsumerWidget {
     final notifier = ref.read(themeConfigProvider.notifier);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 6, 12, 6),
+      padding: EdgeInsets.fromLTRB(16, MediaQuery.paddingOf(context).top + 6, 12, 6),
       decoration: BoxDecoration(
         color: scrolled ? cs.surface : Colors.transparent,
         border: scrolled

@@ -345,7 +345,7 @@ class _StandardSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
     Widget body = SingleChildScrollView(
       padding: (padding ?? const EdgeInsets.all(AppSpacing.md)).add(
           EdgeInsets.only(bottom: bottomInset)),
@@ -413,7 +413,7 @@ class _DialogSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
     return Padding(
       padding: EdgeInsets.only(bottom: bottomInset),
       child: Column(

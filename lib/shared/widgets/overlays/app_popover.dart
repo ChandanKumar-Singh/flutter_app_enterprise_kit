@@ -71,7 +71,7 @@ class _AppPopoverAnchorState extends State<AppPopoverAnchor> {
     if (renderBox == null) return;
     final anchor = renderBox.localToGlobal(Offset.zero);
     final anchorSize = renderBox.size;
-    final screen = MediaQuery.of(context).size;
+    final screen = MediaQuery.sizeOf(context);
 
     // Auto-detect position
     AppPopoverPosition pos = widget.position;

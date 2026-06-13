@@ -70,11 +70,12 @@ class _EnterpriseAppState extends ConsumerState<EnterpriseApp> {
         // 2. Toast overlay (floating notifications)
         content = AppToastOverlay(child: content);
 
-        // 3. Text scale enforcement (optional clamp)
+        // 3. Text scale enforcement — clamp to accessible range [0.8, 1.4×]
+        final mqData = MediaQuery.of(context);
         content = MediaQuery(
-          data: MediaQuery.of(context).copyWith(
+          data: mqData.copyWith(
             textScaler: TextScaler.linear(
-              MediaQuery.of(context).textScaler
+              mqData.textScaler
                   .scale(1.0)
                   .clamp(0.8, 1.4),
             ),
@@ -124,11 +125,12 @@ class _AppBannerLayerState extends State<_AppBannerLayer> {
   @override
   Widget build(BuildContext context) {
     final ctrl        = AppBannerController.instance;
-    final mq          = MediaQuery.of(context);
+    final topPadding  = MediaQuery.paddingOf(context).top;
     final topStrips   = ctrl.topBanners   .where((b) => !b.floating).toList();
     final topPills    = ctrl.topBanners   .where((b) =>  b.floating).toList();
     final bottomStrips = ctrl.bottomBanners.where((b) => !b.floating).toList();
     final bottomPills  = ctrl.bottomBanners.where((b) =>  b.floating).toList();
+    final bottomPadding = MediaQuery.paddingOf(context).bottom;
 
     return Stack(
       children: [
@@ -155,7 +157,7 @@ class _AppBannerLayerState extends State<_AppBannerLayer> {
         // ── Top pills (floating, below status bar) ────────────────────────
         if (topPills.isNotEmpty)
           Positioned(
-            top: mq.padding.top + 8,
+            top: topPadding + 8,
             left: 20, right: 20,
             child: Column(
               children: topPills.map((b) => AppBannerWidget(
@@ -169,7 +171,7 @@ class _AppBannerLayerState extends State<_AppBannerLayer> {
         // ── Bottom pills (floating, above safe area / nav bar) ────────────
         if (bottomPills.isNotEmpty)
           Positioned(
-            bottom: mq.padding.bottom + 16,
+            bottom: bottomPadding + 16,
             left: 20, right: 20,
             child: Column(
               mainAxisSize: MainAxisSize.min,

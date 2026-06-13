@@ -97,7 +97,7 @@ class _AppDevConsoleWrapperState extends State<AppDevConsoleWrapper>
   Widget build(BuildContext context) {
     if (!kDebugMode) return widget.child;
 
-    final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.sizeOf(context);
 
     return Stack(
       children: [
@@ -574,10 +574,10 @@ class _InfoTab extends StatelessWidget {
       ('Flutter', '3.27+'),
       ('Dart', '3.12+'),
       ('Platform', defaultTargetPlatform.name),
-      ('Screen W', '${MediaQuery.of(context).size.width.toStringAsFixed(0)}px'),
-      ('Screen H', '${MediaQuery.of(context).size.height.toStringAsFixed(0)}px'),
-      ('DPR', '${MediaQuery.of(context).devicePixelRatio.toStringAsFixed(2)}x'),
-      ('TextScale', '${MediaQuery.of(context).textScaler.scale(1.0).toStringAsFixed(2)}'),
+      ('Screen W', '${MediaQuery.sizeOf(context).width.toStringAsFixed(0)}px'),
+      ('Screen H', '${MediaQuery.sizeOf(context).height.toStringAsFixed(0)}px'),
+      ('DPR', '${MediaQuery.devicePixelRatioOf(context).toStringAsFixed(2)}x'),
+      ('TextScale', '${MediaQuery.textScalerOf(context).scale(1.0).toStringAsFixed(2)}'),
     ];
 
     return ListView(

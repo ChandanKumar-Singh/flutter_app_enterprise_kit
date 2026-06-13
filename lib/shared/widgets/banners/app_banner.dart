@@ -271,7 +271,7 @@ class _StripBanner extends StatelessWidget {
     final theme  = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final cfg    = _stripConfig(banner.type);
-    final mq     = MediaQuery.of(context);
+    final topPad = MediaQuery.paddingOf(context).top;
 
     return Container(
       width: double.infinity,
@@ -280,7 +280,7 @@ class _StripBanner extends StatelessWidget {
       // status bar area so text never renders over clock/battery icons.
       // When embedded inline in a scroll view, no inset is needed.
       padding: EdgeInsets.only(
-        top: embedded ? 10 : mq.padding.top + 8,
+        top: embedded ? 10 : topPad + 8,
         bottom: 10,
         left: 0,
         right: 0,

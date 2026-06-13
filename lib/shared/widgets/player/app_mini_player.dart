@@ -146,8 +146,8 @@ class _AppMiniPlayerState extends State<AppMiniPlayer>
       animation: _expandCtrl,
       builder: (_, __) {
         final t = _expandCtrl.value;
-        final screenH = MediaQuery.of(context).size.height;
-        final screenW = MediaQuery.of(context).size.width;
+        final screenH = MediaQuery.sizeOf(context).height;
+        final screenW = MediaQuery.sizeOf(context).width;
 
         // Interpolated dimensions
         final height = lerpDouble(_miniHeight + widget.bottomPadding, screenH, t)!;
@@ -358,7 +358,7 @@ class _ExpandedPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final theme = Theme.of(context);
-    final safeTop = MediaQuery.of(context).padding.top;
+    final safeTop = MediaQuery.paddingOf(context).top;
 
     return SafeArea(
       child: Padding(

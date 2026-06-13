@@ -404,7 +404,7 @@ class _WizardFooter extends StatelessWidget {
         AppSpacing.xl,
         AppSpacing.md,
         AppSpacing.xl,
-        AppSpacing.xl + MediaQuery.of(context).padding.bottom,
+        AppSpacing.xl + MediaQuery.paddingOf(context).bottom,
       ),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
