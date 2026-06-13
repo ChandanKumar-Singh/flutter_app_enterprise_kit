@@ -84,7 +84,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ── Location header
+                  /*   // ── Location header
                     AppLocationHeader(
                       city: 'Bangalore',
                       area: 'Enterprise Kit',
@@ -100,7 +100,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         onPressed: () {},
                       ),
                     ).animate().fadeIn(duration: 300.ms),
-
+ */
                     // ── Search
                     AppTopSearchBar(
                       hint: 'Search components, patterns...',
