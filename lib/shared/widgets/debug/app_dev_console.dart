@@ -518,8 +518,9 @@ class _PrefsTabState extends State<_PrefsTab> {
               Expanded(
                 flex: 3,
                 child: isEditing
-                    ? TextField(
+                    ? TextFormField(
                         controller: _editCtrl,
+                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         style: const TextStyle(color: Colors.white, fontSize: 11, fontFamily: 'monospace'),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
@@ -527,7 +528,7 @@ class _PrefsTabState extends State<_PrefsTab> {
                           contentPadding: EdgeInsets.zero,
                         ),
                         autofocus: true,
-                        onSubmitted: (v) {
+                        onFieldSubmitted: (v) {
                           setState(() {
                             _edited[e.key] = v;
                             _editingKey = null;

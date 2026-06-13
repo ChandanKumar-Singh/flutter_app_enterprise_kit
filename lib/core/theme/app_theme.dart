@@ -224,7 +224,7 @@ class AppTheme {
       // ── Input Decoration ──────────────────────────────────────────────────────
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: cs.surfaceVariant,
+        fillColor: cs.surfaceContainerLowest,
         contentPadding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.md, vertical: AppSpacing.sm + AppSpacing.px4),
         border: OutlineInputBorder(

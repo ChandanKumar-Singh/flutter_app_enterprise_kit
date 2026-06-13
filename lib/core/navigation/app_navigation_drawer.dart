@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'app_navigation_node.dart';
 import 'app_navigation_controller.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
+import 'package:enterprise_kit/shared/search/index.dart';
 
 // ── Dimension constants ───────────────────────────────────────────────────────
 
@@ -568,33 +569,15 @@ class _DrawerSearchState extends State<_DrawerSearch> {
     final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      child: TextField(
+      child: AppSearchField(
         controller: _ctrl,
+        hintText: 'Search navigation...',
+        style: AppSearchFieldStyle.underline,
+        fillColor: cs.surfaceContainer,
+        textStyle: const TextStyle(fontSize: 13),
+        hintStyle: TextStyle(fontSize: 13, color: cs.onSurfaceVariant),
         onChanged: widget.controller.setSearchQuery,
-        style: const TextStyle(fontSize: 13),
-        decoration: InputDecoration(
-          hintText: 'Search navigation...',
-          hintStyle: TextStyle(fontSize: 13, color: cs.onSurfaceVariant),
-          prefixIcon: Icon(Iconsax.search_normal, size: 16, color: cs.onSurfaceVariant),
-          suffixIcon: widget.controller.hasSearch
-              ? IconButton(
-                  iconSize: 14,
-                  icon: const Icon(Iconsax.close_circle),
-                  onPressed: () {
-                    _ctrl.clear();
-                    widget.controller.clearSearch();
-                  },
-                )
-              : null,
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(vertical: 8),
-          filled: true,
-          fillColor: cs.surfaceContainer,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
-          ),
-        ),
+        onClear: widget.controller.clearSearch,
       ),
     );
   }

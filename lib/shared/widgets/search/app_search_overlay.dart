@@ -260,11 +260,12 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
                         color: cs.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
                       ),
-                      child: TextField(
+                      child: TextFormField(
                         controller: _controller,
                         focusNode: _focusNode,
                         onChanged: _onQueryChanged,
-                        onSubmitted: (q) => _doSearch(q),
+                        onFieldSubmitted: _doSearch,
+                        onTapOutside: (event) => _focusNode.unfocus(),
                         style: theme.textTheme.bodyLarge,
                         decoration: InputDecoration(
                           hintText: widget.delegate.hintText,

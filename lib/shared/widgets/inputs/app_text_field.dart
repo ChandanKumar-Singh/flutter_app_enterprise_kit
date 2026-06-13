@@ -38,6 +38,7 @@ class AppTextField extends StatefulWidget {
   final bool filled;
   final Color? fillColor;
   final AutovalidateMode? autovalidateMode;
+  final bool unfocusOnTapOutside;
 
   const AppTextField({
     super.key,
@@ -76,6 +77,7 @@ class AppTextField extends StatefulWidget {
     this.filled = true,
     this.fillColor,
     this.autovalidateMode,
+    this.unfocusOnTapOutside = true,
   });
 
   // ── Factories ──────────────────────────────────────────────────────────────
@@ -250,6 +252,9 @@ class _AppTextFieldState extends State<AppTextField> {
       onChanged: widget.onChanged,
       onFieldSubmitted: widget.onSubmitted,
       onTap: widget.onTap,
+      onTapOutside: widget.unfocusOnTapOutside
+          ? (event) => FocusScope.of(context).unfocus()
+          : null,
       textCapitalization: widget.textCapitalization,
       style: widget.style,
       autovalidateMode: widget.autovalidateMode,

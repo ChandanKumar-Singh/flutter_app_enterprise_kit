@@ -11,6 +11,7 @@ import 'package:enterprise_kit/shared/widgets/rating/app_rating.dart';
 import 'package:enterprise_kit/shared/widgets/table/app_table.dart';
 import 'package:enterprise_kit/shared/widgets/tags/app_tag.dart';
 import 'package:enterprise_kit/shared/widgets/timeline/app_timeline.dart';
+import 'package:enterprise_kit/shared/search/index.dart';
 
 class ComponentsShowcasePage extends StatefulWidget {
   const ComponentsShowcasePage({super.key});
@@ -795,19 +796,11 @@ class _PaginationWrapperShowcaseState extends State<_PaginationWrapperShowcase> 
           padding: const EdgeInsets.all(AppSpacing.md),
           child: Column(
             children: [
-              TextField(
+              AppSearchField(
                 controller: _searchCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Search items locally',
-                  prefixIcon: const Icon(Iconsax.search_normal),
-                  suffixIcon: _searchCtrl.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Iconsax.close_circle),
-                          onPressed: () => _searchCtrl.clear(),
-                        )
-                      : null,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppSpacing.radiusMd)),
-                ),
+                hintText: 'Search items locally...',
+                style: AppSearchFieldStyle.filled,
+                borderRadius: AppSpacing.radiusMd,
               ),
               const SizedBox(height: AppSpacing.sm),
               Row(

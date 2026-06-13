@@ -258,7 +258,7 @@ class _SearchModeBar extends StatelessWidget {
 
           // Search field
           Expanded(
-            child: TextField(
+            child: TextFormField(
               controller: textCtrl,
               focusNode: focusNode,
               textInputAction: TextInputAction.search,
@@ -268,18 +268,22 @@ class _SearchModeBar extends StatelessWidget {
               ),
               decoration: InputDecoration(
                 hintText: hint,
+                filled: false,
                 hintStyle: TextStyle(
                   color: isDark ? Colors.white38 : const Color(0xFFADB5BD),
                   fontSize: 15,
                 ),
                 border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
               ),
-              onChanged: (v) {
-                controller.setQuery(v);
-              },
-              onSubmitted: (v) {
+              onChanged: controller.setQuery,
+              onFieldSubmitted: (v) {
                 controller.submitQuery(v);
                 focusNode.unfocus();
               },

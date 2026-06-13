@@ -4,6 +4,7 @@ import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/validators/form_validators.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 import 'package:enterprise_kit/shared/widgets/inputs/app_text_field.dart';
+import 'package:enterprise_kit/shared/search/index.dart';
 
 class InputsShowcasePage extends StatefulWidget {
   const InputsShowcasePage({super.key});
@@ -28,7 +29,15 @@ class _InputsShowcasePageState extends State<InputsShowcasePage> {
             const SizedBox(height: AppSpacing.md),
             AppTextField.phone(validator: FormValidators.requiredPhone()),
             const SizedBox(height: AppSpacing.md),
-            AppTextField.search(),
+            const AppSearchField(
+              hintText: 'Search (Filled Style)',
+              style: AppSearchFieldStyle.filled,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            const AppSearchField(
+              hintText: 'Search (Underline Style - Bottom Border Only)',
+              style: AppSearchFieldStyle.underline,
+            ),
             const SizedBox(height: AppSpacing.md),
             AppTextField.multiline(label: 'Notes', hint: 'Write something...', maxLength: 500, showCharacterCount: true),
             const SizedBox(height: AppSpacing.md),

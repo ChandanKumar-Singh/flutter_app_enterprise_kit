@@ -523,8 +523,9 @@ class _EncStorageTabState extends State<_EncStorageTab> {
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
               child: Column(
                 children: [
-                  TextField(
+                  TextFormField(
                     controller: _keyCtrl,
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     decoration: const InputDecoration(
                       labelText: 'Key',
                       prefixIcon: Icon(Iconsax.key),
@@ -532,8 +533,9 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  TextField(
+                  TextFormField(
                     controller: _valCtrl,
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     decoration: const InputDecoration(
                       labelText: 'Value (plaintext)',
                       prefixIcon: Icon(Iconsax.document_text),
