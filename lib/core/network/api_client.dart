@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:enterprise_kit/core/bootstrap/env_config.dart';
-import 'interceptors/auth_interceptor.dart';
-import 'interceptors/retry_interceptor.dart';
-import 'interceptors/logging_interceptor.dart';
-import 'interceptors/connectivity_interceptor.dart';
-import 'interceptors/cache_interceptor.dart';
-import 'interceptors/error_interceptor.dart';
-import 'interceptors/metrics_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/auth_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/retry_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/logging_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/connectivity_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/cache_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/error_interceptor.dart';
+import 'package:enterprise_kit/core/network/interceptors/metrics_interceptor.dart';
 
 class ApiClient {
   late final Dio dio;

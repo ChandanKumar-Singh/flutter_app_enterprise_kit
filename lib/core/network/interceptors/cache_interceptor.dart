@@ -27,8 +27,10 @@ class CacheInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.requestOptions.method == 'GET') {
       final ttl = response.requestOptions.extra['cacheTtl'] as Duration?;
-      if (ttl != null) _cache[_key(response.requestOptions)] =
+      if (ttl != null) {
+        _cache[_key(response.requestOptions)] =
           CacheEntry(response.data, DateTime.now().add(ttl));
+      }
     }
     handler.next(response);
   }
