@@ -389,6 +389,20 @@ class _ShowcaseItem {
 
 const _sections = [
   _ShowcaseSection(
+    title: 'Notification Center ✦ Sprint 4',
+    accentColor: Color(0xFF7C3AED),
+    items: [
+      _ShowcaseItem(
+        'AppNotificationCenter',
+        Icons.notifications_rounded,
+        '/showcase/notification-center',
+        Color(0xFF7C3AED),
+        description: 'Enterprise inbox · 6 card variants · swipe · bulk ops · filter · search · groups · 3-layout responsive · preferences',
+        isNew: true,
+      ),
+    ],
+  ),
+  _ShowcaseSection(
     title: 'Navigation Framework ✦ Sprint 3',
     accentColor: Color(0xFF0891B2),
     items: [

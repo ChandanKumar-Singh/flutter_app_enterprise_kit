@@ -328,10 +328,37 @@ class AppTheme {
         selectedColor: cs.secondaryContainer,
         secondarySelectedColor: cs.primaryContainer,
         deleteIconColor: cs.onSurfaceVariant,
-        labelStyle: AppTypography.textTheme.labelMedium?.copyWith(color: cs.onSurfaceVariant),
-        secondaryLabelStyle: AppTypography.textTheme.labelMedium?.copyWith(color: cs.onSecondaryContainer),
-        side: BorderSide(color: cs.outline),
-        shape: StadiumBorder(side: BorderSide(color: cs.outline)),
+        labelStyle: WidgetStateTextStyle.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTypography.textTheme.labelMedium!.copyWith(
+              color: cs.onSecondaryContainer,
+              fontWeight: FontWeight.w600,
+            );
+          }
+          return AppTypography.textTheme.labelMedium!.copyWith(
+            color: cs.onSurfaceVariant,
+            fontWeight: FontWeight.w500,
+          );
+        }),
+        secondaryLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTypography.textTheme.labelMedium!.copyWith(
+              color: cs.onPrimaryContainer,
+              fontWeight: FontWeight.w600,
+            );
+          }
+          return AppTypography.textTheme.labelMedium!.copyWith(
+            color: cs.onSurfaceVariant,
+            fontWeight: FontWeight.w500,
+          );
+        }),
+        side: WidgetStateBorderSide.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return BorderSide(color: cs.primary.withOpacity(0.24), width: 1);
+          }
+          return BorderSide(color: cs.outlineVariant, width: 1);
+        }),
+        shape: const StadiumBorder(),
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
         elevation: 0,
         pressElevation: 0,
