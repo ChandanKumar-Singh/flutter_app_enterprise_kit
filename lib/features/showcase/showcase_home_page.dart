@@ -22,83 +22,100 @@ class ShowcaseHomePage extends StatelessWidget {
         slivers: [
           // ── Gradient SliverAppBar
           SliverAppBar(
-            expandedHeight: 140,
+            expandedHeight: 250,
             pinned: true,
             floating: false,
             backgroundColor: cs.surface,
             surfaceTintColor: Colors.transparent,
             scrolledUnderElevation: 1,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
-              title: Text(
-                'Component Showcase',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: cs.onSurface,
-                ),
-              ),
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          cs.primaryContainer,
-                          cs.secondaryContainer,
-                        ],
-                      ),
+            flexibleSpace: LayoutBuilder(
+              builder: (ctx, constraints) {
+                final double currentHeight = constraints.biggest.height;
+                final double topPadding = MediaQuery.of(ctx).padding.top;
+                final double collapsedHeight = topPadding + kToolbarHeight;
+                const double expandedHeight = 140.0;
+                final double denominator = expandedHeight - collapsedHeight;
+                final double ratio = denominator > 0
+                    ? ((expandedHeight - currentHeight) / denominator).clamp(0.0, 1.0)
+                    : 0.0;
+
+                // Smoothly interpolate left padding from 16 to 56 to clear the navigation button
+                final double leftPadding = 16.0 + (56.0 - 16.0) * ratio;
+
+                return FlexibleSpaceBar(
+                  centerTitle: false,
+                  titlePadding: EdgeInsets.fromLTRB(leftPadding, 0, 16, 14),
+                  title: Text(
+                    'Component Showcase',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: cs.onSurface,
                     ),
                   ),
-                  // Decorative circles
-                  Positioned(
-                    right: -30, top: -30,
-                    child: Container(
-                      width: 150, height: 150,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: cs.primary.withOpacity(0.08),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 50, bottom: -20,
-                    child: Container(
-                      width: 80, height: 80,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: cs.secondary.withOpacity(0.1),
-                      ),
-                    ),
-                  ),
-                  // Pattern text
-                  Positioned(
-                    right: 16, top: 50,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '100+',
-                          style: theme.textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: cs.primary.withOpacity(0.15),
-                            fontSize: 48,
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              cs.primaryContainer,
+                              cs.secondaryContainer,
+                            ],
                           ),
                         ),
-                        Text(
-                          'Components',
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            color: cs.primary.withOpacity(0.3),
-                            fontWeight: FontWeight.w600,
+                      ),
+                      // Decorative circles
+                      Positioned(
+                        right: -30, top: -30,
+                        child: Container(
+                          width: 150, height: 150,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: cs.primary.withOpacity(0.08),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        right: 50, bottom: -20,
+                        child: Container(
+                          width: 80, height: 80,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: cs.secondary.withOpacity(0.1),
+                          ),
+                        ),
+                      ),
+                      // Pattern text
+                      Positioned(
+                        right: 16, top: 50,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '100+',
+                              style: theme.textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.w900,
+                                color: cs.primary.withOpacity(0.15),
+                                fontSize: 48,
+                              ),
+                            ),
+                            Text(
+                              'Components',
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                color: cs.primary.withOpacity(0.3),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ),
 
