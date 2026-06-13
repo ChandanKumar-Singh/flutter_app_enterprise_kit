@@ -35,6 +35,7 @@ class AppSheet {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      showDragHandle: false,
       builder: (ctx) => _ModernSheetContainer(
         enableBlur: enableBlur,
         backgroundColor: backgroundColor,
@@ -98,8 +99,9 @@ class AppSheet {
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
-      useSafeArea: false,
+      useSafeArea: true,
       backgroundColor: backgroundColor,
+      showDragHandle: false,
       builder: (ctx) => _FullScreenSheet(
         title: title,
         actions: actions,
@@ -128,10 +130,11 @@ class AppSheet {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      showDragHandle: false,
       builder: (ctx) => _ModernSheetContainer(
         enableBlur: enableBlur,
         backgroundColor: backgroundColor,
-        showDragHandle: showDragHandle,
+        showDragHandle: true,
         child: _DialogSheet(
           title: title,
           actions: actions,
@@ -159,6 +162,7 @@ class AppSheet {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      showDragHandle: false,
       builder: (ctx) => _ModernSheetContainer(
         enableBlur: enableBlur,
         backgroundColor: backgroundColor,
@@ -190,6 +194,7 @@ class AppSheet {
       useSafeArea: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
+      showDragHandle: false,
       builder: (ctx) => _ModernSheetContainer(
         enableBlur: enableBlur,
         backgroundColor: backgroundColor,
@@ -311,7 +316,7 @@ class _SheetHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.sm, 0),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.sm, AppSpacing.md),
       child: Row(
         children: [
           if (leading != null) ...[leading!, const SizedBox(width: 8)],

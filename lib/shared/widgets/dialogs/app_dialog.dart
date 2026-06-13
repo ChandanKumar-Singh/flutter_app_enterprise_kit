@@ -600,7 +600,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Technical details',
+                  Text('Details',
                       style: TextStyle(color: colors.primary, fontSize: 13, fontWeight: FontWeight.w600)),
                   Icon(_showDetails ? Icons.expand_less : Icons.expand_more,
                       size: 16, color: colors.primary),

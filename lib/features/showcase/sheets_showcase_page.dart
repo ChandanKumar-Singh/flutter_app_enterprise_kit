@@ -21,10 +21,10 @@ class SheetsShowcasePage extends StatelessWidget {
           const SizedBox(height: 8),
           AppButton.outlined(label: 'Dialog Sheet', onPressed: () => AppSheet.dialog(context, title: 'Confirm Action', child: const Text('This sheet looks and behaves like a dialog but comes from the bottom.'), confirmLabel: 'OK', cancelLabel: 'Cancel')),
           const SizedBox(height: 8),
-          AppButton.outlined(label: 'Action Sheet', onPressed: () => AppSheet.actions(context, title: 'Options', actions: [
-            AppSheetAction(label: 'Edit', icon: Icons.edit_outlined, value: 'edit'),
-            AppSheetAction(label: 'Share', icon: Icons.share_outlined, value: 'share'),
-            AppSheetAction(label: 'Delete', icon: Icons.delete_outline, value: 'delete', isDestructive: true),
+          AppButton.outlined(label: 'Action Sheet',  onPressed: () => AppSheet.actions(context, title: 'Options', message: "You can choose any of below", actions: [
+            const AppSheetAction(label: 'Edit', icon: Icons.edit_outlined, value: 'edit'),
+            const AppSheetAction(label: 'Share', icon: Icons.share_outlined, value: 'share'),
+            const AppSheetAction(label: 'Delete', icon: Icons.delete_outline, value: 'delete', isDestructive: true),
           ], cancelAction: const AppSheetAction(label: 'Cancel', value: null))),
           const SizedBox(height: 8),
           AppButton.outlined(label: 'Confirm Sheet', onPressed: () => AppSheet.confirm(context, title: 'Are you sure?', message: 'This will permanently delete your account and all data.', confirmLabel: 'Delete Account', isDestructive: true, icon: const Icon(Icons.warning_amber_outlined, size: 48, color: Colors.orange))),

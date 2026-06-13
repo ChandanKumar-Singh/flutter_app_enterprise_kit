@@ -731,19 +731,19 @@ class _InfoPopoverContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(children: [
-          const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
-          const SizedBox(width: 6),
-          const Text('4.8 Rating',
+        const Row(children: [
+          Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+          SizedBox(width: 6),
+          Text('4.8 Rating',
               style: TextStyle(fontWeight: FontWeight.w800)),
         ]),
         const SizedBox(height: 6),
         Text('Based on 1,240 reviews',
             style: TextStyle(color: cs.onSurfaceVariant, fontSize: 12)),
         const SizedBox(height: 10),
-        _RatingRow('Food', 4.9),
-        _RatingRow('Service', 4.7),
-        _RatingRow('Packaging', 4.8),
+        const _RatingRow('Food', 4.9),
+        const _RatingRow('Service', 4.7),
+        const _RatingRow('Packaging', 4.8),
       ],
     );
   }
@@ -809,8 +809,8 @@ class _AppBarPreviewState extends State<_AppBarPreview> {
         behavior: AppBarScrollBehavior.glassmorphic,
         scrollController: _sc,
         actions: [
-          IconButton(
-              icon: const Icon(Icons.search_rounded), onPressed: null),
+          const IconButton(
+              icon: Icon(Icons.search_rounded), onPressed: null),
         ],
       ),
     ]);
@@ -1107,10 +1107,42 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
   }
 }
 
-// ─── Tab 6: Permissions ───────────────────────────────────────────────────────
-
-class _PermissionsTab extends StatelessWidget {
+class _PermissionsTab extends StatefulWidget {
   const _PermissionsTab();
+
+  @override
+  State<_PermissionsTab> createState() => _PermissionsTabState();
+}
+
+class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObserver {
+  int _refreshCounter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _refresh();
+    }
+  }
+
+  void _refresh() {
+    if (mounted) {
+      setState(() {
+        _refreshCounter++;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1163,7 +1195,7 @@ class _PermissionsTab extends StatelessWidget {
 
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: [
+      children: <Widget>[
         const _SectionHeader(
           'AppPermissionManager',
           'Enterprise-grade platform-aware permission system',
@@ -1189,13 +1221,13 @@ class _PermissionsTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                const Icon(Icons.info_outline_rounded,
+              const Row(children: [
+                Icon(Icons.info_outline_rounded,
                     size: 14, color: Color(0xFF7C3AED)),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text('Platform-aware permission resolution',
                     style: TextStyle(
-                        color: const Color(0xFF7C3AED),
+                        color: Color(0xFF7C3AED),
                         fontSize: 12,
                         fontWeight: FontWeight.w700)),
               ]),
@@ -1216,21 +1248,25 @@ class _PermissionsTab extends StatelessWidget {
           child: FilledButton.icon(
             icon: const Icon(Icons.verified_user_rounded, size: 16),
             label: const Text('Request Common Permissions'),
-            onPressed: () => AppPermissionManager.requestAll(
-              context,
-              [
-                AppPermissionType.camera,
-                AppPermissionType.microphone,
-                AppPermissionType.notifications,
-                AppPermissionType.locationWhenInUse,
-              ],
-            ),
+            onPressed: () async {
+              await AppPermissionManager.requestAll(
+                context,
+                [
+                  AppPermissionType.camera,
+                  AppPermissionType.microphone,
+                  AppPermissionType.notifications,
+                  AppPermissionType.locationWhenInUse,
+                ],
+              );
+              _refresh();
+            },
           ),
         ),
         const SizedBox(height: 20),
 
         // Permission groups
         ...groups.map((g) => _PermissionGroup(
+              key: ValueKey('${g.label}_$_refreshCounter'),
               label: g.label,
               color: g.color,
               icon: g.icon,
@@ -1270,7 +1306,10 @@ class _PermissionsTab extends StatelessWidget {
               ),
             ),
             FilledButton.tonal(
-              onPressed: () => AppPermissionManager.openSettings(),
+              onPressed: () async {
+                await AppPermissionManager.openSettings();
+                _refresh();
+              },
               child: const Text('Open'),
             ),
           ]),
@@ -1288,6 +1327,7 @@ class _PermissionGroup extends StatelessWidget {
   final List<AppPermissionType> types;
 
   const _PermissionGroup({
+    super.key,
     required this.label,
     required this.color,
     required this.icon,
