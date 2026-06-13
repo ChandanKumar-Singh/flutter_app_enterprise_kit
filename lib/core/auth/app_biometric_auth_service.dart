@@ -28,6 +28,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
 // ── Auth result ───────────────────────────────────────────────────────────────
@@ -86,9 +87,9 @@ class AppBiometricCapability {
   }
 
   IconData get icon {
-    if (hasFaceId) return Icons.face_retouching_natural_rounded;
-    if (hasFingerprint) return Icons.fingerprint_rounded;
-    return Icons.lock_rounded;
+    if (hasFaceId) return Iconsax.scan;
+    if (hasFingerprint) return Iconsax.finger_scan;
+    return Iconsax.lock;
   }
 }
 
@@ -324,7 +325,7 @@ class AppBiometricLockScreen extends StatelessWidget {
                     ],
                   ),
                   child: logo ??
-                      Icon(Icons.lock_rounded, size: 40, color: cs.primary),
+                      Icon(Iconsax.lock, size: 40, color: cs.primary),
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 Text(
@@ -374,7 +375,7 @@ class AppBiometricLockScreen extends StatelessWidget {
                               color: cs.primary,
                             ),
                           )
-                        : Icon(Icons.fingerprint_rounded, size: 40, color: cs.onPrimary),
+                        : Icon(Iconsax.finger_scan, size: 40, color: cs.onPrimary),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),

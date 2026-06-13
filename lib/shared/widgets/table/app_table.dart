@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
 // ─── Column Definition ────────────────────────────────────────────────────────
@@ -308,7 +309,7 @@ class _AppTableState<T> extends State<AppTable<T>> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            icon: const Icon(Icons.chevron_left),
+            icon: const Icon(Iconsax.arrow_left_2),
             onPressed: _page > 0 ? () => setState(() => _page--) : null,
           ),
           ...List.generate(
@@ -330,7 +331,7 @@ class _AppTableState<T> extends State<AppTable<T>> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.chevron_right),
+            icon: const Icon(Iconsax.arrow_right_3),
             onPressed: _page < _totalPages - 1
                 ? () => setState(() => _page++)
                 : null,
@@ -342,10 +343,10 @@ class _AppTableState<T> extends State<AppTable<T>> {
 
   Widget _sortIcon(String key, ColorScheme cs) {
     if (_sort.columnKey != key) {
-      return Icon(Icons.unfold_more, size: 14, color: cs.onSurfaceVariant);
+      return Icon(Iconsax.arrow_swap_horizontal, size: 14, color: cs.onSurfaceVariant);
     }
     return Icon(
-      _sort.ascending ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+      _sort.ascending ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
       size: 14,
       color: cs.primary,
     );

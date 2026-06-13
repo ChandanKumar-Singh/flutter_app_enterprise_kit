@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,7 +94,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         icon: Badge(
                           backgroundColor: Theme.of(context).colorScheme.error,
                           smallSize: 7,
-                          child: Icon(Icons.notifications_outlined,
+                          child: Icon(Iconsax.notification,
                               color: Theme.of(context).colorScheme.onSurface, size: 22),
                         ),
                         onPressed: () {},
@@ -112,8 +113,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                     // ── Filter bar
                     AppFilterBar(
                       filters: const [
-                        AppFilterChip(label: 'All', leadingIcon: Icons.grid_view_rounded),
-                        AppFilterChip(label: 'New', leadingIcon: Icons.new_releases_rounded),
+                        AppFilterChip(label: 'All', leadingIcon: Iconsax.grid_1),
+                        AppFilterChip(label: 'New', leadingIcon: Iconsax.flash),
                         AppFilterChip(label: 'Cards & Lists'),
                         AppFilterChip(label: 'Overlays'),
                         AppFilterChip(label: 'Forms'),
@@ -222,10 +223,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 if (i == 1) context.push(RouteNames.showcase);
               },
               items: const [
-                AppBottomNavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
-                AppBottomNavItem(icon: Icons.grid_view_outlined, activeIcon: Icons.grid_view_rounded, label: 'Showcase'),
-                AppBottomNavItem(icon: Icons.tune_outlined, activeIcon: Icons.tune_rounded, label: 'Theme'),
-                AppBottomNavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profile', hasDot: true),
+                AppBottomNavItem(icon: Iconsax.home, activeIcon: Iconsax.home, label: 'Home'),
+                AppBottomNavItem(icon: Iconsax.grid_1, activeIcon: Iconsax.grid_1, label: 'Showcase'),
+                AppBottomNavItem(icon: Iconsax.candle_2, activeIcon: Iconsax.candle_2, label: 'Theme'),
+                AppBottomNavItem(icon: Iconsax.profile, activeIcon: Iconsax.profile, label: 'Profile', hasDot: true),
               ],
             ).animate().slideY(begin: 0.3, duration: 500.ms, delay: 300.ms, curve: Curves.easeOutCubic)
               .fadeIn(delay: 300.ms, duration: 400.ms),
@@ -270,7 +271,7 @@ class _TopBar extends ConsumerWidget {
               ),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.layers_rounded, color: Colors.white, size: 20),
+            child: const Icon(Iconsax.layer, color: Colors.white, size: 20),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -303,7 +304,7 @@ class _TopBar extends ConsumerWidget {
             icon: Badge(
               backgroundColor: cs.error,
               smallSize: 8,
-              child: Icon(Icons.notifications_outlined, color: cs.onSurface),
+              child: Icon(Iconsax.notification, color: cs.onSurface),
             ),
             onPressed: () {},
             style: IconButton.styleFrom(
@@ -351,7 +352,7 @@ class _ThemeToggle extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  isDark ? Icons.nightlight_round : Icons.wb_sunny_outlined,
+                  isDark ? Iconsax.moon : Iconsax.sun_1,
                   size: 13,
                   color: isDark ? cs.primary : cs.surface,
                 ),
@@ -448,7 +449,7 @@ class _RestaurantStyleStrip extends StatelessWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.star_rounded, size: 9, color: Colors.white),
+                                  const Icon(Iconsax.star, size: 9, color: Colors.white),
                                   const SizedBox(width: 2),
                                   Text(
                                     item.rating.toStringAsFixed(1),
@@ -471,7 +472,7 @@ class _RestaurantStyleStrip extends StatelessWidget {
                         const Spacer(),
                         Row(
                           children: [
-                            Icon(Icons.verified_rounded, size: 12, color: item.colors.first),
+                            Icon(Iconsax.verify, size: 12, color: item.colors.first),
                             const SizedBox(width: 4),
                             Text(
                               item.badge,
@@ -509,14 +510,14 @@ class _PkgItem {
 // ─── Category Grid ────────────────────────────────────────────────────────────
 class _CategoryGrid extends StatelessWidget {
   static const _cats = [
-    _Cat('Buttons', Icons.smart_button_rounded, Color(0xFF2563EB), RouteNames.showcaseButtons),
-    _Cat('Cards', Icons.credit_card_rounded, Color(0xFF7C3AED), RouteNames.showcaseCards),
-    _Cat('Dialogs', Icons.open_in_new_rounded, Color(0xFF0891B2), RouteNames.showcaseDialogs),
-    _Cat('Inputs', Icons.text_fields_rounded, Color(0xFF16A34A), RouteNames.showcaseInputs),
-    _Cat('Charts', Icons.bar_chart_rounded, Color(0xFFD97706), RouteNames.showcaseCharts),
-    _Cat('Themes', Icons.palette_rounded, Color(0xFFDC2626), RouteNames.showcaseThemeConfig),
-    _Cat('Media', Icons.image_rounded, Color(0xFF7C3AED), RouteNames.showcaseImages),
-    _Cat('Loaders', Icons.hourglass_top_rounded, Color(0xFF0284C7), RouteNames.showcaseLoaders),
+    _Cat('Buttons', Iconsax.link, Color(0xFF2563EB), RouteNames.showcaseButtons),
+    _Cat('Cards', Iconsax.card, Color(0xFF7C3AED), RouteNames.showcaseCards),
+    _Cat('Dialogs', Iconsax.export, Color(0xFF0891B2), RouteNames.showcaseDialogs),
+    _Cat('Inputs', Iconsax.document_text, Color(0xFF16A34A), RouteNames.showcaseInputs),
+    _Cat('Charts', Iconsax.chart, Color(0xFFD97706), RouteNames.showcaseCharts),
+    _Cat('Themes', Iconsax.colorfilter, Color(0xFFDC2626), RouteNames.showcaseThemeConfig),
+    _Cat('Media', Iconsax.image, Color(0xFF7C3AED), RouteNames.showcaseImages),
+    _Cat('Loaders', Iconsax.timer, Color(0xFF0284C7), RouteNames.showcaseLoaders),
   ];
 
   @override
@@ -617,7 +618,7 @@ class _StatsSection extends StatelessWidget {
             subValue: 'Production ready',
             trend: '+12 new',
             trendUp: true,
-            icon: Icons.widgets_rounded,
+            icon: Iconsax.element_4,
             color: Color(0xFF2563EB),
           ).animate().fadeIn(delay: 100.ms).slideX(begin: -0.05),
           const AppStatCard(
@@ -626,7 +627,7 @@ class _StatsSection extends StatelessWidget {
             subValue: 'Colors + custom',
             trend: 'All new',
             trendUp: true,
-            icon: Icons.palette_rounded,
+            icon: Iconsax.colorfilter,
             color: Color(0xFF7C3AED),
           ).animate().fadeIn(delay: 150.ms).slideX(begin: 0.05),
           const AppStatCard(
@@ -635,7 +636,7 @@ class _StatsSection extends StatelessWidget {
             subValue: 'With live demos',
             trend: '+3 new',
             trendUp: true,
-            icon: Icons.photo_library_rounded,
+            icon: Iconsax.gallery,
             color: Color(0xFF0891B2),
           ).animate().fadeIn(delay: 200.ms).slideX(begin: -0.05),
           const AppStatCard(
@@ -644,7 +645,7 @@ class _StatsSection extends StatelessWidget {
             subValue: 'Pre-integrated',
             trend: 'Stable',
             trendUp: true,
-            icon: Icons.inventory_2_rounded,
+            icon: Iconsax.box,
             color: Color(0xFF16A34A),
           ).animate().fadeIn(delay: 250.ms).slideX(begin: 0.05),
         ],
@@ -769,7 +770,7 @@ class _FeaturedCard extends StatelessWidget {
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.widgets_rounded, color: Colors.white, size: 20),
+                child: const Icon(Iconsax.element_4, color: Colors.white, size: 20),
               ),
               const Spacer(),
               Text(
@@ -845,25 +846,25 @@ class _ShowcaseEntry {
 }
 
 const _showcaseSections = [
-  _ShowcaseEntry('Buttons', Icons.smart_button_outlined, RouteNames.showcaseButtons, Color(0xFF2563EB)),
-  _ShowcaseEntry('Cards', Icons.credit_card_outlined, RouteNames.showcaseCards, Color(0xFF7C3AED)),
-  _ShowcaseEntry('Dialogs', Icons.dialpad_outlined, RouteNames.showcaseDialogs, Color(0xFF0891B2)),
-  _ShowcaseEntry('Sheets', Icons.layers_outlined, RouteNames.showcaseSheets, Color(0xFFD97706)),
-  _ShowcaseEntry('Inputs', Icons.input_outlined, RouteNames.showcaseInputs, Color(0xFF16A34A)),
-  _ShowcaseEntry('Theme', Icons.palette_outlined, RouteNames.showcaseTheme, Color(0xFFDC2626)),
-  _ShowcaseEntry('Images', Icons.image_outlined, RouteNames.showcaseImages, Color(0xFF4F46E5)),
-  _ShowcaseEntry('Typography', Icons.text_fields_outlined, RouteNames.showcaseTypography, Color(0xFF92400E)),
-  _ShowcaseEntry('Charts', Icons.bar_chart_outlined, RouteNames.showcaseCharts, Color(0xFF0891B2)),
-  _ShowcaseEntry('Network', Icons.wifi_outlined, RouteNames.showcaseNetwork, Color(0xFF65A30D)),
-  _ShowcaseEntry('Utilities', Icons.build_outlined, RouteNames.showcaseUtils, Color(0xFFD97706)),
-  _ShowcaseEntry('Animate', Icons.animation_outlined, RouteNames.showcaseAnimations, Color(0xFFEC4899)),
-  _ShowcaseEntry('Loaders', Icons.hourglass_empty_outlined, RouteNames.showcaseLoaders, Color(0xFF64748B)),
-  _ShowcaseEntry('PDF', Icons.picture_as_pdf_outlined, RouteNames.showcasePdf, Color(0xFFDC2626)),
-  _ShowcaseEntry('States', Icons.layers_clear_outlined, RouteNames.showcaseStates, Color(0xFF7C3AED)),
-  _ShowcaseEntry('Components', Icons.widgets_outlined, RouteNames.showcaseComponents, Color(0xFF0891B2), badge: 'NEW'),
-  _ShowcaseEntry('Config', Icons.tune_outlined, RouteNames.showcaseThemeConfig, Color(0xFF7C3AED), badge: 'NEW'),
-  _ShowcaseEntry('UI Kit', Icons.style_outlined, RouteNames.showcaseUiKit, Color(0xFFEC4899), badge: 'NEW'),
-  _ShowcaseEntry('Food UI', Icons.restaurant_outlined, RouteNames.showcaseFood, Color(0xFFDC2626), badge: 'NEW'),
+  _ShowcaseEntry('Buttons', Iconsax.device_message, RouteNames.showcaseButtons, Color(0xFF2563EB)),
+  _ShowcaseEntry('Cards', Iconsax.card, RouteNames.showcaseCards, Color(0xFF7C3AED)),
+  _ShowcaseEntry('Dialogs', Iconsax.menu, RouteNames.showcaseDialogs, Color(0xFF0891B2)),
+  _ShowcaseEntry('Sheets', Iconsax.layer, RouteNames.showcaseSheets, Color(0xFFD97706)),
+  _ShowcaseEntry('Inputs', Iconsax.import, RouteNames.showcaseInputs, Color(0xFF16A34A)),
+  _ShowcaseEntry('Theme', Iconsax.colorfilter, RouteNames.showcaseTheme, Color(0xFFDC2626)),
+  _ShowcaseEntry('Images', Iconsax.image, RouteNames.showcaseImages, Color(0xFF4F46E5)),
+  _ShowcaseEntry('Typography', Iconsax.document_text, RouteNames.showcaseTypography, Color(0xFF92400E)),
+  _ShowcaseEntry('Charts', Iconsax.chart, RouteNames.showcaseCharts, Color(0xFF0891B2)),
+  _ShowcaseEntry('Network', Iconsax.wifi, RouteNames.showcaseNetwork, Color(0xFF65A30D)),
+  _ShowcaseEntry('Utilities', Iconsax.designtools, RouteNames.showcaseUtils, Color(0xFFD97706)),
+  _ShowcaseEntry('Animate', Iconsax.magicpen, RouteNames.showcaseAnimations, Color(0xFFEC4899)),
+  _ShowcaseEntry('Loaders', Iconsax.timer, RouteNames.showcaseLoaders, Color(0xFF64748B)),
+  _ShowcaseEntry('PDF', Iconsax.document_text, RouteNames.showcasePdf, Color(0xFFDC2626)),
+  _ShowcaseEntry('States', Iconsax.layer, RouteNames.showcaseStates, Color(0xFF7C3AED)),
+  _ShowcaseEntry('Components', Iconsax.element_4, RouteNames.showcaseComponents, Color(0xFF0891B2), badge: 'NEW'),
+  _ShowcaseEntry('Config', Iconsax.candle_2, RouteNames.showcaseThemeConfig, Color(0xFF7C3AED), badge: 'NEW'),
+  _ShowcaseEntry('UI Kit', Iconsax.colors_square, RouteNames.showcaseUiKit, Color(0xFFEC4899), badge: 'NEW'),
+  _ShowcaseEntry('Food UI', Iconsax.cup, RouteNames.showcaseFood, Color(0xFFDC2626), badge: 'NEW'),
 ];
 
 class _ShowcaseTile extends StatelessWidget {
@@ -958,7 +959,7 @@ class _QuickActionsRow extends StatelessWidget {
     final theme = Theme.of(context);
 
     final actions = [
-      _QuickAction('Toast\nDemo', Icons.notifications_active_rounded, const Color(0xFF2563EB), () {
+      _QuickAction('Toast\nDemo', Iconsax.notification, const Color(0xFF2563EB), () {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text('Enterprise Kit is ready!'),
@@ -967,11 +968,11 @@ class _QuickActionsRow extends StatelessWidget {
           ),
         );
       }),
-      _QuickAction('Theme\nConfig', Icons.palette_rounded, const Color(0xFF7C3AED),
+      _QuickAction('Theme\nConfig', Iconsax.colorfilter, const Color(0xFF7C3AED),
           () => context.push(RouteNames.showcaseThemeConfig)),
-      _QuickAction('Components\nShowcase', Icons.widgets_rounded, const Color(0xFF0891B2),
+      _QuickAction('Components\nShowcase', Iconsax.element_4, const Color(0xFF0891B2),
           () => context.push(RouteNames.showcaseComponents)),
-      _QuickAction('All\nShowcase', Icons.grid_view_rounded, const Color(0xFF16A34A),
+      _QuickAction('All\nShowcase', Iconsax.grid_1, const Color(0xFF16A34A),
           () => context.push(RouteNames.showcase)),
     ];
 
@@ -1034,16 +1035,16 @@ class _QuickAction {
 
 // ─── Component Categories (used in AppFoodCategoryWheel) ─────────────────────
 final _componentCategories = [
-  const AppFoodCategory(label: 'Buttons', icon: Icons.smart_button_rounded, color: Color(0xFF2563EB)),
-  const AppFoodCategory(label: 'Cards', icon: Icons.credit_card_rounded, color: Color(0xFF7C3AED)),
-  const AppFoodCategory(label: 'Dialogs', icon: Icons.open_in_new_rounded, color: Color(0xFF0891B2)),
-  const AppFoodCategory(label: 'Inputs', icon: Icons.text_fields_rounded, color: Color(0xFF16A34A)),
-  const AppFoodCategory(label: 'Charts', icon: Icons.bar_chart_rounded, color: Color(0xFFD97706)),
-  const AppFoodCategory(label: 'Themes', icon: Icons.palette_rounded, color: Color(0xFFDC2626)),
-  const AppFoodCategory(label: 'Media', icon: Icons.image_rounded, color: Color(0xFF4F46E5)),
-  const AppFoodCategory(label: 'Overlays', icon: Icons.layers_rounded, color: Color(0xFFEC4899)),
-  const AppFoodCategory(label: 'Loaders', icon: Icons.hourglass_top_rounded, color: Color(0xFF64748B)),
-  const AppFoodCategory(label: 'Food UI', icon: Icons.restaurant_rounded, color: Color(0xFFDC2626)),
+  const AppFoodCategory(label: 'Buttons', icon: Iconsax.link, color: Color(0xFF2563EB)),
+  const AppFoodCategory(label: 'Cards', icon: Iconsax.card, color: Color(0xFF7C3AED)),
+  const AppFoodCategory(label: 'Dialogs', icon: Iconsax.export, color: Color(0xFF0891B2)),
+  const AppFoodCategory(label: 'Inputs', icon: Iconsax.document_text, color: Color(0xFF16A34A)),
+  const AppFoodCategory(label: 'Charts', icon: Iconsax.chart, color: Color(0xFFD97706)),
+  const AppFoodCategory(label: 'Themes', icon: Iconsax.colorfilter, color: Color(0xFFDC2626)),
+  const AppFoodCategory(label: 'Media', icon: Iconsax.image, color: Color(0xFF4F46E5)),
+  const AppFoodCategory(label: 'Overlays', icon: Iconsax.layer, color: Color(0xFFEC4899)),
+  const AppFoodCategory(label: 'Loaders', icon: Iconsax.timer, color: Color(0xFF64748B)),
+  const AppFoodCategory(label: 'Food UI', icon: Iconsax.cup, color: Color(0xFFDC2626)),
 ];
 
 // ─── Promo Banner Data ────────────────────────────────────────────────────────

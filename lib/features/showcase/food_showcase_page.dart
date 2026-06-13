@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/cards/app_restaurant_card.dart';
@@ -46,7 +47,7 @@ class _FoodShowcasePageState extends State<FoodShowcasePage>
             surfaceTintColor: Colors.transparent,
             scrolledUnderElevation: 0.5,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: cs.onSurface),
+              icon: Icon(Iconsax.arrow_left_2, size: 18, color: cs.onSurface),
               onPressed: () => Navigator.of(context).pop(),
             ),
             flexibleSpace: FlexibleSpaceBar(
@@ -273,7 +274,7 @@ class _FoodCategoriesTab extends StatelessWidget {
               subtitle: 'Karnataka 560038',
               onTap: () {},
               trailing: IconButton(
-                icon: Icon(Icons.notifications_outlined, color: cs.onSurface, size: 22),
+                icon: Icon(Iconsax.notification, color: cs.onSurface, size: 22),
                 onPressed: () {},
               ),
             ),
@@ -358,7 +359,7 @@ class _FilterSearchTab extends StatelessWidget {
           AppTopSearchBar(
             hint: 'pizza, biryani, burger...',
             onTap: () {},
-            trailing: Icon(Icons.mic_rounded, color: cs.primary, size: 20),
+            trailing: Icon(Iconsax.microphone, color: cs.primary, size: 20),
           ).animate().fadeIn(delay: 100.ms, duration: 300.ms),
 
           const SizedBox(height: 24),
@@ -387,10 +388,10 @@ class _FilterSearchTab extends StatelessWidget {
             initialSelected: 0,
             filters: const [
               AppFilterChip(label: 'Recommended', hasDropdown: true),
-              AppFilterChip(label: 'Nearest First', leadingIcon: Icons.place_rounded),
-              AppFilterChip(label: 'Rating', leadingIcon: Icons.star_rounded),
-              AppFilterChip(label: '₹ Low to High', leadingIcon: Icons.currency_rupee_rounded),
-              AppFilterChip(label: 'New', leadingIcon: Icons.new_releases_rounded),
+              AppFilterChip(label: 'Nearest First', leadingIcon: Iconsax.location),
+              AppFilterChip(label: 'Rating', leadingIcon: Iconsax.star),
+              AppFilterChip(label: '₹ Low to High', leadingIcon: Iconsax.wallet_money),
+              AppFilterChip(label: 'New', leadingIcon: Iconsax.flash),
             ],
             onSelected: (_) {},
           ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
@@ -467,7 +468,7 @@ class _OfferCardsTab extends StatelessWidget {
                   upto: 'up to ₹120',
                   code: 'WELCOME60',
                   gradientColors: const [Color(0xFFDC2626), Color(0xFFD97706)],
-                  icon: Icons.celebration_rounded,
+                  icon: Iconsax.award,
                   onTap: () {},
                 ).animate(delay: 450.ms).fadeIn(duration: 300.ms),
               ),
@@ -479,7 +480,7 @@ class _OfferCardsTab extends StatelessWidget {
                   code: 'FREEDEL',
                   description: 'On first 5 orders',
                   gradientColors: const [Color(0xFF16A34A), Color(0xFF0891B2)],
-                  icon: Icons.electric_moped_rounded,
+                  icon: Iconsax.truck,
                   onTap: () {},
                 ).animate(delay: 500.ms).fadeIn(duration: 300.ms),
               ),
@@ -574,7 +575,7 @@ final _offerCards = [
     code: 'TRYNEW',
     description: 'Valid on your first order',
     gradientColors: const [Color(0xFF1D4ED8), Color(0xFF7C3AED)],
-    icon: Icons.local_offer_rounded,
+    icon: Iconsax.tag,
     onTap: () {},
   ),
   AppOfferCard(
@@ -582,7 +583,7 @@ final _offerCards = [
     upto: 'on all orders',
     code: 'FREEDEL',
     gradientColors: const [Color(0xFF16A34A), Color(0xFF0891B2)],
-    icon: Icons.electric_moped_rounded,
+    icon: Iconsax.truck,
     onTap: () {},
   ),
   AppOfferCard(
@@ -591,7 +592,7 @@ final _offerCards = [
     code: 'WEEKEND',
     description: 'Weekend special offer',
     gradientColors: const [Color(0xFFD97706), Color(0xFFDC2626)],
-    icon: Icons.celebration_rounded,
+    icon: Iconsax.award,
     onTap: () {},
   ),
   AppOfferCard(
@@ -599,7 +600,7 @@ final _offerCards = [
     upto: 'on orders ₹599+',
     code: 'SAVE200',
     gradientColors: const [Color(0xFF7C3AED), Color(0xFFEC4899)],
-    icon: Icons.savings_rounded,
+    icon: Iconsax.wallet,
     onTap: () {},
   ),
 ];

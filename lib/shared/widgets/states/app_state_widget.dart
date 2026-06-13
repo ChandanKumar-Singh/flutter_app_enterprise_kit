@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 
@@ -141,51 +142,51 @@ class AppStateWidget extends StatelessWidget {
   _StateConfig _getConfig(ColorScheme colors) {
     return switch (type) {
       AppStateType.empty => _StateConfig(
-          icon: Icons.inbox_outlined,
+          icon: Iconsax.archive,
           iconColor: colors.onSurfaceVariant,
           iconBackground: colors.surfaceVariant,
           defaultTitle: 'Nothing here yet',
           defaultMessage: 'There\'s no content to display.',
         ),
       AppStateType.error => _StateConfig(
-          icon: Icons.error_outline,
+          icon: Iconsax.danger,
           iconColor: colors.error,
           iconBackground: colors.errorContainer,
           defaultTitle: 'Something went wrong',
           defaultMessage: 'An unexpected error occurred. Please try again.',
         ),
       AppStateType.noConnection => _StateConfig(
-          icon: Icons.wifi_off_outlined,
+          icon: Iconsax.wifi_square,
           iconColor: colors.error,
           iconBackground: colors.errorContainer,
           defaultTitle: 'No connection',
           defaultMessage: 'Check your internet connection and try again.',
         ),
       AppStateType.noResults => _StateConfig(
-          icon: Icons.search_off_outlined,
+          icon: Iconsax.search_normal,
           iconColor: colors.onSurfaceVariant,
-          iconBackground: colors.surfaceVariant,
+          iconBackground: colors.surfaceContainerHighest,
           defaultTitle: 'No results',
           defaultMessage: 'Try adjusting your search.',
         ),
       AppStateType.comingSoon => _StateConfig(
-          icon: Icons.rocket_launch_outlined,
+          icon: Iconsax.ranking,
           iconColor: colors.primary,
           iconBackground: colors.primaryContainer,
           defaultTitle: 'Coming soon',
           defaultMessage: 'This feature is under development.',
         ),
       AppStateType.accessDenied => _StateConfig(
-          icon: Icons.lock_outlined,
+          icon: Iconsax.lock,
           iconColor: colors.error,
           iconBackground: colors.errorContainer,
           defaultTitle: 'Access denied',
           defaultMessage: 'You don\'t have permission to view this.',
         ),
       _ => _StateConfig(
-          icon: Icons.help_outline,
+          icon: Iconsax.info_circle,
           iconColor: colors.onSurfaceVariant,
-          iconBackground: colors.surfaceVariant,
+          iconBackground: colors.surfaceContainerHighest,
           defaultTitle: '',
           defaultMessage: null,
         ),

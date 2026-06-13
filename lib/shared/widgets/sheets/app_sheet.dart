@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
@@ -381,7 +382,7 @@ class _FullScreenSheet extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: leading ?? IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Iconsax.close_circle),
           onPressed: () => Navigator.pop(context),
         ),
         title: title != null ? Text(title!) : null,

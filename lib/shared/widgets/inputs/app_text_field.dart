@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AppTextField extends StatefulWidget {
   final String? label;
@@ -91,7 +92,7 @@ class AppTextField extends StatefulWidget {
     controller: controller,
     keyboardType: TextInputType.emailAddress,
     textInputAction: textInputAction,
-    prefixIcon: const Icon(Icons.email_outlined),
+    prefixIcon: const Icon(Iconsax.sms),
     validator: validator,
     onChanged: onChanged,
     autofocus: autofocus,
@@ -109,7 +110,7 @@ class AppTextField extends StatefulWidget {
     controller: controller,
     obscureText: true,
     showPasswordToggle: true,
-    prefixIcon: const Icon(Icons.lock_outlined),
+    prefixIcon: const Icon(Iconsax.lock),
     validator: validator,
     onChanged: onChanged,
   );
@@ -123,7 +124,7 @@ class AppTextField extends StatefulWidget {
     hint: '+1 (555) 000-0000',
     controller: controller,
     keyboardType: TextInputType.phone,
-    prefixIcon: const Icon(Icons.phone_outlined),
+    prefixIcon: const Icon(Iconsax.call),
     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
     validator: validator,
     onChanged: onChanged,
@@ -131,6 +132,7 @@ class AppTextField extends StatefulWidget {
 
   factory AppTextField.search({
     TextEditingController? controller,
+    FocusNode? focusNode,
     String? hint,
     void Function(String)? onChanged,
     void Function(String)? onSubmitted,
@@ -138,9 +140,10 @@ class AppTextField extends StatefulWidget {
   }) => AppTextField(
     hint: hint ?? 'Search...',
     controller: controller,
+    focusNode: focusNode,
     keyboardType: TextInputType.text,
     textInputAction: TextInputAction.search,
-    prefixIcon: const Icon(Icons.search),
+    prefixIcon: const Icon(Iconsax.search_normal),
     onChanged: onChanged,
     onSubmitted: onSubmitted,
   );
@@ -225,7 +228,7 @@ class _AppTextFieldState extends State<AppTextField> {
 
     if (widget.showPasswordToggle) {
       effectiveSuffix = IconButton(
-        icon: Icon(_obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+        icon: Icon(_obscure ? Iconsax.eye : Iconsax.eye_slash),
         onPressed: () => setState(() => _obscure = !_obscure),
       );
     }

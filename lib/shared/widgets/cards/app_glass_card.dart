@@ -11,6 +11,7 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -223,7 +224,7 @@ class AppGlassCard extends StatelessWidget {
 //
 // Usage:
 //   AppMetricCard(label: 'Revenue', value: '₹2.4L', subValue: '+12% MoM',
-//                 icon: Icons.trending_up_rounded, iconColor: Colors.green)
+//                 icon: Iconsax.trend_up, iconColor: Colors.green)
 
 class AppMetricCard extends StatelessWidget {
   final String label;
@@ -306,8 +307,8 @@ class AppMetricCard extends StatelessWidget {
 //
 // Usage:
 //   AppMetricGrid(metrics: [
-//     AppMetricData(label: 'Sales', value: '₹1.2L', icon: Icons.store),
-//     AppMetricData(label: 'Orders', value: '348', icon: Icons.shopping_bag),
+//     AppMetricData(label: 'Sales', value: '₹1.2L', icon: Iconsax.shop),
+//     AppMetricData(label: 'Orders', value: '348', icon: Iconsax.shopping_bag),
 //   ])
 
 class AppMetricData {

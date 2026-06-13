@@ -21,6 +21,7 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'app_navigation_node.dart';
 import 'app_navigation_controller.dart';
 import 'app_navigation_drawer.dart';
@@ -280,7 +281,7 @@ class _MobileLayout extends StatelessWidget {
                     child: Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.menu_rounded),
+                          icon: const Icon(Iconsax.menu),
                           onPressed: onDrawerToggle,
                           tooltip: 'Open navigation',
                         ),
@@ -374,7 +375,7 @@ class _BreadcrumbBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            current.icon ?? Icons.dashboard_outlined,
+            current.icon ?? Iconsax.category,
             size: 16,
             color: color,
           ),
@@ -404,13 +405,13 @@ class _BreadcrumbBar extends StatelessWidget {
         children: [
           // Home / root icon
           Icon(
-            Icons.dashboard_outlined,
+            Iconsax.category,
             size: 15,
             color: cs.onSurfaceVariant.withOpacity(0.5),
           ),
           const SizedBox(width: 8),
           Icon(
-            Icons.chevron_right_rounded,
+            Iconsax.arrow_right_3,
             size: 14,
             color: cs.onSurfaceVariant.withOpacity(0.3),
           ),
@@ -419,7 +420,7 @@ class _BreadcrumbBar extends StatelessWidget {
             if (i > 0) ...[
               const SizedBox(width: 6),
               Icon(
-                Icons.chevron_right_rounded,
+                Iconsax.arrow_right_3,
                 size: 14,
                 color: cs.onSurfaceVariant.withOpacity(0.3),
               ),

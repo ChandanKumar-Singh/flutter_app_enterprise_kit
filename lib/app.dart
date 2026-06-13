@@ -95,7 +95,9 @@ class _EnterpriseAppState extends ConsumerState<EnterpriseApp> {
 }
 
 // ─── App Banner Layer ─────────────────────────────────────────────────────────
-/// Renders app-wide top/bottom banners inside the MaterialApp context.
+// Two rendering modes:
+//   strip   (floating: false) → in Column, pushes content, respects SafeArea
+//   pill    (floating: true)  → in Stack overlay, never pushes content
 class _AppBannerLayer extends StatefulWidget {
   final Widget child;
   const _AppBannerLayer({required this.child});
@@ -111,9 +113,7 @@ class _AppBannerLayerState extends State<_AppBannerLayer> {
     AppBannerController.instance.addListener(_rebuild);
   }
 
-  void _rebuild() {
-    if (mounted) setState(() {});
-  }
+  void _rebuild() { if (mounted) setState(() {}); }
 
   @override
   void dispose() {
@@ -123,33 +123,63 @@ class _AppBannerLayerState extends State<_AppBannerLayer> {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = AppBannerController.instance;
-    return Column(
+    final ctrl        = AppBannerController.instance;
+    final mq          = MediaQuery.of(context);
+    final topStrips   = ctrl.topBanners   .where((b) => !b.floating).toList();
+    final topPills    = ctrl.topBanners   .where((b) =>  b.floating).toList();
+    final bottomStrips = ctrl.bottomBanners.where((b) => !b.floating).toList();
+    final bottomPills  = ctrl.bottomBanners.where((b) =>  b.floating).toList();
+
+    return Stack(
       children: [
-        // Top banners
-        ...ctrl.topBanners.map((b) => AppBannerWidget(
+        // ── Column layout: strips push content ───────────────────────────
+        Column(
+          children: [
+            // Top strips (status-bar inset handled inside AppBannerWidget)
+            ...topStrips.map((b) => AppBannerWidget(
               key: ValueKey(b.id),
-              message: b.message,
-              title: b.title,
-              type: b.type,
-              actions: b.actions,
-              dismissible: b.dismissible,
+              banner: b,
               onDismiss: () => ctrl.dismiss(b.id),
-              leading: b.leading,
             )),
-        // Main content
-        Expanded(child: widget.child),
-        // Bottom banners (reversed so newest is nearest bottom edge)
-        ...ctrl.bottomBanners.reversed.map((b) => AppBannerWidget(
+            // Main content
+            Expanded(child: widget.child),
+            // Bottom strips
+            ...bottomStrips.reversed.map((b) => AppBannerWidget(
               key: ValueKey(b.id),
-              message: b.message,
-              title: b.title,
-              type: b.type,
-              actions: b.actions,
-              dismissible: b.dismissible,
+              banner: b,
               onDismiss: () => ctrl.dismiss(b.id),
-              leading: b.leading,
             )),
+          ],
+        ),
+
+        // ── Top pills (floating, below status bar) ────────────────────────
+        if (topPills.isNotEmpty)
+          Positioned(
+            top: mq.padding.top + 8,
+            left: 20, right: 20,
+            child: Column(
+              children: topPills.map((b) => AppBannerWidget(
+                key: ValueKey(b.id),
+                banner: b,
+                onDismiss: () => ctrl.dismiss(b.id),
+              )).toList(),
+            ),
+          ),
+
+        // ── Bottom pills (floating, above safe area / nav bar) ────────────
+        if (bottomPills.isNotEmpty)
+          Positioned(
+            bottom: mq.padding.bottom + 16,
+            left: 20, right: 20,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: bottomPills.reversed.map((b) => AppBannerWidget(
+                key: ValueKey(b.id),
+                banner: b,
+                onDismiss: () => ctrl.dismiss(b.id),
+              )).toList(),
+            ),
+          ),
       ],
     );
   }

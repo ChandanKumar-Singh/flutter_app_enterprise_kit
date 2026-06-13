@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 import 'package:enterprise_kit/shared/widgets/sheets/app_sheet.dart';
@@ -22,12 +23,12 @@ class SheetsShowcasePage extends StatelessWidget {
           AppButton.outlined(label: 'Dialog Sheet', onPressed: () => AppSheet.dialog(context, title: 'Confirm Action', child: const Text('This sheet looks and behaves like a dialog but comes from the bottom.'), confirmLabel: 'OK', cancelLabel: 'Cancel')),
           const SizedBox(height: 8),
           AppButton.outlined(label: 'Action Sheet',  onPressed: () => AppSheet.actions(context, title: 'Options', message: "You can choose any of below", actions: [
-            const AppSheetAction(label: 'Edit', icon: Icons.edit_outlined, value: 'edit'),
-            const AppSheetAction(label: 'Share', icon: Icons.share_outlined, value: 'share'),
-            const AppSheetAction(label: 'Delete', icon: Icons.delete_outline, value: 'delete', isDestructive: true),
+            const AppSheetAction(label: 'Edit', icon: Iconsax.edit, value: 'edit'),
+            const AppSheetAction(label: 'Share', icon: Iconsax.send_2, value: 'share'),
+            const AppSheetAction(label: 'Delete', icon: Iconsax.trash, value: 'delete', isDestructive: true),
           ], cancelAction: const AppSheetAction(label: 'Cancel', value: null))),
           const SizedBox(height: 8),
-          AppButton.outlined(label: 'Confirm Sheet', onPressed: () => AppSheet.confirm(context, title: 'Are you sure?', message: 'This will permanently delete your account and all data.', confirmLabel: 'Delete Account', isDestructive: true, icon: const Icon(Icons.warning_amber_outlined, size: 48, color: Colors.orange))),
+          AppButton.outlined(label: 'Confirm Sheet', onPressed: () => AppSheet.confirm(context, title: 'Are you sure?', message: 'This will permanently delete your account and all data.', confirmLabel: 'Delete Account', isDestructive: true, icon: const Icon(Iconsax.warning_2, size: 48, color: Colors.orange))),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/shared/widgets/loaders/app_shimmer.dart';
 import 'package:enterprise_kit/shared/widgets/states/app_state_widget.dart';
 
@@ -276,7 +277,7 @@ class _AppPaginatorState<T> extends State<AppPaginator<T>> {
         child: Center(
           child: TextButton.icon(
             onPressed: widget.controller.loadMore,
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Iconsax.refresh),
             label: const Text('Retry'),
           ),
         ),

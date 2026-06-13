@@ -16,6 +16,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ─── InheritedWidget ──────────────────────────────────────────────────────────
 
@@ -173,7 +174,7 @@ class _DefaultOfflineBanner extends StatelessWidget {
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.wifi_off_rounded, color: Colors.white, size: 14),
+            Icon(Iconsax.wifi_square, color: Colors.white, size: 14),
             SizedBox(width: 8),
             Text(
               'No internet connection',

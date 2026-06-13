@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 import 'package:enterprise_kit/shared/widgets/pdf/app_pdf_viewer.dart';
@@ -27,7 +28,7 @@ class PdfShowcasePage extends StatelessWidget {
               url: 'https://www.w3.org/WAI/WCAG21/Techniques/pdf/PDF17.pdf',
               title: 'Sample PDF',
             ),
-            icon: const Icon(Icons.picture_as_pdf, size: 18),
+            icon: const Icon(Iconsax.document_text, size: 18),
           ),
           const SizedBox(height: AppSpacing.md),
 
@@ -59,7 +60,7 @@ class PdfShowcasePage extends StatelessWidget {
             'Callback: onPageChanged, onDocumentLoaded, onDocumentLoadFailed',
           ].map((f) => ListTile(
             dense: true,
-            leading: const Icon(Icons.check, color: Colors.green, size: 18),
+            leading: const Icon(Iconsax.tick_circle, color: Colors.green, size: 18),
             title: Text(f, style: const TextStyle(fontSize: 13)),
           )),
         ],

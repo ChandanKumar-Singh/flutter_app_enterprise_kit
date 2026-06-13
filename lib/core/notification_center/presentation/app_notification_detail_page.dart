@@ -4,6 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../controller/app_notification_controller.dart';
 import '../models/app_notification_model.dart';
@@ -230,7 +231,7 @@ class _DetailBody extends StatelessWidget {
                               ),
                             ),
                             child: step.isCompleted
-                                ? const Icon(Icons.check, size: 9, color: Colors.white)
+                                ? const Icon(Iconsax.tick_circle, size: 9, color: Colors.white)
                                 : null,
                           ),
                           if (!isLast) Container(width: 1.5, height: 24, color: isDark ? Colors.white.withOpacity(0.15) : Colors.black.withOpacity(0.10)),
@@ -481,21 +482,21 @@ class _DetailActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return PopupMenuButton<String>(
-      icon: Icon(Icons.more_vert_rounded, size: 20,
+      icon: Icon(Iconsax.more, size: 20,
         color: isDark ? Colors.white60 : const Color(0xFF64748B)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: isDark ? const Color(0xFF1E293B) : Colors.white,
       itemBuilder: (_) => [
         if (!n.isRead)
-          _item('mark_read', 'Mark as read', Icons.mark_email_read_rounded),
+          _item('mark_read', 'Mark as read', Iconsax.sms_tracking),
         if (n.isRead)
-          _item('mark_unread', 'Mark as unread', Icons.mark_email_unread_rounded),
-        _item(n.isPinned ? 'unpin' : 'pin', n.isPinned ? 'Unpin' : 'Pin', Icons.push_pin_rounded),
-        _item(n.isStarred ? 'unstar' : 'star', n.isStarred ? 'Remove star' : 'Star', Icons.star_rounded),
+          _item('mark_unread', 'Mark as unread', Iconsax.sms_notification),
+        _item(n.isPinned ? 'unpin' : 'pin', n.isPinned ? 'Unpin' : 'Pin', Iconsax.bookmark),
+        _item(n.isStarred ? 'unstar' : 'star', n.isStarred ? 'Remove star' : 'Star', Iconsax.star),
         if (controller.config.enableArchive && !n.isArchived)
-          _item('archive', 'Archive', Icons.archive_rounded),
+          _item('archive', 'Archive', Iconsax.archive_1),
         const PopupMenuDivider(),
-        _item('delete', 'Delete', Icons.delete_outline_rounded, destructive: true),
+        _item('delete', 'Delete', Iconsax.trash, destructive: true),
       ],
       onSelected: (val) {
         switch (val) {

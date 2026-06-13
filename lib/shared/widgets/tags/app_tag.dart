@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
 // ─── Tag Variant ──────────────────────────────────────────────────────────────
@@ -142,7 +143,7 @@ class AppTag extends StatelessWidget {
           SizedBox(width: iconSize / 2),
           GestureDetector(
             onTap: onClose,
-            child: Icon(Icons.close_rounded, size: iconSize, color: fg.withOpacity(0.7)),
+            child: Icon(Iconsax.close_circle, size: iconSize, color: fg.withOpacity(0.7)),
           ),
         ],
       ],

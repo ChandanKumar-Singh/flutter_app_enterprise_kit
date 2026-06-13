@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -420,7 +421,7 @@ class _AppProductCardState extends State<AppProductCard>
       width: width ?? double.infinity,
       color: cs.surfaceContainerHighest,
       child: Icon(
-        Icons.image_outlined,
+        Iconsax.image,
         size: 32,
         color: cs.onSurfaceVariant.withOpacity(0.4),
       ),
@@ -441,7 +442,7 @@ class _RatingRow extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.star_rounded, size: 13, color: const Color(0xFFF59E0B)),
+        Icon(Iconsax.star, size: 13, color: const Color(0xFFF59E0B)),
         const SizedBox(width: 2),
         Text(
           rating.toStringAsFixed(1),
@@ -530,7 +531,7 @@ class _AddButton extends StatelessWidget {
             color: cs.primary,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Icon(Icons.add, color: Colors.white, size: 18),
+          child: const Icon(Iconsax.add, color: Colors.white, size: 18),
         ),
       ).animate().scale(duration: 200.ms, curve: Curves.elasticOut);
     }
@@ -548,7 +549,7 @@ class _AddButton extends StatelessWidget {
             child: const SizedBox(
               width: 28,
               height: 30,
-              child: Icon(Icons.remove, color: Colors.white, size: 16),
+              child: Icon(Iconsax.minus, color: Colors.white, size: 16),
             ),
           ),
           SizedBox(
@@ -568,7 +569,7 @@ class _AddButton extends StatelessWidget {
             child: const SizedBox(
               width: 28,
               height: 30,
-              child: Icon(Icons.add, color: Colors.white, size: 16),
+              child: Icon(Iconsax.add, color: Colors.white, size: 16),
             ),
           ),
         ],
@@ -677,8 +678,8 @@ class _FavoriteButtonState extends State<_FavoriteButton>
           ),
           child: Icon(
             widget.isFavorite
-                ? Icons.favorite_rounded
-                : Icons.favorite_border_rounded,
+                ? Iconsax.heart
+                : Iconsax.heart,
             size: 16,
             color: widget.isFavorite ? Colors.red : Colors.grey.shade500,
           ),
@@ -922,7 +923,7 @@ class AppCategoryChip extends StatelessWidget {
                   height: 16,
                   fit: BoxFit.cover,
                   errorWidget: (_, __, ___) => Icon(
-                    icon ?? Icons.category,
+                    icon ?? Iconsax.category,
                     size: 14,
                     color: selected ? Colors.white : effectiveColor,
                   ),
@@ -1084,7 +1085,7 @@ class AppStatCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(
-                    icon ?? Icons.analytics_outlined,
+                    icon ?? Iconsax.presention_chart,
                     size: 18,
                     color: effectiveColor,
                   ),
@@ -1108,8 +1109,8 @@ class AppStatCard extends StatelessWidget {
                       children: [
                         Icon(
                           trendUp
-                              ? Icons.trending_up_rounded
-                              : Icons.trending_down_rounded,
+                              ? Iconsax.trend_up
+                              : Iconsax.trend_down,
                           size: 11,
                           color: trendUp
                               ? const Color(0xFF16A34A)

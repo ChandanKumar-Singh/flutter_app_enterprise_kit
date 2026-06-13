@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/permissions/app_permission_manager.dart';
 
 void main() {
@@ -15,7 +16,7 @@ void main() {
         title: 'Camera for {location}',
         rationale: 'We need access to {customVar} to {usecase} in {location}.',
         deniedMessage: 'Denied in {location}.',
-        icon: Icons.camera,
+        icon: Iconsax.camera,
         color: Colors.red,
       );
 
@@ -37,7 +38,7 @@ void main() {
         title: 'Profile Pic',
         rationale: 'Choose a profile pic',
         deniedMessage: 'Pic blocked',
-        icon: Icons.person,
+        icon: Iconsax.user,
         color: Colors.blue,
       );
 
@@ -70,7 +71,7 @@ void main() {
         title: 'Checkout Camera',
         rationale: 'Scan checkout code',
         deniedMessage: 'Checkout camera blocked',
-        icon: Icons.qr_code,
+        icon: Iconsax.scan,
         color: Colors.green,
       );
       AppPermissionManager.registerOverride(
@@ -96,7 +97,7 @@ void main() {
             title: 'Dynamic Resolver Title',
             rationale: 'Dynamic Rationale',
             deniedMessage: 'Dynamic Denied',
-            icon: Icons.help,
+            icon: Iconsax.info_circle,
             color: Colors.purple,
           );
         }

@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../shared/widgets/cards/app_card.dart';
 import '../config/app_notification_config.dart';
@@ -144,7 +145,7 @@ class _CardShell extends StatelessWidget {
                           ),
                         ),
                         child: isSelected
-                            ? const Icon(Icons.check, size: 12, color: Colors.white)
+                            ? const Icon(Iconsax.tick_circle, size: 12, color: Colors.white)
                             : null,
                       ),
                     ),
@@ -413,11 +414,11 @@ class _StandardCard extends StatelessWidget {
                       const Spacer(),
                       if (n.isPinned) Padding(
                         padding: const EdgeInsets.only(right: 6),
-                        child: Icon(Icons.push_pin_rounded, size: 12, color: isDark ? Colors.white38 : Colors.black38),
+                        child: Icon(Iconsax.bookmark, size: 12, color: isDark ? Colors.white38 : Colors.black38),
                       ),
                       if (n.isStarred) Padding(
                         padding: const EdgeInsets.only(right: 6),
-                        child: Icon(Icons.star_rounded, size: 12, color: const Color(0xFFD97706)),
+                        child: Icon(Iconsax.star, size: 12, color: const Color(0xFFD97706)),
                       ),
                       _TimeChip(dt: n.createdAt),
                     ],
@@ -460,7 +461,7 @@ class _RichCard extends StatelessWidget {
                 errorBuilder: (_, __, ___) => Container(
                   height: 140,
                   color: isDark ? Colors.white10 : Colors.black.withOpacity(0.05),
-                  child: Center(child: Icon(Icons.image_not_supported_outlined, color: isDark ? Colors.white30 : Colors.black26)),
+                  child: Center(child: Icon(Iconsax.gallery_slash, color: isDark ? Colors.white30 : Colors.black26)),
                 ),
               ),
             ),
@@ -573,7 +574,7 @@ class _ActionCard extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.check_rounded, size: 14, color: Colors.white),
+                          const Icon(Iconsax.tick_circle, size: 14, color: Colors.white),
                           const SizedBox(width: 4),
                           Text('Approve',
                             style: theme.textTheme.labelSmall?.copyWith(
@@ -600,7 +601,7 @@ class _ActionCard extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.close_rounded, size: 14, color: Color(0xFFDC2626)),
+                          const Icon(Iconsax.close_circle, size: 14, color: Color(0xFFDC2626)),
                           const SizedBox(width: 4),
                           Text('Reject',
                             style: theme.textTheme.labelSmall?.copyWith(
@@ -676,7 +677,7 @@ class _TimelineCard extends StatelessWidget {
                             border: Border.all(color: step.isCompleted ? meta.accentColor : Colors.transparent, width: 2),
                           ),
                           child: step.isCompleted
-                              ? Icon(Icons.check, size: 8, color: Colors.white)
+                              ? Icon(Iconsax.tick_circle, size: 8, color: Colors.white)
                               : null,
                         ),
                         if (!isLast)
@@ -870,12 +871,12 @@ class _SwipeBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (color, icon, label) = switch (action) {
-      AppNotificationSwipeAction.markRead => (const Color(0xFF0284C7), Icons.mark_email_read_rounded, 'Mark Read'),
-      AppNotificationSwipeAction.archive  => (const Color(0xFF6B7280), Icons.archive_rounded, 'Archive'),
-      AppNotificationSwipeAction.delete   => (const Color(0xFFDC2626), Icons.delete_rounded, 'Delete'),
-      AppNotificationSwipeAction.pin      => (const Color(0xFFD97706), Icons.push_pin_rounded, 'Pin'),
-      AppNotificationSwipeAction.mute     => (const Color(0xFF7C3AED), Icons.volume_off_rounded, 'Mute'),
-      AppNotificationSwipeAction.none     => (Colors.transparent, Icons.close, ''),
+      AppNotificationSwipeAction.markRead => (const Color(0xFF0284C7), Iconsax.sms_tracking, 'Mark Read'),
+      AppNotificationSwipeAction.archive  => (const Color(0xFF6B7280), Iconsax.archive_1, 'Archive'),
+      AppNotificationSwipeAction.delete   => (const Color(0xFFDC2626), Iconsax.trash, 'Delete'),
+      AppNotificationSwipeAction.pin      => (const Color(0xFFD97706), Iconsax.bookmark, 'Pin'),
+      AppNotificationSwipeAction.mute     => (const Color(0xFF7C3AED), Iconsax.volume_cross, 'Mute'),
+      AppNotificationSwipeAction.none     => (Colors.transparent, Iconsax.close_circle, ''),
     };
 
     return Container(
@@ -980,7 +981,7 @@ class AppNotificationEmptyState extends StatelessWidget {
     final theme  = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final hasSearch = searchQuery?.isNotEmpty == true;
-    final icon  = hasSearch ? Icons.search_off_rounded : kCategoryIcon[category]!;
+    final icon  = hasSearch ? Iconsax.search_status : kCategoryIcon[category]!;
     final title = hasSearch ? 'No results for "$searchQuery"' : _emptyTitle(category);
     final body  = hasSearch ? 'Try a different search term' : _emptyBody(category);
 

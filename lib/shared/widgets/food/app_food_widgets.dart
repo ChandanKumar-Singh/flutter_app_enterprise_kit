@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -183,7 +184,7 @@ class _CategoryIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Icon(
-      cat.icon ?? Icons.fastfood_rounded,
+      cat.icon ?? Iconsax.coffee,
       size: 30,
       color: cat.color ?? cs.primary,
     );
@@ -299,7 +300,7 @@ class _AppFilterBarState extends State<AppFilterBar> {
                         if (f.hasDropdown || f.trailingIcon != null) ...[
                           const SizedBox(width: 4),
                           Icon(
-                            f.trailingIcon ?? Icons.keyboard_arrow_down_rounded,
+                            f.trailingIcon ?? Iconsax.arrow_down_1,
                             size: 16,
                             color: selected ? Colors.white : cs.onSurfaceVariant,
                           ),
@@ -323,11 +324,11 @@ class _AppFilterBarState extends State<AppFilterBar> {
 
 /// Default Zomato-style filter set.
 List<AppFilterChip> appDefaultFilters() => const [
-  AppFilterChip(label: 'Sort', leadingIcon: Icons.sort_rounded, hasDropdown: true),
-  AppFilterChip(label: 'Fastest Delivery', leadingIcon: Icons.electric_bolt_rounded),
-  AppFilterChip(label: 'Rating 4.0+', leadingIcon: Icons.star_rounded),
-  AppFilterChip(label: 'Pure Veg', leadingIcon: Icons.eco_rounded),
-  AppFilterChip(label: 'Offers', leadingIcon: Icons.local_offer_rounded),
+  AppFilterChip(label: 'Sort', leadingIcon: Iconsax.sort, hasDropdown: true),
+  AppFilterChip(label: 'Fastest Delivery', leadingIcon: Iconsax.flash),
+  AppFilterChip(label: 'Rating 4.0+', leadingIcon: Iconsax.star),
+  AppFilterChip(label: 'Pure Veg', leadingIcon: Iconsax.milk),
+  AppFilterChip(label: 'Offers', leadingIcon: Iconsax.tag),
   AppFilterChip(label: 'New on App'),
   AppFilterChip(label: 'Less than ₹150'),
 ];
@@ -367,7 +368,7 @@ class AppLocationHeader extends StatelessWidget {
               color: cs.errorContainer,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.location_on_rounded, size: 18, color: cs.error),
+            child: Icon(Iconsax.location, size: 18, color: cs.error),
           ),
           const SizedBox(width: 10),
 
@@ -397,7 +398,7 @@ class AppLocationHeader extends StatelessWidget {
                             ),
                             if (onTap != null)
                               Icon(
-                                Icons.keyboard_arrow_down_rounded,
+                                Iconsax.arrow_down_1,
                                 size: 18,
                                 color: cs.onSurface,
                               ),
@@ -506,7 +507,7 @@ class AppOfferCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
-                    icon ?? Icons.local_offer_rounded,
+                    icon ?? Iconsax.tag,
                     color: Colors.white,
                     size: 22,
                   ),
@@ -660,7 +661,7 @@ class AppTopSearchBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: Row(
           children: [
-            Icon(Icons.search_rounded, color: cs.onSurfaceVariant, size: 22),
+            Icon(Iconsax.search_normal, color: cs.onSurfaceVariant, size: 22),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
@@ -681,7 +682,7 @@ class AppTopSearchBar extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.near_me_rounded, size: 12, color: cs.primary),
+                    Icon(Iconsax.direct_right, size: 12, color: cs.primary),
                     const SizedBox(width: 3),
                     Text(
                       location!,
@@ -703,14 +704,14 @@ class AppTopSearchBar extends StatelessWidget {
 
 // ─── Default food categories ──────────────────────────────────────────────────
 List<AppFoodCategory> appDefaultFoodCategories() => [
-  const AppFoodCategory(label: 'Pizza', icon: Icons.local_pizza_rounded, color: Color(0xFFDC2626)),
-  const AppFoodCategory(label: 'Burger', icon: Icons.lunch_dining_rounded, color: Color(0xFFD97706)),
-  const AppFoodCategory(label: 'Biryani', icon: Icons.restaurant_rounded, color: Color(0xFF7C3AED)),
-  const AppFoodCategory(label: 'Chinese', icon: Icons.ramen_dining_rounded, color: Color(0xFF0891B2)),
-  const AppFoodCategory(label: 'Desserts', icon: Icons.icecream_rounded, color: Color(0xFFEC4899)),
-  const AppFoodCategory(label: 'Salads', icon: Icons.eco_rounded, color: Color(0xFF16A34A)),
-  const AppFoodCategory(label: 'North Indian', icon: Icons.set_meal_rounded, color: Color(0xFFD97706)),
-  const AppFoodCategory(label: 'South Indian', icon: Icons.breakfast_dining_rounded, color: Color(0xFF2563EB)),
-  const AppFoodCategory(label: 'Rolls & Wraps', icon: Icons.food_bank_rounded, color: Color(0xFF7C3AED)),
-  const AppFoodCategory(label: 'Seafood', icon: Icons.set_meal_rounded, color: Color(0xFF0891B2)),
+  const AppFoodCategory(label: 'Pizza', icon: Iconsax.coffee, color: Color(0xFFDC2626)),
+  const AppFoodCategory(label: 'Burger', icon: Iconsax.coffee, color: Color(0xFFD97706)),
+  const AppFoodCategory(label: 'Biryani', icon: Iconsax.cup, color: Color(0xFF7C3AED)),
+  const AppFoodCategory(label: 'Chinese', icon: Iconsax.milk, color: Color(0xFF0891B2)),
+  const AppFoodCategory(label: 'Desserts', icon: Iconsax.cake, color: Color(0xFFEC4899)),
+  const AppFoodCategory(label: 'Salads', icon: Iconsax.milk, color: Color(0xFF16A34A)),
+  const AppFoodCategory(label: 'North Indian', icon: Iconsax.cup, color: Color(0xFFD97706)),
+  const AppFoodCategory(label: 'South Indian', icon: Iconsax.coffee, color: Color(0xFF2563EB)),
+  const AppFoodCategory(label: 'Rolls & Wraps', icon: Iconsax.bank, color: Color(0xFF7C3AED)),
+  const AppFoodCategory(label: 'Seafood', icon: Iconsax.cup, color: Color(0xFF0891B2)),
 ];

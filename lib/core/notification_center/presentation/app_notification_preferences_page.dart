@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../shared/widgets/cards/app_card.dart';
 import '../config/app_notification_config.dart';
 import '../controller/app_notification_controller.dart';
@@ -125,7 +126,7 @@ class AppNotificationPreferencesPage extends StatelessWidget {
               child: Column(
                 children: [
                   _ActionRow(
-                    icon: Icons.done_all_rounded,
+                    icon: Iconsax.tick_circle,
                     title: 'Mark all as read',
                     subtitle: '${controller.totalUnread} unread notifications',
                     color: const Color(0xFF0284C7),
@@ -134,7 +135,7 @@ class AppNotificationPreferencesPage extends StatelessWidget {
                   ),
                   Divider(height: 1, color: isDark ? Colors.white.withOpacity(0.06) : Colors.black.withOpacity(0.05), indent: 52),
                   _ActionRow(
-                    icon: Icons.manage_search_rounded,
+                    icon: Iconsax.search_normal,
                     title: 'Clear recent searches',
                     subtitle: '${controller.recentSearches.length} saved searches',
                     color: const Color(0xFF7C3AED),
@@ -362,7 +363,7 @@ class _ActionRow extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded, size: 18,
+             Icon(Iconsax.arrow_right_3, size: 18,
               color: isDark ? Colors.white30 : Colors.black26),
           ],
         ),

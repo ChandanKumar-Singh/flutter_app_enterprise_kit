@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -266,7 +267,7 @@ class _DevPanelState extends State<_DevPanel> with SingleTickerProviderStateMixi
                   const Spacer(),
                   IconButton(
                     icon: Icon(
-                      widget.showFps ? Icons.speed : Icons.speed_outlined,
+                      widget.showFps ? Iconsax.speedometer : Iconsax.speedometer,
                       color: widget.showFps ? accent : Colors.white54,
                       size: 20,
                     ),
@@ -276,7 +277,7 @@ class _DevPanelState extends State<_DevPanel> with SingleTickerProviderStateMixi
                     constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close_rounded, color: Colors.white54, size: 20),
+                    icon: const Icon(Iconsax.close_circle, color: Colors.white54, size: 20),
                     onPressed: widget.onClose,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
@@ -548,7 +549,7 @@ class _PrefsTabState extends State<_PrefsTab> {
                   });
                 },
                 child: Icon(
-                  isEditing ? Icons.check_rounded : Icons.edit_rounded,
+                  isEditing ? Iconsax.tick_circle : Iconsax.edit,
                   color: isEditing ? Colors.greenAccent : Colors.white38,
                   size: 14,
                 ),

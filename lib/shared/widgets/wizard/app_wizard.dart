@@ -18,7 +18,7 @@
 //       AppWizardStep(
 //         title: 'Personal Info',
 //         subtitle: 'Tell us about yourself',
-//         icon: Icons.person_rounded,
+//         icon: Iconsax.profile,
 //         canSkip: false,
 //         validate: () => _nameController.text.isNotEmpty,
 //         builder: (ctx, controller) => PersonalInfoForm(),
@@ -33,6 +33,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -426,7 +427,7 @@ class _WizardFooter extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                 ),
               ),
-              child: const Icon(Icons.arrow_back_rounded),
+              child: const Icon(Iconsax.arrow_left),
             ),
           if (step.canGoBack && !controller.isFirst)
             const SizedBox(width: AppSpacing.md),
@@ -471,7 +472,7 @@ class _WizardFooter extends StatelessWidget {
                       ),
                       if (!isLast) ...[
                         const SizedBox(width: AppSpacing.xs),
-                        const Icon(Icons.arrow_forward_rounded, size: 18),
+                        const Icon(Iconsax.arrow_right_1, size: 18),
                       ],
                     ],
                   ),
@@ -510,7 +511,7 @@ class AppWizardPage extends StatelessWidget {
           ? AppBar(
               title: Text(title!),
               leading: IconButton(
-                icon: const Icon(Icons.close_rounded),
+                icon: const Icon(Iconsax.close_circle),
                 onPressed: onCancelled ?? () => Navigator.of(context).maybePop(),
               ),
             )

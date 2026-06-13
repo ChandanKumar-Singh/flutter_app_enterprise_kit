@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 // ─── App Rating ───────────────────────────────────────────────────────────────
@@ -30,9 +31,9 @@ class AppRating extends StatefulWidget {
     this.halfAllowed = true,
     this.animated = true,
     this.onChanged,
-    this.activeIcon = Icons.star_rounded,
-    this.halfIcon = Icons.star_half_rounded,
-    this.inactiveIcon = Icons.star_outline_rounded,
+    this.activeIcon = Iconsax.star,
+    this.halfIcon = Iconsax.star,
+    this.inactiveIcon = Iconsax.star,
     this.alignment = MainAxisAlignment.start,
     this.itemBuilder,
     this.spacing = 4,
@@ -163,7 +164,7 @@ class AppRatingDisplay extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.star_rounded, color: const Color(0xFFFBBF24), size: size),
+        Icon(Iconsax.star, color: const Color(0xFFFBBF24), size: size),
         const SizedBox(width: 4),
         if (showLabel)
           Text(

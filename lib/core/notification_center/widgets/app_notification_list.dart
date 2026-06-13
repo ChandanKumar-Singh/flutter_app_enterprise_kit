@@ -8,6 +8,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../controller/app_notification_controller.dart';
 import '../models/app_notification_model.dart';
 import 'app_notification_card.dart';
@@ -156,7 +157,7 @@ class _SliverGroup extends StatelessWidget {
                       turns: isCollapsed ? -0.25 : 0,
                       duration: const Duration(milliseconds: 200),
                       child: Icon(
-                        Icons.expand_more_rounded, size: 16,
+                        Iconsax.arrow_down_1, size: 16,
                         color: isDark ? Colors.white30 : Colors.black26,
                       ),
                     ),
@@ -250,22 +251,22 @@ class _BulkActionBar extends StatelessWidget {
             const Spacer(),
 
             // Actions
-            _BulkButton(
-              icon: Icons.mark_email_read_rounded,
+             _BulkButton(
+              icon: Iconsax.sms_tracking,
               label: 'Read',
               onTap: count > 0 ? controller.bulkMarkRead : null,
               isDark: isDark,
             ),
             const SizedBox(width: 8),
             _BulkButton(
-              icon: Icons.archive_rounded,
+              icon: Iconsax.archive_1,
               label: 'Archive',
               onTap: count > 0 ? controller.bulkArchive : null,
               isDark: isDark,
             ),
             const SizedBox(width: 8),
             _BulkButton(
-              icon: Icons.delete_outline_rounded,
+              icon: Iconsax.trash,
               label: 'Delete',
               onTap: count > 0 ? controller.bulkDelete : null,
               color: const Color(0xFFDC2626),
@@ -282,7 +283,7 @@ class _BulkActionBar extends StatelessWidget {
                   color: isDark ? Colors.white10 : Colors.black.withOpacity(0.05),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.close_rounded, size: 16,
+                child: Icon(Iconsax.close_circle, size: 16,
                   color: isDark ? Colors.white54 : Colors.black54),
               ),
             ),

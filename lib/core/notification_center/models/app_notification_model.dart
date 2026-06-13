@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ── Enums ─────────────────────────────────────────────────────────────────────
 
@@ -82,19 +83,19 @@ class AppNotificationAction {
 
   static const approve = AppNotificationAction(
     id: 'approve', label: 'Approve',
-    icon: Icons.check_rounded,
+    icon: Iconsax.tick_circle,
     style: AppNotificationActionStyle.primary,
   );
 
   static const reject = AppNotificationAction(
     id: 'reject', label: 'Reject',
-    icon: Icons.close_rounded,
+    icon: Iconsax.close_circle,
     style: AppNotificationActionStyle.destructive,
   );
 
   static const view = AppNotificationAction(
     id: 'view', label: 'View',
-    icon: Icons.open_in_new_rounded,
+    icon: Iconsax.export,
   );
 }
 
@@ -262,26 +263,26 @@ class AppNotificationTypeMeta {
   });
 }
 
-const Map<AppNotificationType, AppNotificationTypeMeta> kNotificationTypeMeta = {
-  AppNotificationType.info:        AppNotificationTypeMeta(accentColor: Color(0xFF0284C7), icon: Icons.info_rounded),
-  AppNotificationType.success:     AppNotificationTypeMeta(accentColor: Color(0xFF16A34A), icon: Icons.check_circle_rounded),
-  AppNotificationType.warning:     AppNotificationTypeMeta(accentColor: Color(0xFFD97706), icon: Icons.warning_rounded, defaultPriority: AppNotificationPriority.high),
-  AppNotificationType.error:       AppNotificationTypeMeta(accentColor: Color(0xFFDC2626), icon: Icons.error_rounded, defaultPriority: AppNotificationPriority.high),
-  AppNotificationType.alert:       AppNotificationTypeMeta(accentColor: Color(0xFFDB2777), icon: Icons.notifications_active_rounded, defaultPriority: AppNotificationPriority.high),
-  AppNotificationType.security:    AppNotificationTypeMeta(accentColor: Color(0xFF7C3AED), icon: Icons.security_rounded, defaultPriority: AppNotificationPriority.critical),
-  AppNotificationType.transaction: AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Icons.swap_horiz_rounded),
-  AppNotificationType.payment:     AppNotificationTypeMeta(accentColor: Color(0xFF059669), icon: Icons.payments_rounded),
-  AppNotificationType.promotional: AppNotificationTypeMeta(accentColor: Color(0xFFEA580C), icon: Icons.local_offer_rounded),
-  AppNotificationType.marketing:   AppNotificationTypeMeta(accentColor: Color(0xFFD97706), icon: Icons.campaign_rounded),
-  AppNotificationType.reminder:    AppNotificationTypeMeta(accentColor: Color(0xFF0284C7), icon: Icons.alarm_rounded),
-  AppNotificationType.approval:    AppNotificationTypeMeta(accentColor: Color(0xFF7C3AED), icon: Icons.approval_rounded, defaultPriority: AppNotificationPriority.high),
-  AppNotificationType.assignment:  AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Icons.assignment_ind_rounded),
-  AppNotificationType.mention:     AppNotificationTypeMeta(accentColor: Color(0xFF2563EB), icon: Icons.alternate_email_rounded),
-  AppNotificationType.comment:     AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Icons.comment_rounded),
-  AppNotificationType.chat:        AppNotificationTypeMeta(accentColor: Color(0xFF059669), icon: Icons.chat_bubble_rounded),
-  AppNotificationType.systemUpdate: AppNotificationTypeMeta(accentColor: Color(0xFF6B7280), icon: Icons.system_update_rounded),
-  AppNotificationType.maintenance: AppNotificationTypeMeta(accentColor: Color(0xFF92400E), icon: Icons.build_rounded, defaultPriority: AppNotificationPriority.high),
-  AppNotificationType.announcement: AppNotificationTypeMeta(accentColor: Color(0xFF1D4ED8), icon: Icons.announcement_rounded),
+Map<AppNotificationType, AppNotificationTypeMeta> kNotificationTypeMeta = {
+  AppNotificationType.info:        const AppNotificationTypeMeta(accentColor: Color(0xFF0284C7), icon: Iconsax.info_circle),
+  AppNotificationType.success:     const AppNotificationTypeMeta(accentColor: Color(0xFF16A34A), icon: Iconsax.tick_circle),
+  AppNotificationType.warning:     const AppNotificationTypeMeta(accentColor: Color(0xFFD97706), icon: Iconsax.danger, defaultPriority: AppNotificationPriority.high),
+  AppNotificationType.error:       const AppNotificationTypeMeta(accentColor: Color(0xFFDC2626), icon: Iconsax.close_circle, defaultPriority: AppNotificationPriority.high),
+  AppNotificationType.alert:       const AppNotificationTypeMeta(accentColor: Color(0xFFDB2777), icon: Iconsax.notification_status, defaultPriority: AppNotificationPriority.high),
+  AppNotificationType.security:    const AppNotificationTypeMeta(accentColor: Color(0xFF7C3AED), icon: Iconsax.security, defaultPriority: AppNotificationPriority.critical),
+  AppNotificationType.transaction: const AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Iconsax.arrow_swap_horizontal),
+  AppNotificationType.payment:     const AppNotificationTypeMeta(accentColor: Color(0xFF059669), icon: Iconsax.card_receive),
+  AppNotificationType.promotional: const AppNotificationTypeMeta(accentColor: Color(0xFFEA580C), icon: Iconsax.tag),
+  AppNotificationType.marketing:   const AppNotificationTypeMeta(accentColor: Color(0xFFD97706), icon: Iconsax.voice_square),
+  AppNotificationType.reminder:    const AppNotificationTypeMeta(accentColor: Color(0xFF0284C7), icon: Iconsax.clock),
+  AppNotificationType.approval:    const AppNotificationTypeMeta(accentColor: Color(0xFF7C3AED), icon: Iconsax.verify, defaultPriority: AppNotificationPriority.high),
+  AppNotificationType.assignment:  const AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Iconsax.briefcase),
+  AppNotificationType.mention:     const AppNotificationTypeMeta(accentColor: Color(0xFF2563EB), icon: Iconsax.sms),
+  AppNotificationType.comment:     const AppNotificationTypeMeta(accentColor: Color(0xFF0891B2), icon: Iconsax.message_text),
+  AppNotificationType.chat:        const AppNotificationTypeMeta(accentColor: Color(0xFF059669), icon: Iconsax.messages_1),
+  AppNotificationType.systemUpdate:const AppNotificationTypeMeta(accentColor: Color(0xFF6B7280), icon: Iconsax.document_download),
+  AppNotificationType.maintenance: const AppNotificationTypeMeta(accentColor: Color(0xFF92400E), icon: Iconsax.setting_2, defaultPriority: AppNotificationPriority.high),
+  AppNotificationType.announcement:const AppNotificationTypeMeta(accentColor: Color(0xFF1D4ED8), icon: Iconsax.voice_square),
 };
 
 const Map<AppNotificationCategory, String> kCategoryLabel = {
@@ -300,16 +301,16 @@ const Map<AppNotificationCategory, String> kCategoryLabel = {
 };
 
 const Map<AppNotificationCategory, IconData> kCategoryIcon = {
-  AppNotificationCategory.all:       Icons.notifications_rounded,
-  AppNotificationCategory.unread:    Icons.mark_email_unread_rounded,
-  AppNotificationCategory.important: Icons.priority_high_rounded,
-  AppNotificationCategory.starred:   Icons.star_rounded,
-  AppNotificationCategory.archived:  Icons.archive_rounded,
-  AppNotificationCategory.mentions:  Icons.alternate_email_rounded,
-  AppNotificationCategory.system:    Icons.settings_rounded,
-  AppNotificationCategory.security:  Icons.security_rounded,
-  AppNotificationCategory.finance:   Icons.account_balance_rounded,
-  AppNotificationCategory.tasks:     Icons.task_alt_rounded,
-  AppNotificationCategory.messages:  Icons.chat_bubble_rounded,
-  AppNotificationCategory.updates:   Icons.system_update_rounded,
+  AppNotificationCategory.all:       Iconsax.notification,
+  AppNotificationCategory.unread:    Iconsax.sms_notification,
+  AppNotificationCategory.important: Iconsax.danger,
+  AppNotificationCategory.starred:   Iconsax.star,
+  AppNotificationCategory.archived:  Iconsax.archive_1,
+  AppNotificationCategory.mentions:  Iconsax.sms,
+  AppNotificationCategory.system:    Iconsax.setting,
+  AppNotificationCategory.security:  Iconsax.security,
+  AppNotificationCategory.finance:   Iconsax.empty_wallet,
+  AppNotificationCategory.tasks:     Iconsax.task,
+  AppNotificationCategory.messages:  Iconsax.message,
+  AppNotificationCategory.updates:   Iconsax.import,
 };

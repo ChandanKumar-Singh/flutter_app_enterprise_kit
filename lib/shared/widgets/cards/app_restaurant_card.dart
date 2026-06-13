@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -280,7 +281,7 @@ class _AppRestaurantCardState extends State<AppRestaurantCard>
     if (url == null) {
       return Container(
         color: const Color(0xFFF1F5F9),
-        child: const Icon(Icons.restaurant_rounded, color: Color(0xFF94A3B8), size: 32),
+        child: const Icon(Iconsax.cup, color: Color(0xFF94A3B8), size: 32),
       );
     }
     return CachedNetworkImage(
@@ -289,7 +290,7 @@ class _AppRestaurantCardState extends State<AppRestaurantCard>
       placeholder: (_, __) => const _ImageShimmer(),
       errorWidget: (_, __, ___) => Container(
         color: const Color(0xFFF1F5F9),
-        child: const Icon(Icons.restaurant_rounded, color: Color(0xFF94A3B8), size: 32),
+        child: const Icon(Iconsax.cup, color: Color(0xFF94A3B8), size: 32),
       ),
     );
   }
@@ -343,7 +344,7 @@ class _RestaurantImage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.schedule_rounded, color: Colors.white, size: 24),
+                    const Icon(Iconsax.clock, color: Colors.white, size: 24),
                     const SizedBox(height: 4),
                     Text(
                       closedMessage ?? 'Currently Closed',
@@ -443,7 +444,7 @@ class _RestaurantImage extends StatelessWidget {
                         height: 32,
                         color: Colors.white.withOpacity(0.7),
                         child: Icon(
-                          isFav ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+                          isFav ? Iconsax.heart : Iconsax.heart,
                           size: 16,
                           color: isFav ? const Color(0xFFDC2626) : const Color(0xFF94A3B8),
                         ),
@@ -526,7 +527,7 @@ class _RestaurantInfo extends StatelessWidget {
         Row(
           children: [
             if (deliveryTime != null) ...[
-              Icon(Icons.schedule_outlined, size: 13, color: cs.onSurfaceVariant),
+              Icon(Iconsax.clock, size: 13, color: cs.onSurfaceVariant),
               const SizedBox(width: 3),
               Text(
                 deliveryTime!,
@@ -535,7 +536,7 @@ class _RestaurantInfo extends StatelessWidget {
               const SizedBox(width: 10),
             ],
             if (distance != null) ...[
-              Icon(Icons.place_outlined, size: 13, color: cs.onSurfaceVariant),
+              Icon(Iconsax.location, size: 13, color: cs.onSurfaceVariant),
               const SizedBox(width: 3),
               Text(
                 distance!,
@@ -545,7 +546,7 @@ class _RestaurantInfo extends StatelessWidget {
             ],
             if (deliveryFee != null) ...[
               Icon(
-                Icons.electric_moped_outlined,
+                Iconsax.truck,
                 size: 13,
                 color: deliveryFee!.toLowerCase().contains('free')
                     ? const Color(0xFF16A34A)
@@ -577,7 +578,7 @@ class _RestaurantInfo extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.local_offer_rounded,
+                      Iconsax.tag,
                       size: 12,
                       color: o.color ?? const Color(0xFF1D4ED8),
                     ),
@@ -628,7 +629,7 @@ class _RatingBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            Icons.star_rounded,
+            Iconsax.star,
             size: compact ? 9 : 11,
             color: Colors.white,
           ),
@@ -654,7 +655,7 @@ class _PlaceholderImage extends StatelessWidget {
     return Container(
       color: const Color(0xFFF1F5F9),
       child: const Center(
-        child: Icon(Icons.restaurant_menu_rounded, color: Color(0xFFCBD5E1), size: 40),
+        child: Icon(Iconsax.cup, color: Color(0xFFCBD5E1), size: 40),
       ),
     );
   }
@@ -733,7 +734,7 @@ class AppRestaurantList extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.restaurant_outlined, size: 48, color: Theme.of(context).colorScheme.outlineVariant),
+              Icon(Iconsax.cup, size: 48, color: Theme.of(context).colorScheme.outlineVariant),
               const SizedBox(height: 12),
               Text(
                 emptyMessage ?? 'No restaurants found',

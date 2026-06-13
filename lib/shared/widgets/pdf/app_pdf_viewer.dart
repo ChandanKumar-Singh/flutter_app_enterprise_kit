@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/states/app_state_widget.dart';
@@ -132,7 +133,7 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
           actions: [
             if (widget.enableSearch)
               IconButton(
-                icon: Icon(_showSearch ? Icons.search_off : Icons.search),
+                icon: Icon(_showSearch ? Iconsax.search_normal : Iconsax.search_normal),
                 onPressed: () => setState(() => _showSearch = !_showSearch),
               ),
             if (_totalPages > 0)
@@ -224,12 +225,12 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(Icons.first_page),
+            icon: const Icon(Iconsax.arrow_left_1),
             onPressed: _currentPage > 1 ? () => _controller.jumpToPage(1) : null,
             tooltip: 'First page',
           ),
           IconButton(
-            icon: const Icon(Icons.chevron_left),
+            icon: const Icon(Iconsax.arrow_left_2),
             onPressed: _currentPage > 1 ? _controller.previousPage : null,
             tooltip: 'Previous',
           ),
@@ -239,20 +240,20 @@ class _AppPdfViewerState extends State<AppPdfViewer> {
                 style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
           ),
           IconButton(
-            icon: const Icon(Icons.chevron_right),
+            icon: const Icon(Iconsax.arrow_right_3),
             onPressed: _currentPage < _totalPages
                 ? _controller.nextPage : null,
             tooltip: 'Next',
           ),
           IconButton(
-            icon: const Icon(Icons.last_page),
+            icon: const Icon(Iconsax.arrow_right_2),
             onPressed: _currentPage < _totalPages
                 ? () => _controller.jumpToPage(_totalPages) : null,
             tooltip: 'Last page',
           ),
           if (widget.enableSearch)
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(Iconsax.search_normal),
               tooltip: 'Search',
               onPressed: () => _pdfKey.currentState?.openBookmarkView(),
             ),

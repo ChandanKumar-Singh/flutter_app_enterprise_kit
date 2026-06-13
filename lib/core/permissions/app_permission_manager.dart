@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 
@@ -607,140 +608,140 @@ class AppPermissionManager {
         title: 'Camera',
         rationale: 'We need camera access to let you take photos and scan documents directly in the app.',
         deniedMessage: 'Camera access is required. Please enable it in Settings → Privacy → Camera.',
-        icon: Icons.camera_alt_rounded,
+        icon: Iconsax.camera,
         color: Color(0xFF2563EB),
       ),
       AppPermissionType.photoLibrary => const AppPermissionMeta(
         title: 'Photo Library',
         rationale: 'We need access to your photos to let you select and upload images.',
         deniedMessage: 'Photo access is required. Enable it in Settings → Privacy → Photos.',
-        icon: Icons.photo_library_rounded,
+        icon: Iconsax.gallery,
         color: Color(0xFF7C3AED),
       ),
       AppPermissionType.photoLibraryAdd => const AppPermissionMeta(
         title: 'Save to Photos',
         rationale: 'We need permission to save images directly to your photo library.',
         deniedMessage: 'Photo library write access is required. Enable it in Settings → Privacy → Photos.',
-        icon: Icons.add_photo_alternate_rounded,
+        icon: Iconsax.gallery_add,
         color: Color(0xFF7C3AED),
       ),
       AppPermissionType.microphone => const AppPermissionMeta(
         title: 'Microphone',
         rationale: 'Microphone access is needed to record audio and enable voice features.',
         deniedMessage: 'Microphone access is required. Enable it in Settings → Privacy → Microphone.',
-        icon: Icons.mic_rounded,
+        icon: Iconsax.microphone,
         color: Color(0xFFDC2626),
       ),
       AppPermissionType.locationWhenInUse => const AppPermissionMeta(
         title: 'Location',
         rationale: 'Your location helps us show nearby services and provide accurate results.',
         deniedMessage: 'Location access is required. Enable it in Settings → Privacy → Location Services.',
-        icon: Icons.location_on_rounded,
+        icon: Iconsax.location,
         color: Color(0xFF16A34A),
       ),
       AppPermissionType.locationAlways => const AppPermissionMeta(
         title: 'Background Location',
         rationale: 'Always-on location allows us to send relevant alerts even when the app is closed.',
         deniedMessage: 'Background location is required. Enable "Always" in Settings → Privacy → Location Services.',
-        icon: Icons.my_location_rounded,
+        icon: Iconsax.gps,
         color: Color(0xFF15803D),
       ),
       AppPermissionType.notifications => const AppPermissionMeta(
         title: 'Notifications',
         rationale: 'Enable notifications to receive order updates, delivery alerts, and important messages.',
         deniedMessage: 'Notifications are disabled. Enable them in Settings → Notifications.',
-        icon: Icons.notifications_rounded,
+        icon: Iconsax.notification,
         color: Color(0xFFD97706),
       ),
       AppPermissionType.contacts => const AppPermissionMeta(
         title: 'Contacts',
         rationale: 'Contact access lets you quickly share or invite friends already in your phonebook.',
         deniedMessage: 'Contacts access is required. Enable it in Settings → Privacy → Contacts.',
-        icon: Icons.contacts_rounded,
+        icon: Iconsax.profile_2user,
         color: Color(0xFF0891B2),
       ),
       AppPermissionType.storage => const AppPermissionMeta(
         title: 'Storage',
         rationale: 'Storage access lets the app read and save files on your device.',
         deniedMessage: 'Storage access is required. Enable it in Settings → Privacy → Files & Media.',
-        icon: Icons.folder_rounded,
+        icon: Iconsax.folder,
         color: Color(0xFF65A30D),
       ),
       AppPermissionType.calendarRead => const AppPermissionMeta(
         title: 'Calendar (Read)',
         rationale: 'Calendar read access lets us check your schedule to avoid conflicts.',
         deniedMessage: 'Calendar access is required. Enable it in Settings → Privacy → Calendars.',
-        icon: Icons.calendar_today_rounded,
+        icon: Iconsax.calendar,
         color: Color(0xFFEC4899),
       ),
       AppPermissionType.calendarWrite => const AppPermissionMeta(
         title: 'Calendar (Write)',
         rationale: 'Calendar write access lets us add bookings and reminders to your calendar.',
         deniedMessage: 'Calendar write access is required. Enable it in Settings → Privacy → Calendars.',
-        icon: Icons.edit_calendar_rounded,
+        icon: Iconsax.calendar_edit,
         color: Color(0xFFEC4899),
       ),
       AppPermissionType.bluetooth => const AppPermissionMeta(
         title: 'Bluetooth',
         rationale: 'Bluetooth access is needed to connect to nearby devices and accessories.',
         deniedMessage: 'Bluetooth access is required. Enable it in Settings → Privacy → Bluetooth.',
-        icon: Icons.bluetooth_rounded,
+        icon: Iconsax.bluetooth,
         color: Color(0xFF1D4ED8),
       ),
       AppPermissionType.bluetoothScan => const AppPermissionMeta(
         title: 'Nearby Devices',
         rationale: 'Bluetooth scan permission lets us find nearby devices.',
         deniedMessage: 'Nearby devices access is required. Enable Bluetooth in Settings.',
-        icon: Icons.bluetooth_searching_rounded,
+        icon: Iconsax.bluetooth_circle,
         color: Color(0xFF1D4ED8),
       ),
       AppPermissionType.phone => const AppPermissionMeta(
         title: 'Phone',
         rationale: 'Phone access lets you call support or contacts directly from the app.',
         deniedMessage: 'Phone access is required. Enable it in Settings → Apps → Permissions → Phone.',
-        icon: Icons.phone_rounded,
+        icon: Iconsax.call,
         color: Color(0xFF16A34A),
       ),
       AppPermissionType.sms => const AppPermissionMeta(
         title: 'SMS',
         rationale: 'SMS access lets us auto-read OTP verification codes sent to your phone.',
         deniedMessage: 'SMS access is required. Enable it in Settings → Apps → Permissions → SMS.',
-        icon: Icons.sms_rounded,
+        icon: Iconsax.sms,
         color: Color(0xFF7C3AED),
       ),
       AppPermissionType.speechRecognition => const AppPermissionMeta(
         title: 'Speech Recognition',
         rationale: 'Speech recognition lets you use voice commands and voice-to-text features.',
         deniedMessage: 'Speech recognition access is required. Enable it in Settings → Privacy → Speech Recognition.',
-        icon: Icons.record_voice_over_rounded,
+        icon: Iconsax.microphone_2,
         color: Color(0xFF0891B2),
       ),
       AppPermissionType.activityRecognition => const AppPermissionMeta(
         title: 'Physical Activity',
         rationale: 'Activity access lets us track steps and fitness data for health features.',
         deniedMessage: 'Activity recognition access is required. Enable it in Settings → Privacy → Motion & Fitness.',
-        icon: Icons.directions_run_rounded,
+        icon: Iconsax.activity,
         color: Color(0xFF16A34A),
       ),
       AppPermissionType.appTracking => const AppPermissionMeta(
         title: 'Personalized Ads',
         rationale: 'Allow tracking to see ads that are more relevant to your interests. You can change this at any time.',
         deniedMessage: 'Tracking is disabled. You can change this in Settings → Privacy → Tracking.',
-        icon: Icons.ads_click_rounded,
+        icon: Iconsax.mouse,
         color: Color(0xFF64748B),
       ),
       AppPermissionType.nearbyWifi => const AppPermissionMeta(
         title: 'Nearby Wi-Fi Devices',
         rationale: 'Wi-Fi scan access is needed to discover and connect to nearby devices.',
         deniedMessage: 'Nearby Wi-Fi access is required. Enable it in Settings → Apps → Permissions.',
-        icon: Icons.wifi_tethering_rounded,
+        icon: Iconsax.wifi,
         color: Color(0xFF0891B2),
       ),
       AppPermissionType.manageExternalStorage => const AppPermissionMeta(
         title: 'Manage All Files',
         rationale: 'Full file management access lets you import and export any file on your device.',
         deniedMessage: 'File management access requires granting "All Files Access" in Settings → Privacy.',
-        icon: Icons.folder_open_rounded,
+        icon: Iconsax.folder_open,
         color: Color(0xFFD97706),
       ),
     };
@@ -1015,7 +1016,7 @@ class _PermissionSettingsDialog extends StatelessWidget {
                 color: cs.errorContainer,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.lock_rounded, color: cs.error, size: 26),
+              child: Icon(Iconsax.lock, color: cs.error, size: 26),
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -1031,7 +1032,7 @@ class _PermissionSettingsDialog extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             AppButton.filled(
-              icon: const Icon(Icons.settings_rounded, size: 18),
+              icon: const Icon(Iconsax.setting, size: 18),
               label: 'Open Settings',
               onPressed: () async {
                 Navigator.pop(context);
@@ -1144,31 +1145,31 @@ class _AppPermissionTileState extends State<AppPermissionTile> {
       case AppPermissionStatus.granted:
         statusColor = const Color(0xFF16A34A);
         statusLabel = 'Granted';
-        statusIcon = Icons.check_circle_rounded;
+        statusIcon = Iconsax.tick_circle;
       case AppPermissionStatus.limited:
         statusColor = const Color(0xFFD97706);
         statusLabel = 'Limited';
-        statusIcon = Icons.info_rounded;
+        statusIcon = Iconsax.info_circle;
       case AppPermissionStatus.denied:
         statusColor = cs.error;
         statusLabel = 'Denied';
-        statusIcon = Icons.cancel_rounded;
+        statusIcon = Iconsax.close_circle;
       case AppPermissionStatus.permanentlyDenied:
         statusColor = cs.error;
         statusLabel = 'Blocked';
-        statusIcon = Icons.block_rounded;
+        statusIcon = Iconsax.forbidden_2;
       case AppPermissionStatus.restricted:
         statusColor = cs.onSurfaceVariant;
         statusLabel = 'Restricted';
-        statusIcon = Icons.lock_rounded;
+        statusIcon = Iconsax.lock;
       case AppPermissionStatus.notApplicable:
         statusColor = cs.onSurfaceVariant;
         statusLabel = 'N/A';
-        statusIcon = Icons.remove_circle_outline_rounded;
+        statusIcon = Iconsax.minus_cirlce;
       case null:
         statusColor = cs.onSurfaceVariant;
         statusLabel = 'Checking…';
-        statusIcon = Icons.hourglass_empty_rounded;
+        statusIcon = Iconsax.timer;
     }
 
     final isGranted = status == AppPermissionStatus.granted || status == AppPermissionStatus.limited;

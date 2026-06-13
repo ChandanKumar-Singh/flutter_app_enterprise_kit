@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/core/toast/app_toast.dart';
 import 'package:enterprise_kit/shared/widgets/banners/app_banner.dart';
@@ -105,7 +106,7 @@ class _ToastShowcase extends StatelessWidget {
           children: [
             _DemoButton(
               'Success',
-              icon: Icons.check_circle,
+              icon: Iconsax.tick_circle,
               color: Colors.green,
               onTap: () => AppToastController.instance.success(
                 'Operation completed successfully!',
@@ -114,7 +115,7 @@ class _ToastShowcase extends StatelessWidget {
             ),
             _DemoButton(
               'Error',
-              icon: Icons.error,
+              icon: Iconsax.danger,
               color: Colors.red,
               onTap: () => AppToastController.instance.error(
                 'Something went wrong. Please try again.',
@@ -123,7 +124,7 @@ class _ToastShowcase extends StatelessWidget {
             ),
             _DemoButton(
               'Warning',
-              icon: Icons.warning,
+              icon: Iconsax.warning_2,
               color: Colors.orange,
               onTap: () => AppToastController.instance.warning(
                 'This action may have side effects.',
@@ -132,7 +133,7 @@ class _ToastShowcase extends StatelessWidget {
             ),
             _DemoButton(
               'Info',
-              icon: Icons.info,
+              icon: Iconsax.info_circle,
               color: Colors.blue,
               onTap: () => AppToastController.instance.info(
                 'Here is some helpful information.',
@@ -144,7 +145,7 @@ class _ToastShowcase extends StatelessWidget {
         _SectionTitle('Toast with Action'),
         _DemoButton(
           'With Undo Action',
-          icon: Icons.undo,
+          icon: Iconsax.rotate_left,
           onTap: () => AppToastController.instance.show(
             message: 'Item deleted from list.',
             type: AppToastType.warning,
@@ -156,13 +157,13 @@ class _ToastShowcase extends StatelessWidget {
         _SectionTitle('Toast Positions'),
         _ShowcaseRow(
           children: [
-            _DemoButton('Top', icon: Icons.arrow_upward,
+            _DemoButton('Top', icon: Iconsax.arrow_up,
               onTap: () => AppToastController.instance.info(
                 'Toast from top!', position: AppToastPosition.top)),
-            _DemoButton('Center', icon: Icons.center_focus_strong,
+            _DemoButton('Center', icon: Iconsax.scan,
               onTap: () => AppToastController.instance.info(
                 'Toast at center!', position: AppToastPosition.center)),
-            _DemoButton('Bottom', icon: Icons.arrow_downward,
+            _DemoButton('Bottom', icon: Iconsax.arrow_down,
               onTap: () => AppToastController.instance.info(
                 'Toast from bottom!', position: AppToastPosition.bottom)),
           ],
@@ -171,7 +172,7 @@ class _ToastShowcase extends StatelessWidget {
         Builder(builder: (ctx) {
           return _DemoButton(
             'Show Loading',
-            icon: Icons.hourglass_empty,
+            icon: Iconsax.timer,
             onTap: () async {
               final id = AppToastController.instance.loading('Processing...');
               await Future.delayed(const Duration(seconds: 2));
@@ -195,40 +196,55 @@ class _BannerShowcase extends StatelessWidget {
         _SectionTitle('App-level Banners (add to top of screen)'),
         _ShowcaseRow(
           children: [
-            _DemoButton('Info Banner', icon: Icons.info_outline, color: Colors.blue,
+            _DemoButton('Info Banner', icon: Iconsax.info_circle, color: Colors.blue,
               onTap: () => AppBannerController.instance.show(
                 message: 'This is an important notification banner.',
                 title: 'Information',
                 type: AppBannerType.info,
               )),
-            _DemoButton('Warning', icon: Icons.warning_amber, color: Colors.orange,
+            _DemoButton('Warning', icon: Iconsax.warning_2, color: Colors.orange,
               onTap: () => AppBannerController.instance.show(
                 message: 'Your session expires in 5 minutes.',
                 type: AppBannerType.warning,
               )),
           ],
         ),
-        _DemoButton('Offline Banner (dismissible: false)', icon: Icons.wifi_off,
+        _DemoButton('Offline Banner (dismissible: false)', icon: Iconsax.wifi_square,
           onTap: () => AppBannerController.instance.offline()),
-        _DemoButton('Dismiss All Banners', icon: Icons.close,
+        _DemoButton('Dismiss All Banners', icon: Iconsax.close_circle,
           onTap: () => AppBannerController.instance.dismissAll()),
         _SectionTitle('Inline Banner Widgets'),
-        const AppBannerWidget(
-          message: 'Your payment method expires soon. Update to avoid interruption.',
-          title: 'Action Required',
-          type: AppBannerType.warning,
-          actions: [AppBannerAction(label: 'Update Now', onTap: _noop)],
+        AppBannerWidget(
+          embedded: true,
+          banner: AppBannerData(
+            id: 'demo_warning',
+            message: 'Your payment method expires soon. Update to avoid interruption.',
+            title: 'Action Required',
+            type: AppBannerType.warning,
+            actions: [AppBannerAction(label: 'Update Now', onTap: _noop)],
+          ),
+          onDismiss: _noop,
         ),
         const SizedBox(height: 8),
-        const AppBannerWidget(
-          message: 'New features available in this update.',
-          type: AppBannerType.announcement,
-          dismissible: false,
+        AppBannerWidget(
+          embedded: true,
+          banner: AppBannerData(
+            id: 'demo_announcement',
+            message: 'New features available in this update.',
+            type: AppBannerType.announcement,
+            dismissible: false,
+          ),
+          onDismiss: _noop,
         ),
         const SizedBox(height: 8),
-        const AppBannerWidget(
-          message: 'All systems operational.',
-          type: AppBannerType.success,
+        AppBannerWidget(
+          embedded: true,
+          banner: AppBannerData(
+            id: 'demo_success',
+            message: 'All systems operational.',
+            type: AppBannerType.success,
+          ),
+          onDismiss: _noop,
         ),
       ],
     );
@@ -274,7 +290,7 @@ class _GradientShowcase extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.lock_outline, color: Colors.white, size: 32),
+                  Icon(Iconsax.lock, color: Colors.white, size: 32),
                   SizedBox(height: 8),
                   Text('Glassmorphism Card',
                       style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
@@ -305,10 +321,10 @@ class _GradientShowcase extends StatelessWidget {
         const Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            AppGradientIcon(icon: Icons.star_rounded, gradient: AppGradients.fire, size: 40),
-            AppGradientIcon(icon: Icons.favorite_rounded, gradient: AppGradients.sunset, size: 40),
-            AppGradientIcon(icon: Icons.bolt_rounded, gradient: AppGradients.aurora, size: 40),
-            AppGradientIcon(icon: Icons.diamond_rounded, gradient: AppGradients.lavender, size: 40),
+            AppGradientIcon(icon: Iconsax.star, gradient: AppGradients.fire, size: 40),
+            AppGradientIcon(icon: Iconsax.heart, gradient: AppGradients.sunset, size: 40),
+            AppGradientIcon(icon: Iconsax.flash, gradient: AppGradients.aurora, size: 40),
+            AppGradientIcon(icon: Iconsax.award, gradient: AppGradients.lavender, size: 40),
           ],
         ),
       ],
@@ -398,9 +414,9 @@ class _TagShowcase extends StatelessWidget {
           spacing: 8,
           runSpacing: 8,
           children: [
-            AppTag(label: 'New', leadingIcon: Icons.new_releases_rounded, status: AppTagStatus.success),
-            AppTag(label: 'Featured', leadingIcon: Icons.star_rounded, status: AppTagStatus.warning),
-            AppTag(label: 'Sale', leadingIcon: Icons.local_offer_rounded, status: AppTagStatus.error),
+            AppTag(label: 'New', leadingIcon: Iconsax.flash, status: AppTagStatus.success),
+            AppTag(label: 'Featured', leadingIcon: Iconsax.star, status: AppTagStatus.warning),
+            AppTag(label: 'Sale', leadingIcon: Iconsax.tag, status: AppTagStatus.error),
           ],
         ),
         _SectionTitle('Toggleable Tag Group'),
@@ -783,10 +799,10 @@ class _PaginationWrapperShowcaseState extends State<_PaginationWrapperShowcase> 
                 controller: _searchCtrl,
                 decoration: InputDecoration(
                   labelText: 'Search items locally',
-                  prefixIcon: const Icon(Icons.search_rounded),
+                  prefixIcon: const Icon(Iconsax.search_normal),
                   suffixIcon: _searchCtrl.text.isNotEmpty
                       ? IconButton(
-                          icon: const Icon(Icons.clear_rounded),
+                          icon: const Icon(Iconsax.close_circle),
                           onPressed: () => _searchCtrl.clear(),
                         )
                       : null,
@@ -809,13 +825,13 @@ class _PaginationWrapperShowcaseState extends State<_PaginationWrapperShowcase> 
                   Row(
                     children: [
                       IconButton.filledTonal(
-                        icon: const Icon(Icons.arrow_upward_rounded, size: 18),
+                        icon: const Icon(Iconsax.arrow_up, size: 18),
                         tooltip: 'Scroll to top',
                         onPressed: _controller.scrollToTop,
                       ),
                       const SizedBox(width: AppSpacing.xs),
                       IconButton.filledTonal(
-                        icon: const Icon(Icons.refresh_rounded, size: 18),
+                        icon: const Icon(Iconsax.refresh, size: 18),
                         tooltip: 'Refresh',
                         onPressed: _controller.refresh,
                       ),
@@ -845,11 +861,11 @@ class _PaginationWrapperShowcaseState extends State<_PaginationWrapperShowcase> 
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: colors.primary.withOpacity(0.1),
-                  child: Icon(Icons.shopping_bag_outlined, color: colors.primary, size: 20),
+                  child: Icon(Iconsax.shopping_bag, color: colors.primary, size: 20),
                 ),
                 title: Text(item, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: const Text('Enterprise ready catalog item'),
-                trailing: const Icon(Icons.chevron_right_rounded),
+                trailing: const Icon(Iconsax.arrow_right_3),
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
@@ -123,7 +124,7 @@ class AppDialog {
       message: message,
       closeLabel: closeLabel,
       color: Colors.green,
-      icon: Icons.check_circle_outline,
+      icon: Iconsax.tick_circle,
     ),
   );
 
@@ -159,7 +160,7 @@ class AppDialog {
       message: message,
       closeLabel: closeLabel,
       color: Colors.orange,
-      icon: Icons.warning_amber_outlined,
+      icon: Iconsax.danger,
     ),
   );
 
@@ -395,7 +396,7 @@ class _DangerDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final errorColor = Theme.of(context).colorScheme.error;
     return _DialogContainer(
-      icon: Icon(Icons.delete_outline, color: errorColor, size: 28),
+      icon: Icon(Iconsax.trash, color: errorColor, size: 28),
       iconContainerColor: errorColor,
       isDestructive: true,
       title: title,
@@ -583,7 +584,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return _DialogContainer(
-      icon: Icon(Icons.error_outline, color: colors.error, size: 28),
+      icon: Icon(Iconsax.danger, color: colors.error, size: 28),
       iconContainerColor: colors.error,
       isDestructive: true,
       title: widget.title,
@@ -602,7 +603,7 @@ class _ErrorDialogState extends State<_ErrorDialog> {
                 children: [
                   Text('Details',
                       style: TextStyle(color: colors.primary, fontSize: 13, fontWeight: FontWeight.w600)),
-                  Icon(_showDetails ? Icons.expand_less : Icons.expand_more,
+                  Icon(_showDetails ? Iconsax.arrow_up_2 : Iconsax.arrow_down_1,
                       size: 16, color: colors.primary),
                 ],
               ),

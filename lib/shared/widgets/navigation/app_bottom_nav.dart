@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -307,7 +308,7 @@ class AppSectionHeader extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Icon(Icons.chevron_right_rounded, size: 16, color: cs.primary),
+                  Icon(Iconsax.arrow_right_3, size: 16, color: cs.primary),
                 ],
               ),
             ),

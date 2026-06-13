@@ -8,6 +8,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../models/app_notification_model.dart';
 
 // ── Channel config ────────────────────────────────────────────────────────────
@@ -29,23 +30,23 @@ class AppNotificationChannelConfig {
 
   static const push = AppNotificationChannelConfig(
     channel: AppNotificationChannel.push, label: 'Push Notifications',
-    icon: Icons.notifications_rounded,
+    icon: Iconsax.notification,
   );
   static const email = AppNotificationChannelConfig(
     channel: AppNotificationChannel.email, label: 'Email',
-    icon: Icons.email_rounded,
+    icon: Iconsax.sms,
   );
   static const sms = AppNotificationChannelConfig(
     channel: AppNotificationChannel.sms, label: 'SMS',
-    icon: Icons.sms_rounded, enabledByDefault: false,
+    icon: Iconsax.sms, enabledByDefault: false,
   );
   static const whatsapp = AppNotificationChannelConfig(
     channel: AppNotificationChannel.whatsapp, label: 'WhatsApp',
-    icon: Icons.chat_rounded, enabledByDefault: false,
+    icon: Iconsax.message, enabledByDefault: false,
   );
   static const inApp = AppNotificationChannelConfig(
     channel: AppNotificationChannel.inApp, label: 'In-App',
-    icon: Icons.web_rounded,
+    icon: Iconsax.monitor,
   );
 }
 

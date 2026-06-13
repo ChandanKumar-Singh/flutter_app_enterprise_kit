@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
 // ─── Card Variants ─────────────────────────────────────────────────────────────
@@ -393,7 +394,7 @@ class AppCard extends StatelessWidget {
       title: title != null ? Text(title!) : null,
       subtitle: subtitle != null ? Text(subtitle!) : null,
       trailing: trailing ?? (onTap != null
-          ? Icon(Icons.chevron_right, color: colors.onSurfaceVariant) : null),
+          ? Icon(Iconsax.arrow_right_3, color: colors.onSurfaceVariant) : null),
       onTap: onTap,
     );
   }
@@ -489,7 +490,7 @@ class AppCard extends StatelessWidget {
                   color: colors.onSurfaceVariant)),
             ],
           )),
-          Icon(Icons.arrow_forward_ios, size: 16, color: colors.onSurfaceVariant),
+          Icon(Iconsax.arrow_right_3, size: 16, color: colors.onSurfaceVariant),
         ],
       ),
     );

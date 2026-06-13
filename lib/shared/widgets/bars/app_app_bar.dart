@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -175,7 +176,7 @@ class _AppAppBarState extends State<AppAppBar> {
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
                         child: _GlassButton(
-                          child: Icon(Icons.arrow_back_ios_rounded, size: 18, color: fgColor),
+                          child: Icon(Iconsax.arrow_left_2, size: 18, color: fgColor),
                           onTap: () => Navigator.pop(context),
                           visible: _blurProgress > 0.3,
                         ),

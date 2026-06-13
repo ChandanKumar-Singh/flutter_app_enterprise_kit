@@ -4,6 +4,7 @@
 
 import 'package:enterprise_kit/core/notifications/index.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -31,15 +32,15 @@ class _ServicesShowcasePageState extends State<ServicesShowcasePage>
   late final TabController _tab;
 
   static const _tabs = [
-    (icon: Icons.notifications_rounded,  label: 'Notifications'),
-    (icon: Icons.flag_rounded,           label: 'Flags'),
-    (icon: Icons.fingerprint_rounded,    label: 'Biometric'),
-    (icon: Icons.lock_rounded,           label: 'Enc Storage'),
-    (icon: Icons.storage_rounded,        label: 'Cache'),
-    (icon: Icons.linear_scale_rounded,   label: 'Wizard'),
-    (icon: Icons.search_rounded,         label: 'Search'),
-    (icon: Icons.bar_chart_rounded,      label: 'Charts'),
-    (icon: Icons.system_update_rounded,  label: 'Updates'),
+    (icon: Iconsax.notification,  label: 'Notifications'),
+    (icon: Iconsax.flag,           label: 'Flags'),
+    (icon: Iconsax.finger_scan,    label: 'Biometric'),
+    (icon: Iconsax.lock,           label: 'Enc Storage'),
+    (icon: Iconsax.archive,        label: 'Cache'),
+    (icon: Iconsax.routing,   label: 'Wizard'),
+    (icon: Iconsax.search_normal,         label: 'Search'),
+    (icon: Iconsax.chart,      label: 'Charts'),
+    (icon: Iconsax.refresh,  label: 'Updates'),
   ];
 
   @override
@@ -189,7 +190,7 @@ class _DemoButton extends StatelessWidget {
           child: Icon(icon, color: color ?? cs.primary, size: 20),
         ),
         title: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+        trailing: const Icon(Iconsax.arrow_right_3, size: 14),
         onTap: () {
           HapticFeedback.lightImpact();
           onTap();
@@ -220,12 +221,12 @@ class _NotificationsTab extends StatelessWidget {
         _DemoSection(
           title: 'AppNotificationService',
           subtitle: 'flutter_local_notifications with channel routing',
-          icon: Icons.notifications_rounded,
+          icon: Iconsax.notification,
           color: const Color(0xFF7C3AED),
           children: [
             _DemoButton(
               label: 'Request Permission',
-              icon: Icons.security_rounded,
+              icon: Iconsax.security,
               color: const Color(0xFF7C3AED),
               onTap: () async {
                 final granted =
@@ -239,7 +240,7 @@ class _NotificationsTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Show Order Notification',
-              icon: Icons.shopping_bag_rounded,
+              icon: Iconsax.shopping_bag,
               color: const Color(0xFF16A34A),
               onTap: () => AppNotificationService.instance.show(
                 id: AppNotificationId.orderUpdate,
@@ -251,7 +252,7 @@ class _NotificationsTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Show Promo Notification',
-              icon: Icons.local_offer_rounded,
+              icon: Iconsax.tag,
               color: const Color(0xFFD97706),
               onTap: () => AppNotificationService.instance.show(
                 id: AppNotificationId.promoAlert,
@@ -262,7 +263,7 @@ class _NotificationsTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Cancel All Notifications',
-              icon: Icons.clear_all_rounded,
+              icon: Iconsax.trash,
               color: const Color(0xFFDC2626),
               onTap: () async {
                 await AppNotificationService.instance.cancelAll();
@@ -326,7 +327,7 @@ class _FeatureFlagsTabState extends State<_FeatureFlagsTab> {
         _DemoSection(
           title: 'AppFeatureFlags',
           subtitle: 'Type-safe toggle system with override support',
-          icon: Icons.flag_rounded,
+          icon: Iconsax.flag,
           color: const Color(0xFF0891B2),
           children: [
             // Live toggle
@@ -372,7 +373,7 @@ class _FeatureFlagsTabState extends State<_FeatureFlagsTab> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.remove_rounded),
+                            icon: const Icon(Iconsax.minus),
                             onPressed: () => AppFeatureFlags.instance
                                 .setOverride(_demoMaxItems, (_maxItems - 1).clamp(1, 20)),
                           ),
@@ -381,7 +382,7 @@ class _FeatureFlagsTabState extends State<_FeatureFlagsTab> {
                                 fontWeight: FontWeight.w800,
                               )),
                           IconButton(
-                            icon: const Icon(Icons.add_rounded),
+                            icon: const Icon(Iconsax.add),
                             onPressed: () => AppFeatureFlags.instance
                                 .setOverride(_demoMaxItems, (_maxItems + 1).clamp(1, 20)),
                           ),
@@ -394,7 +395,7 @@ class _FeatureFlagsTabState extends State<_FeatureFlagsTab> {
                         AppFeatureFlags.instance.clearAllOverrides();
                         _showResult(context, 'All overrides cleared');
                       },
-                      icon: const Icon(Icons.refresh_rounded, size: 16),
+                      icon: const Icon(Iconsax.refresh, size: 16),
                       label: const Text('Clear all overrides'),
                     ),
                   ],
@@ -421,12 +422,12 @@ class _BiometricTab extends StatelessWidget {
         _DemoSection(
           title: 'AppBiometricAuthService',
           subtitle: 'Fingerprint / Face ID with session locking',
-          icon: Icons.fingerprint_rounded,
+          icon: Iconsax.finger_scan,
           color: const Color(0xFF7C3AED),
           children: [
             _DemoButton(
               label: 'Check Availability',
-              icon: Icons.info_rounded,
+              icon: Iconsax.info_circle,
               onTap: () async {
                 final cap =
                     await AppBiometricAuthService.instance.getCapability();
@@ -439,7 +440,7 @@ class _BiometricTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Authenticate',
-              icon: Icons.fingerprint_rounded,
+              icon: Iconsax.finger_scan,
               color: const Color(0xFF7C3AED),
               onTap: () async {
                 final result =
@@ -458,7 +459,7 @@ class _BiometricTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Show Lock Screen',
-              icon: Icons.lock_rounded,
+              icon: Iconsax.lock,
               color: const Color(0xFF0891B2),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<void>(
@@ -515,7 +516,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
         _DemoSection(
           title: 'AppEncryptedStorage',
           subtitle: 'AES-256 GCM encrypted SharedPreferences',
-          icon: Icons.lock_rounded,
+          icon: Iconsax.lock,
           color: const Color(0xFF16A34A),
           children: [
             Padding(
@@ -526,7 +527,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                     controller: _keyCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Key',
-                      prefixIcon: Icon(Icons.key_rounded),
+                      prefixIcon: Icon(Iconsax.key),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -535,7 +536,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                     controller: _valCtrl,
                     decoration: const InputDecoration(
                       labelText: 'Value (plaintext)',
-                      prefixIcon: Icon(Icons.text_fields_rounded),
+                      prefixIcon: Icon(Iconsax.document_text),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -551,7 +552,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                               _showResult(context, 'Encrypted & saved ✓');
                             }
                           },
-                          icon: const Icon(Icons.save_rounded, size: 16),
+                          icon: const Icon(Iconsax.save_2, size: 16),
                           label: const Text('Encrypt & Save'),
                         ),
                       ),
@@ -563,7 +564,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                                 .getString(_keyCtrl.text);
                             setState(() => _readValue = val ?? '(not found)');
                           },
-                          icon: const Icon(Icons.lock_open_rounded, size: 16),
+                          icon: const Icon(Iconsax.unlock, size: 16),
                           label: const Text('Decrypt & Read'),
                         ),
                       ),
@@ -579,7 +580,7 @@ class _EncStorageTabState extends State<_EncStorageTab> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.check_circle_rounded,
+                          Icon(Iconsax.tick_circle,
                               color: cs.primary, size: 16),
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
@@ -638,7 +639,7 @@ class _CacheTabState extends State<_CacheTab> {
         _DemoSection(
           title: 'AppCacheManager',
           subtitle: 'L1 memory + L2 persistent cache with TTL',
-          icon: Icons.storage_rounded,
+          icon: Iconsax.archive,
           color: const Color(0xFFD97706),
           children: [
             if (stats != null)
@@ -668,7 +669,7 @@ class _CacheTabState extends State<_CacheTab> {
               ),
             _DemoButton(
               label: 'Cache a value (5s TTL)',
-              icon: Icons.add_rounded,
+              icon: Iconsax.add,
               color: const Color(0xFF16A34A),
               onTap: () async {
                 await AppCacheManager.instance.set(
@@ -684,7 +685,7 @@ class _CacheTabState extends State<_CacheTab> {
             ),
             _DemoButton(
               label: 'Read cached value',
-              icon: Icons.read_more_rounded,
+              icon: Iconsax.document_text,
               onTap: () async {
                 final val = await AppCacheManager.instance.get('demo/showcase');
                 _refresh();
@@ -696,7 +697,7 @@ class _CacheTabState extends State<_CacheTab> {
             ),
             _DemoButton(
               label: 'Clear all cache',
-              icon: Icons.delete_sweep_rounded,
+              icon: Iconsax.trash,
               color: const Color(0xFFDC2626),
               onTap: () async {
                 await AppCacheManager.instance.clearAll();
@@ -747,12 +748,12 @@ class _WizardTab extends StatelessWidget {
         _DemoSection(
           title: 'AppWizardFlow',
           subtitle: 'Multi-step progressive disclosure',
-          icon: Icons.linear_scale_rounded,
+          icon: Iconsax.routing,
           color: const Color(0xFF7C3AED),
           children: [
             _DemoButton(
               label: 'Open 3-Step Wizard',
-              icon: Icons.open_in_new_rounded,
+              icon: Iconsax.export,
               color: const Color(0xFF7C3AED),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute<void>(
@@ -769,20 +770,20 @@ class _WizardTab extends StatelessWidget {
                       AppWizardStep(
                         title: 'Welcome',
                         subtitle: 'Let\'s get you set up in just a few steps.',
-                        icon: Icons.waving_hand_rounded,
+                        icon: Iconsax.emoji_happy,
                         builder: (_, ctrl) => const _WizardStep1(),
                       ),
                       AppWizardStep(
                         title: 'Your Preferences',
                         subtitle: 'Customise your experience.',
-                        icon: Icons.tune_rounded,
+                        icon: Iconsax.candle_2,
                         canSkip: true,
                         builder: (_, ctrl) => const _WizardStep2(),
                       ),
                       AppWizardStep(
                         title: 'All Set!',
                         subtitle: 'You\'re ready to go.',
-                        icon: Icons.check_circle_rounded,
+                        icon: Iconsax.tick_circle,
                         nextLabel: 'Get Started',
                         canGoBack: false,
                         builder: (_, ctrl) => const _WizardStep3(),
@@ -833,7 +834,7 @@ class _WizardStep3 extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Icon(Icons.check_circle_rounded, size: 80, color: cs.primary),
+          Icon(Iconsax.tick_circle, size: 80, color: cs.primary),
           const SizedBox(height: AppSpacing.lg),
           Text('All done!',
               style: Theme.of(context)
@@ -869,7 +870,7 @@ class _DemoSearchDelegate extends AppSearchDelegate<String> {
         .map((s) => AppSearchResult(
               title: s,
               subtitle: 'Electronics',
-              icon: Icons.shopping_bag_rounded,
+              icon: Iconsax.shopping_bag,
               data: s,
             ))
         .toList();
@@ -879,9 +880,9 @@ class _DemoSearchDelegate extends AppSearchDelegate<String> {
   Future<List<AppSearchResult<String>>> suggestions() async {
     return [
       const AppSearchResult(
-        title: 'iPhone 15 Pro', subtitle: 'Trending', icon: Icons.trending_up_rounded),
+        title: 'iPhone 15 Pro', subtitle: 'Trending', icon: Iconsax.trend_up),
       const AppSearchResult(
-        title: 'MacBook Air', subtitle: 'Popular', icon: Icons.laptop_rounded),
+        title: 'MacBook Air', subtitle: 'Popular', icon: Iconsax.monitor),
     ];
   }
 
@@ -902,12 +903,12 @@ class _SearchTab extends StatelessWidget {
         _DemoSection(
           title: 'AppSearchOverlay',
           subtitle: 'Debounced full-screen search with history',
-          icon: Icons.search_rounded,
+          icon: Iconsax.search_normal,
           color: const Color(0xFF0891B2),
           children: [
             _DemoButton(
               label: 'Open Search Overlay',
-              icon: Icons.search_rounded,
+              icon: Iconsax.search_normal,
               color: const Color(0xFF0891B2),
               onTap: () => AppSearchOverlay.show(
                 context,
@@ -977,7 +978,7 @@ class _ChartsTab extends StatelessWidget {
         _DemoSection(
           title: 'AppLineChart',
           subtitle: 'Smooth area chart with gradient fill',
-          icon: Icons.show_chart_rounded,
+          icon: Iconsax.chart,
           color: const Color(0xFF7C3AED),
           children: [
             Padding(
@@ -999,7 +1000,7 @@ class _ChartsTab extends StatelessWidget {
         const _DemoSection(
           title: 'AppBarChart',
           subtitle: 'Vertical bar chart with touch tooltips',
-          icon: Icons.bar_chart_rounded,
+          icon: Iconsax.chart,
           color: Color(0xFF0891B2),
           children: [
             Padding(
@@ -1014,7 +1015,7 @@ class _ChartsTab extends StatelessWidget {
         const _DemoSection(
           title: 'AppPieChart',
           subtitle: 'Donut chart with legend',
-          icon: Icons.pie_chart_rounded,
+          icon: Iconsax.chart_1,
           color: Color(0xFF16A34A),
           children: [
             Padding(
@@ -1031,7 +1032,7 @@ class _ChartsTab extends StatelessWidget {
         const _DemoSection(
           title: 'AppSparkline',
           subtitle: 'Inline compact trend chart',
-          icon: Icons.trending_up_rounded,
+          icon: Iconsax.trend_up,
           color: Color(0xFFD97706),
           children: [
             Padding(
@@ -1131,12 +1132,12 @@ class _UpdateCheckerTab extends StatelessWidget {
         _DemoSection(
           title: 'AppUpdateService',
           subtitle: 'Version gate with force-update + optional sheet',
-          icon: Icons.system_update_rounded,
+          icon: Iconsax.refresh,
           color: const Color(0xFF0891B2),
           children: [
             _DemoButton(
               label: 'Show Optional Update Sheet',
-              icon: Icons.new_releases_rounded,
+              icon: Iconsax.flash,
               color: const Color(0xFF0891B2),
               onTap: () => showModalBottomSheet<void>(
                 context: context,
@@ -1149,7 +1150,7 @@ class _UpdateCheckerTab extends StatelessWidget {
             ),
             _DemoButton(
               label: 'Show Force Update Dialog',
-              icon: Icons.block_rounded,
+              icon: Iconsax.forbidden_2,
               color: const Color(0xFFDC2626),
               onTap: () => showDialog<void>(
                 context: context,
@@ -1202,7 +1203,7 @@ class _AppOptionalUpdateSheetPreview extends StatelessWidget {
                   color: cs.primaryContainer,
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                 ),
-                child: Icon(Icons.new_releases_rounded, color: cs.primary, size: 28),
+                child: Icon(Iconsax.flash, color: cs.primary, size: 28),
               ),
               const SizedBox(width: AppSpacing.md),
               Column(
@@ -1244,7 +1245,7 @@ class _AppOptionalUpdateSheetPreview extends StatelessWidget {
                 flex: 2,
                 child: FilledButton.icon(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.download_rounded),
+                  icon: const Icon(Iconsax.document_download),
                   label: const Text('Update'),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
@@ -1283,7 +1284,7 @@ class _AppForceUpdateDialogPreview extends StatelessWidget {
               color: cs.primaryContainer,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.system_update_rounded, size: 36, color: cs.primary),
+            child: Icon(Iconsax.refresh, size: 36, color: cs.primary),
           ),
           const SizedBox(height: AppSpacing.lg),
           Text('Update Required',
@@ -1302,7 +1303,7 @@ class _AppForceUpdateDialogPreview extends StatelessWidget {
             width: double.infinity,
             child: FilledButton.icon(
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.download_rounded),
+              icon: const Icon(Iconsax.document_download),
               label: const Text('Update Now'),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),

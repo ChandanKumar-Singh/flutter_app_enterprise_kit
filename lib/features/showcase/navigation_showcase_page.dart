@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/navigation/index.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/core/toast/app_toast.dart';
@@ -16,28 +17,28 @@ final _demoRoots = <AppNavigationNode>[
   AppNavigationNode.group(
     id: 'infrastructure',
     label: 'Infrastructure',
-    icon: Icons.dns_rounded,
+    icon: Iconsax.cpu,
     accentColor: const Color(0xFF0891B2),
     children: [
       AppNavigationNode.leaf(
         id: 'clusters',
         label: 'Clusters',
         description: 'Kubernetes cluster management',
-        icon: Icons.hub_rounded,
+        icon: Iconsax.hierarchy,
         route: '/infra/clusters',
         accentColor: const Color(0xFF0891B2),
       ),
       AppNavigationNode.group(
         id: 'databases',
         label: 'Databases',
-        icon: Icons.storage_rounded,
+        icon: Iconsax.archive,
         accentColor: const Color(0xFF7C3AED),
         children: [
           AppNavigationNode.leaf(
             id: 'db-postgres',
             label: 'PostgreSQL',
             description: 'Relational databases',
-            icon: Icons.table_chart_rounded,
+            icon: Iconsax.row_vertical,
             route: '/infra/databases/postgres',
             badge: '3',
           ),
@@ -45,21 +46,21 @@ final _demoRoots = <AppNavigationNode>[
             id: 'db-mongo',
             label: 'MongoDB',
             description: 'Document stores',
-            icon: Icons.data_object_rounded,
+            icon: Iconsax.code,
             route: '/infra/databases/mongo',
           ),
           AppNavigationNode.leaf(
             id: 'db-redis',
             label: 'Redis',
             description: 'In-memory cache',
-            icon: Icons.memory_rounded,
+            icon: Iconsax.cpu,
             route: '/infra/databases/redis',
           ),
           AppNavigationNode.leaf(
             id: 'db-backups',
             label: 'Backups',
             description: 'Scheduled backup policies',
-            icon: Icons.backup_rounded,
+            icon: Iconsax.cloud_change,
             route: '/infra/databases/backups',
             permissions: AppNavigationPermissions({_kDevOpsPerm}),
           ),
@@ -69,14 +70,14 @@ final _demoRoots = <AppNavigationNode>[
         id: 'storage',
         label: 'Object Storage',
         description: 'S3-compatible buckets',
-        icon: Icons.folder_rounded,
+        icon: Iconsax.folder,
         route: '/infra/storage',
       ),
       AppNavigationNode.leaf(
         id: 'networking',
         label: 'Networking',
         description: 'VPCs, subnets, load balancers',
-        icon: Icons.lan_rounded,
+        icon: Iconsax.routing,
         route: '/infra/networking',
         accentColor: const Color(0xFF16A34A),
       ),
@@ -84,7 +85,7 @@ final _demoRoots = <AppNavigationNode>[
         id: 'monitoring',
         label: 'Monitoring',
         description: 'Alerts, dashboards, SLOs',
-        icon: Icons.monitor_heart_rounded,
+        icon: Iconsax.activity,
         route: '/infra/monitoring',
         badge: '!',
         accentColor: const Color(0xFFDC2626),
@@ -95,35 +96,35 @@ final _demoRoots = <AppNavigationNode>[
   AppNavigationNode.group(
     id: 'applications',
     label: 'Applications',
-    icon: Icons.apps_rounded,
+    icon: Iconsax.element_4,
     accentColor: const Color(0xFF7C3AED),
     children: [
       AppNavigationNode.leaf(
         id: 'app-mobile',
         label: 'Mobile Apps',
         description: 'iOS & Android deployments',
-        icon: Icons.smartphone_rounded,
+        icon: Iconsax.mobile,
         route: '/apps/mobile',
       ),
       AppNavigationNode.leaf(
         id: 'app-web',
         label: 'Web Apps',
         description: 'Frontend & PWA deployments',
-        icon: Icons.web_rounded,
+        icon: Iconsax.monitor,
         route: '/apps/web',
       ),
       AppNavigationNode.leaf(
         id: 'app-apis',
         label: 'APIs & Backends',
         description: 'REST, gRPC, GraphQL services',
-        icon: Icons.api_rounded,
+        icon: Iconsax.link,
         route: '/apps/apis',
       ),
       AppNavigationNode.leaf(
         id: 'app-admin',
         label: 'Admin Panels',
         description: 'Internal tooling',
-        icon: Icons.admin_panel_settings_rounded,
+        icon: Iconsax.security_user,
         route: '/apps/admin',
         permissions: AppNavigationPermissions({_kAdminPerm}),
         badge: 'ADMIN',
@@ -135,28 +136,28 @@ final _demoRoots = <AppNavigationNode>[
   AppNavigationNode.group(
     id: 'services',
     label: 'Platform Services',
-    icon: Icons.settings_rounded,
+    icon: Iconsax.setting,
     accentColor: const Color(0xFF16A34A),
     children: [
       AppNavigationNode.leaf(
         id: 'svc-auth',
         label: 'Authentication',
         description: 'OAuth2, JWT, SSO providers',
-        icon: Icons.lock_rounded,
+        icon: Iconsax.lock,
         route: '/services/auth',
       ),
       AppNavigationNode.leaf(
         id: 'svc-notif',
         label: 'Notifications',
         description: 'Push, email, SMS delivery',
-        icon: Icons.notifications_rounded,
+        icon: Iconsax.notification,
         route: '/services/notifications',
       ),
       AppNavigationNode.leaf(
         id: 'svc-payments',
         label: 'Payments',
         description: 'Razorpay, Stripe integrations',
-        icon: Icons.payments_rounded,
+        icon: Iconsax.wallet_3,
         route: '/services/payments',
         permissions: AppNavigationPermissions({_kAdminPerm}),
       ),
@@ -164,7 +165,7 @@ final _demoRoots = <AppNavigationNode>[
         id: 'svc-files',
         label: 'File Storage',
         description: 'Uploads, CDN, image transforms',
-        icon: Icons.upload_file_rounded,
+        icon: Iconsax.document_upload,
         route: '/services/files',
       ),
     ],
@@ -173,7 +174,7 @@ final _demoRoots = <AppNavigationNode>[
   AppNavigationNode.group(
     id: 'security',
     label: 'Security',
-    icon: Icons.shield_rounded,
+    icon: Iconsax.shield,
     accentColor: const Color(0xFFDC2626),
     permissions: AppNavigationPermissions({_kAdminPerm}),
     children: [
@@ -181,14 +182,14 @@ final _demoRoots = <AppNavigationNode>[
         id: 'sec-roles',
         label: 'Roles & Permissions',
         description: 'RBAC management',
-        icon: Icons.manage_accounts_rounded,
+        icon: Iconsax.profile_2user,
         route: '/security/roles',
       ),
       AppNavigationNode.leaf(
         id: 'sec-audit',
         label: 'Audit Logs',
         description: 'Full activity trail',
-        icon: Icons.history_edu_rounded,
+        icon: Iconsax.document_text,
         route: '/security/audit',
       ),
     ],
@@ -197,21 +198,21 @@ final _demoRoots = <AppNavigationNode>[
   AppNavigationNode.group(
     id: 'analytics',
     label: 'Analytics',
-    icon: Icons.bar_chart_rounded,
+    icon: Iconsax.chart,
     accentColor: const Color(0xFFD97706),
     children: [
       AppNavigationNode.leaf(
         id: 'ana-dashboards',
         label: 'Dashboards',
         description: 'Real-time KPI views',
-        icon: Icons.dashboard_rounded,
+        icon: Iconsax.category,
         route: '/analytics/dashboards',
       ),
       AppNavigationNode.leaf(
         id: 'ana-reports',
         label: 'Reports',
         description: 'Scheduled & ad-hoc reports',
-        icon: Icons.assessment_rounded,
+        icon: Iconsax.chart_2,
         route: '/analytics/reports',
       ),
     ],
@@ -222,19 +223,19 @@ final _demoBottomNodes = <AppNavigationNode>[
   AppNavigationNode.leaf(
     id: 'settings',
     label: 'Settings',
-    icon: Icons.tune_rounded,
+    icon: Iconsax.candle_2,
     route: '/settings',
   ),
   AppNavigationNode.leaf(
     id: 'help',
     label: 'Help & Support',
-    icon: Icons.help_outline_rounded,
+    icon: Iconsax.info_circle,
     route: '/help',
   ),
   AppNavigationNode.leaf(
     id: 'docs',
     label: 'Documentation',
-    icon: Icons.menu_book_rounded,
+    icon: Iconsax.book,
     externalUrl: 'https://docs.anandians.dev',
     accentColor: const Color(0xFF0891B2),
   ),
@@ -372,7 +373,7 @@ class _ControlsBar extends StatelessWidget {
       color: cs.primaryContainer.withOpacity(0.4),
       child: Row(
         children: [
-          Icon(Icons.tune_rounded, size: 13, color: cs.primary),
+          Icon(Iconsax.candle_2, size: 13, color: cs.primary),
           const SizedBox(width: 6),
           Text('Permissions:',
               style: theme.textTheme.labelSmall?.copyWith(
@@ -439,7 +440,7 @@ class _PermChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              active ? Icons.check_circle_rounded : Icons.circle_outlined,
+              active ? Iconsax.tick_circle : Iconsax.record,
               size: 10,
               color: active ? color : color.withOpacity(0.5),
             ),
@@ -493,7 +494,7 @@ class _WelcomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.rocket_launch_rounded, size: 56, color: cs.primary),
+          Icon(Iconsax.flash, size: 56, color: cs.primary),
           const SizedBox(height: AppSpacing.lg),
           Text('Anandians Infra Platform',
               style: theme.textTheme.headlineSmall?.copyWith(
@@ -540,7 +541,7 @@ class _NodePage extends StatelessWidget {
                   color: color.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                 ),
-                child: Icon(node.icon ?? Icons.article_rounded,
+                child: Icon(node.icon ?? Iconsax.document_text,
                     color: color, size: 22),
               ),
               const SizedBox(width: AppSpacing.md),
@@ -562,7 +563,7 @@ class _NodePage extends StatelessWidget {
               ),
               IconButton.filledTonal(
                 icon: Icon(
-                  isFav ? Icons.star_rounded : Icons.star_outline_rounded,
+                  isFav ? Iconsax.star : Iconsax.star_1,
                   size: 18,
                   color: isFav ? const Color(0xFFD97706) : null,
                 ),
@@ -621,7 +622,7 @@ class _NodePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(node.icon ?? Icons.web_rounded,
+                Icon(node.icon ?? Iconsax.monitor,
                     size: 40, color: color.withOpacity(0.25)),
                 const SizedBox(height: AppSpacing.sm),
                 Text(

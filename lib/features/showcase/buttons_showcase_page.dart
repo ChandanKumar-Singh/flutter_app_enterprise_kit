@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
 
@@ -49,7 +50,7 @@ class _ButtonsShowcasePageState extends State<ButtonsShowcasePage> {
 
           _Section('States', [
             AppButton.filled(label: 'Loading', onPressed: () {}, isLoading: _loading,
-              icon: const Icon(Icons.download)),
+              icon: const Icon(Iconsax.document_download)),
             const SizedBox(height: 8),
             AppButton.filled(label: 'Disabled', onPressed: null),
             const SizedBox(height: 8),
@@ -63,32 +64,32 @@ class _ButtonsShowcasePageState extends State<ButtonsShowcasePage> {
             AppButton.filled(
               label: 'Leading Icon',
               onPressed: () {},
-              icon: const Icon(Icons.star_outlined, size: 18),
+              icon: const Icon(Iconsax.star, size: 18),
             ),
             const SizedBox(height: 8),
             AppButton(
               label: 'Trailing Icon',
               onPressed: () {},
-              trailingIcon: const Icon(Icons.arrow_forward, size: 18),
+              trailingIcon: const Icon(Iconsax.arrow_right_1, size: 18),
               variant: AppButtonVariant.outlined,
             ),
             const SizedBox(height: 8),
             Row(children: [
               AppButton.icon(
-                icon: const Icon(Icons.favorite_outline),
+                icon: const Icon(Iconsax.heart),
                 onPressed: () {},
                 tooltip: 'Favourite',
               ),
               const SizedBox(width: 8),
               AppButton.icon(
-                icon: const Icon(Icons.share_outlined),
+                icon: const Icon(Iconsax.send_2),
                 onPressed: () {},
                 tooltip: 'Share',
                 backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
               ),
               const SizedBox(width: 8),
               AppButton.icon(
-                icon: const Icon(Icons.delete_outline),
+                icon: const Icon(Iconsax.trash),
                 onPressed: () {},
                 foregroundColor: Theme.of(context).colorScheme.error,
                 tooltip: 'Delete',
@@ -99,12 +100,12 @@ class _ButtonsShowcasePageState extends State<ButtonsShowcasePage> {
           _Section('FAB', [
             Row(children: [
               AppButton.fab(
-                icon: const Icon(Icons.add),
+                icon: const Icon(Iconsax.add),
                 onPressed: () {},
               ),
               const SizedBox(width: 16),
               AppButton.fab(
-                icon: const Icon(Icons.edit),
+                icon: const Icon(Iconsax.edit),
                 label: 'Edit',
                 onPressed: () {},
               ),

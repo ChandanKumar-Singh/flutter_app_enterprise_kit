@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -318,7 +319,7 @@ class AppSheetHeader extends StatelessWidget {
                   color: cs.surfaceContainerHighest,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.close_rounded, size: 16, color: cs.onSurface),
+                child: Icon(Iconsax.close_circle, size: 16, color: cs.onSurface),
               ),
               onPressed: onClose,
             ),
@@ -438,7 +439,7 @@ class AppOptionSheet extends StatelessWidget {
                           ? Text(opt.description!, style: TextStyle(color: cs.onSurfaceVariant))
                           : null,
                       trailing: isSelected
-                          ? Icon(Icons.check_circle_rounded, color: cs.primary)
+                          ? Icon(Iconsax.tick_circle, color: cs.primary)
                           : null,
                       onTap: () {
                         onSelected?.call(i);

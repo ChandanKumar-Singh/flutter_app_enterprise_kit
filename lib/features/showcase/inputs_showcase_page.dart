@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/validators/form_validators.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
@@ -31,7 +32,7 @@ class _InputsShowcasePageState extends State<InputsShowcasePage> {
             const SizedBox(height: AppSpacing.md),
             AppTextField.multiline(label: 'Notes', hint: 'Write something...', maxLength: 500, showCharacterCount: true),
             const SizedBox(height: AppSpacing.md),
-            AppTextField.number(label: 'Amount', hint: '0.00', allowDecimals: true, suffixIcon: const Icon(Icons.attach_money)),
+            AppTextField.number(label: 'Amount', hint: '0.00', allowDecimals: true, suffixIcon: const Icon(Iconsax.wallet_money)),
             const SizedBox(height: AppSpacing.md),
             const AppTextField(label: 'Read Only', initialValue: 'Cannot edit this', readOnly: true),
             const SizedBox(height: AppSpacing.md),

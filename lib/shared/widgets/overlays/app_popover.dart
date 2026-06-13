@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -19,7 +20,7 @@ enum AppPopoverPosition { top, bottom, left, right, auto }
 /// ```dart
 /// AppPopoverAnchor(
 ///   popover: Text('Hello!'),
-///   child: IconButton(icon: Icon(Icons.info), onPressed: null),
+///   child: IconButton(icon: Icon(Iconsax.info_circle), onPressed: null),
 /// )
 /// ```
 class AppPopoverAnchor extends StatefulWidget {

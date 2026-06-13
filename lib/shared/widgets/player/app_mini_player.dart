@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -285,8 +286,8 @@ class _MiniBar extends StatelessWidget {
                       color: accentColor.withOpacity(0.2),
                       child: data.imageUrl != null
                           ? Image.network(data.imageUrl!, fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => Icon(Icons.music_note_rounded, color: accentColor, size: 20))
-                          : Icon(Icons.music_note_rounded, color: accentColor, size: 20),
+                              errorBuilder: (_, __, ___) => Icon(Iconsax.musicnote, color: accentColor, size: 20))
+                          : Icon(Iconsax.musicnote, color: accentColor, size: 20),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -305,13 +306,13 @@ class _MiniBar extends StatelessWidget {
                   ),
                   // Controls
                   IconButton(
-                    icon: Icon(data.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, size: 28),
+                    icon: Icon(data.isPlaying ? Iconsax.pause : Iconsax.play, size: 28),
                     onPressed: onPlayPause,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.skip_next_rounded, size: 24),
+                    icon: const Icon(Iconsax.next, size: 24),
                     onPressed: onNext,
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
@@ -381,14 +382,14 @@ class _ExpandedPlayer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_down_rounded, size: 28),
+                  icon: const Icon(Iconsax.arrow_down_1, size: 28),
                   onPressed: onCollapse,
                   color: cs.onSurface,
                 ),
                 Text('Now Playing', style: theme.textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w600, color: cs.onSurface.withOpacity(0.7))),
                 IconButton(
-                  icon: const Icon(Icons.more_vert_rounded),
+                  icon: const Icon(Iconsax.more),
                   onPressed: () {},
                   color: cs.onSurface,
                 ),
@@ -422,7 +423,7 @@ class _ExpandedPlayer extends StatelessWidget {
                         ),
                         child: data.imageUrl != null
                             ? Image.network(data.imageUrl!, fit: BoxFit.cover)
-                            : Icon(Icons.music_note_rounded, size: 80, color: accentColor),
+                            : Icon(Iconsax.musicnote, size: 80, color: accentColor),
                       ),
                     ),
                   ),
@@ -454,7 +455,7 @@ class _ExpandedPlayer extends StatelessWidget {
                     duration: const Duration(milliseconds: 200),
                     transitionBuilder: (c, a) => ScaleTransition(scale: a, child: c),
                     child: Icon(
-                      data.isLiked ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                      data.isLiked ? Iconsax.heart : Iconsax.heart,
                       key: ValueKey(data.isLiked),
                       color: data.isLiked ? Colors.red : cs.onSurface,
                     ),
@@ -508,12 +509,12 @@ class _ExpandedPlayer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.shuffle_rounded, size: 22),
+                  icon: const Icon(Iconsax.shuffle, size: 22),
                   onPressed: () {},
                   color: cs.onSurface.withOpacity(0.6),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.skip_previous_rounded, size: 36),
+                  icon: const Icon(Iconsax.previous, size: 36),
                   onPressed: onPrevious,
                   color: cs.onSurface,
                 ),
@@ -536,7 +537,7 @@ class _ExpandedPlayer extends StatelessWidget {
                       duration: const Duration(milliseconds: 200),
                       transitionBuilder: (c, a) => ScaleTransition(scale: a, child: c),
                       child: Icon(
-                        data.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                        data.isPlaying ? Iconsax.pause : Iconsax.play,
                         key: ValueKey(data.isPlaying),
                         size: 32,
                         color: Colors.white,
@@ -545,12 +546,12 @@ class _ExpandedPlayer extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.skip_next_rounded, size: 36),
+                  icon: const Icon(Iconsax.next, size: 36),
                   onPressed: onNext,
                   color: cs.onSurface,
                 ),
                 IconButton(
-                  icon: const Icon(Icons.repeat_rounded, size: 22),
+                  icon: const Icon(Iconsax.repeat, size: 22),
                   onPressed: () {},
                   color: cs.onSurface.withOpacity(0.6),
                 ),

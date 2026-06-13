@@ -11,12 +11,12 @@
 //   final root = AppNavigationNode.group(
 //     id: 'infrastructure',
 //     label: 'Infrastructure',
-//     icon: Icons.dns_rounded,
+//     icon: Iconsax.cpu,
 //     children: [
 //       AppNavigationNode.leaf(
 //         id: 'databases',
 //         label: 'Databases',
-//         icon: Icons.storage_rounded,
+//         icon: Iconsax.archive,
 //         route: '/infra/databases',
 //       ),
 //     ],
@@ -24,6 +24,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
 
 // ── Permission set ─────────────────────────────────────────────────────────────
 

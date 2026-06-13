@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/cards/app_card.dart';
 
@@ -31,7 +32,7 @@ class CardsShowcasePage extends StatelessWidget {
           _label(context, 'Media'),
           AppCard.media(
             media: Container(height: 160, color: Colors.blue.shade100,
-                child: const Icon(Icons.image, size: 64, color: Colors.blue)),
+                child: const Icon(Iconsax.image, size: 64, color: Colors.blue)),
             title: 'Media Card',
             subtitle: 'Card with media area at top',
             body: 'This card contains a media area above content.',
@@ -45,14 +46,14 @@ class CardsShowcasePage extends StatelessWidget {
               title: 'Total Users',
               value: '12.4K',
               subtitle: '+8.3% this week',
-              leading: Icon(Icons.people_outline, color: Colors.blue.shade600, size: 32),
+              leading: Icon(Iconsax.profile_2user, color: Colors.blue.shade600, size: 32),
             )),
             const SizedBox(width: AppSpacing.sm),
             Expanded(child: AppCard.stat(
               title: 'Revenue',
               value: '\$48.2K',
               subtitle: '+12% vs last month',
-              leading: Icon(Icons.attach_money, color: Colors.green.shade600, size: 32),
+              leading: Icon(Iconsax.wallet_money, color: Colors.green.shade600, size: 32),
             )),
           ]),
           const SizedBox(height: AppSpacing.md),
@@ -61,7 +62,7 @@ class CardsShowcasePage extends StatelessWidget {
           AppCard.list(
             title: 'List Card', subtitle: 'Subtitle text goes here',
             leading: CircleAvatar(backgroundColor: Colors.blue.shade100,
-                child: Icon(Icons.person_outline, color: Colors.blue.shade700)),
+                child: Icon(Iconsax.profile, color: Colors.blue.shade700)),
             onTap: () {},
           ),
           const SizedBox(height: AppSpacing.md),
@@ -69,7 +70,7 @@ class CardsShowcasePage extends StatelessWidget {
           _label(context, 'Profile'),
           AppCard.profile(
             name: 'John Appleseed', role: 'Senior Engineer',
-            avatar: const Icon(Icons.person),
+            avatar: const Icon(Iconsax.profile),
             actions: [
               TextButton(onPressed: () {}, child: const Text('Message')),
               TextButton(onPressed: () {}, child: const Text('Follow')),
@@ -82,7 +83,7 @@ class CardsShowcasePage extends StatelessWidget {
             title: 'Gradient Card',
             subtitle: 'With linear gradient background',
             gradientColors: [Colors.blue.shade400, Colors.purple.shade600],
-            trailing: const Icon(Icons.star, color: Colors.white),
+            trailing: const Icon(Iconsax.star, color: Colors.white),
           ),
           const SizedBox(height: AppSpacing.md),
 
@@ -90,7 +91,7 @@ class CardsShowcasePage extends StatelessWidget {
           AppCard.action(
             title: 'Notifications',
             subtitle: 'Manage your alerts',
-            leading: Icon(Icons.notifications_outlined, color: Colors.orange.shade700),
+            leading: Icon(Iconsax.notification, color: Colors.orange.shade700),
             badge: '3',
             onTap: () {},
           ),
@@ -99,10 +100,10 @@ class CardsShowcasePage extends StatelessWidget {
           _label(context, 'Horizontal'),
           AppCard.horizontal(
             leading: Container(color: Colors.teal.shade100,
-                child: Icon(Icons.music_note, color: Colors.teal.shade700, size: 40)),
+                child: Icon(Iconsax.musicnote, color: Colors.teal.shade700, size: 40)),
             title: 'Horizontal Card',
             subtitle: 'Image + text side by side',
-            trailing: const Icon(Icons.more_vert),
+            trailing: const Icon(Iconsax.more),
             onTap: () {},
           ),
           const SizedBox(height: AppSpacing.xl),

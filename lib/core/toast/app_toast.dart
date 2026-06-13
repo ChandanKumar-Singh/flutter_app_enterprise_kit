@@ -20,6 +20,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:iconsax/iconsax.dart';
 
 // ── Toast types & positions ───────────────────────────────────────────────────
 
@@ -495,7 +496,7 @@ class _ToastCardState extends State<_ToastCard>
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 6),
                                   child: Icon(
-                                    Icons.close_rounded,
+                                    Iconsax.close_circle,
                                     size: 15,
                                     color: isDark
                                         ? Colors.white30
@@ -645,22 +646,22 @@ class _ToastCfg {
 _ToastCfg _configFor(AppToastType type) => switch (type) {
   AppToastType.success => const _ToastCfg(
     accentColor: Color(0xFF16A34A),
-    icon: Icons.check_circle_rounded,
+    icon: Iconsax.tick_circle,
   ),
   AppToastType.error => const _ToastCfg(
     accentColor: Color(0xFFDC2626),
-    icon: Icons.error_rounded,
+    icon: Iconsax.danger,
   ),
   AppToastType.warning => const _ToastCfg(
     accentColor: Color(0xFFD97706),
-    icon: Icons.warning_rounded,
+    icon: Iconsax.warning_2,
   ),
   AppToastType.loading => const _ToastCfg(
     accentColor: Color(0xFF7C3AED),
-    icon: Icons.sync_rounded,
+    icon: Iconsax.refresh,
   ),
   _ => const _ToastCfg(
     accentColor: Color(0xFF0284C7),
-    icon: Icons.info_rounded,
+    icon: Iconsax.info_circle,
   ),
 };

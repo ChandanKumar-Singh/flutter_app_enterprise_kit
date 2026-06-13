@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:enterprise_kit/core/theme/theme_config.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -111,9 +112,9 @@ class _ModeSelector extends StatelessWidget {
       children: ThemeMode.values.map((mode) {
         final isSelected = config.mode == mode;
         final icon = switch (mode) {
-          ThemeMode.light => Icons.light_mode_rounded,
-          ThemeMode.dark => Icons.dark_mode_rounded,
-          _ => Icons.auto_mode_rounded,
+          ThemeMode.light => Iconsax.sun_1,
+          ThemeMode.dark => Iconsax.moon,
+          _ => Iconsax.setting,
         };
         final label = switch (mode) {
           ThemeMode.light => 'Light',
@@ -197,7 +198,7 @@ class _ColorPresetGrid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (isSelected)
-                  const Icon(Icons.check_rounded, color: Colors.white, size: 24),
+                  const Icon(Iconsax.tick_circle, color: Colors.white, size: 24),
                 const SizedBox(height: 4),
                 Text(
                   preset.label,
@@ -262,7 +263,7 @@ class _CustomColorRow extends StatelessWidget {
                   : null,
             ),
             child: isSelected
-                ? const Icon(Icons.check_rounded, color: Colors.white, size: 20)
+                ? const Icon(Iconsax.tick_circle, color: Colors.white, size: 20)
                 : null,
           ),
         );

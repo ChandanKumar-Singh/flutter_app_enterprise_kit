@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -358,10 +359,10 @@ class _InfoStripTile extends StatelessWidget {
 AppInfoStrip appInfoStripDefault() {
   return const AppInfoStrip(
     items: [
-      AppInfoStripItem(Icons.electric_bolt_rounded, '10-min delivery', color: Color(0xFF7C3AED)),
-      AppInfoStripItem(Icons.local_offer_rounded, 'Best prices', color: Color(0xFF16A34A)),
-      AppInfoStripItem(Icons.verified_user_rounded, '100% safe', color: Color(0xFF0284C7)),
-      AppInfoStripItem(Icons.replay_rounded, 'Easy returns', color: Color(0xFFD97706)),
+      AppInfoStripItem(Iconsax.flash, '10-min delivery', color: Color(0xFF7C3AED)),
+      AppInfoStripItem(Iconsax.tag, 'Best prices', color: Color(0xFF16A34A)),
+      AppInfoStripItem(Iconsax.verify, '100% safe', color: Color(0xFF0284C7)),
+      AppInfoStripItem(Iconsax.rotate_left, 'Easy returns', color: Color(0xFFD97706)),
     ],
   );
 }

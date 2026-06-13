@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
@@ -278,7 +279,7 @@ class _ContextPreviewOverlayState extends State<_ContextPreviewOverlay>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.keyboard_arrow_up_rounded, size: 14, color: Colors.white60),
+                              Icon(Iconsax.arrow_up_2, size: 14, color: Colors.white60),
                               const SizedBox(width: 4),
                               Text(
                                 'Swipe up for actions',

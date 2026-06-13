@@ -17,6 +17,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'app_navigation_node.dart';
@@ -223,7 +224,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer>
                                 if (expanded && ctrl.favouriteNodes.isNotEmpty) ...[
                                   _ShortcutSection(
                                     title: 'Favourites',
-                                    icon: Icons.star_rounded,
+                                    icon: Iconsax.star,
                                     nodes: ctrl.favouriteNodes,
                                     controller: ctrl,
                                     onTap: _handleTap,
@@ -235,7 +236,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer>
                                 if (expanded && ctrl.recentNodes.isNotEmpty) ...[
                                   _ShortcutSection(
                                     title: 'Recent',
-                                    icon: Icons.history_rounded,
+                                    icon: Iconsax.clock,
                                     nodes: ctrl.recentNodes,
                                     controller: ctrl,
                                     onTap: _handleTap,
@@ -245,7 +246,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer>
                                       borderRadius: BorderRadius.circular(4),
                                       child: Padding(
                                         padding: const EdgeInsets.all(2),
-                                        child: Icon(Icons.close_rounded,
+                                        child: Icon(Iconsax.close_circle,
                                             size: 12,
                                             color: cs.onSurfaceVariant),
                                       ),
@@ -366,7 +367,7 @@ class _DrawerHeader extends StatelessWidget {
             Tooltip(
               message: 'Go back',
               child: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded, size: 20),
+                icon: const Icon(Iconsax.arrow_left, size: 20),
                 onPressed: onBack,
                 style: IconButton.styleFrom(
                   padding: EdgeInsets.zero,
@@ -431,7 +432,7 @@ class _DrawerHeader extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
               ),
               child: environment.logoWidget ??
-                  Icon(Icons.bolt_rounded, color: cs.primary, size: 20),
+                  Icon(Iconsax.flash, color: cs.primary, size: 20),
             ),
 
             // Labels (visible when expanded)
@@ -487,7 +488,7 @@ class _DrawerHeader extends StatelessWidget {
               turns: expanded ? 0 : 0.5,
               duration: _kAnimDuration,
               child: Icon(
-                Icons.chevron_left_rounded,
+                Iconsax.arrow_left_2,
                 size: 18,
                 color: cs.onSurfaceVariant,
               ),
@@ -566,11 +567,11 @@ class _DrawerSearchState extends State<_DrawerSearch> {
         decoration: InputDecoration(
           hintText: 'Search navigation...',
           hintStyle: TextStyle(fontSize: 13, color: cs.onSurfaceVariant),
-          prefixIcon: Icon(Icons.search_rounded, size: 16, color: cs.onSurfaceVariant),
+          prefixIcon: Icon(Iconsax.search_normal, size: 16, color: cs.onSurfaceVariant),
           suffixIcon: widget.controller.hasSearch
               ? IconButton(
                   iconSize: 14,
-                  icon: const Icon(Icons.close_rounded),
+                  icon: const Icon(Iconsax.close_circle),
                   onPressed: () {
                     _ctrl.clear();
                     widget.controller.clearSearch();
@@ -822,7 +823,7 @@ class _GroupTile extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      node.icon ?? Icons.folder_rounded,
+                      node.icon ?? Iconsax.folder,
                       size: 16,
                       color: accentColor,
                     ),
@@ -861,7 +862,7 @@ class _GroupTile extends StatelessWidget {
                       ),
                     ),
                     Icon(
-                      Icons.chevron_right_rounded,
+                      Iconsax.arrow_right_3,
                       size: 16,
                       color: cs.onSurfaceVariant.withOpacity(0.6),
                     ),
@@ -988,7 +989,7 @@ class _LeafTile extends StatelessWidget {
                     if (node.badge != null) _Badge(label: node.badge!),
 
                     if (isFavourite)
-                      const Icon(Icons.star_rounded,
+                      const Icon(Iconsax.star,
                           size: 12,
                           color: Color(0xFFD97706)),
 
@@ -1161,7 +1162,7 @@ class _UserTile extends StatelessWidget {
                 ),
               ),
               if (user.onTap != null)
-                Icon(Icons.more_vert_rounded,
+                Icon(Iconsax.more,
                     size: 16, color: cs.onSurfaceVariant),
             ],
           ],

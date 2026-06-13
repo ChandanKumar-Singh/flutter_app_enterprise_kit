@@ -4,6 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/notification_center/index.dart';
 
 class NotificationCenterShowcasePage extends StatefulWidget {
@@ -173,7 +174,7 @@ List<AppNotification> _buildDemoNotifications() {
       createdAt: now.subtract(const Duration(hours: 3)),
       isRead: false,
       actions: [
-        const AppNotificationAction(id: 'remind', label: 'Remind me', icon: Icons.alarm_rounded),
+        const AppNotificationAction(id: 'remind', label: 'Remind me', icon: Iconsax.clock),
         const AppNotificationAction(id: 'dismiss', label: 'Dismiss', style: AppNotificationActionStyle.secondary),
       ],
     ),

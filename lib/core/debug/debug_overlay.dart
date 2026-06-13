@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:enterprise_kit/core/bootstrap/env_config.dart';
+import 'package:iconsax/iconsax.dart';
 
 // Riverpod 3: StateProvider removed — use NotifierProvider
 class _DebugVisible extends Notifier<bool> {
@@ -41,7 +42,7 @@ class DebugOverlay extends ConsumerWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.orange, width: 2),
                 ),
-                child: const Icon(Icons.bug_report, color: Colors.orange, size: 20),
+                child: const Icon(Iconsax.code, color: Colors.orange, size: 20),
               ),
             ),
           ),
@@ -89,7 +90,7 @@ class _DebugPanelState extends State<_DebugPanel> {
                   style: TextStyle(color: Colors.orange, fontSize: 18, fontWeight: FontWeight.bold)),
               IconButton(
                   onPressed: widget.onClose,
-                  icon: const Icon(Icons.close, color: Colors.white)),
+                  icon: const Icon(Iconsax.close_circle, color: Colors.white)),
             ],
           ),
           const Divider(color: Colors.orange),

@@ -6,6 +6,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../../shared/widgets/inputs/app_text_field.dart';
 import '../controller/app_notification_controller.dart';
 import '../models/app_notification_model.dart';
@@ -136,7 +137,7 @@ class _NotificationAppBar extends StatelessWidget implements PreferredSizeWidget
         if (cfg.enableSearch)
           IconButton(
             icon: Icon(
-              state._searchOpen ? Icons.search_off_rounded : Icons.search_rounded,
+              state._searchOpen ? Iconsax.search_status : Iconsax.search_normal,
               size: 20,
               color: isDark ? Colors.white60 : const Color(0xFF64748B),
             ),
@@ -156,7 +157,7 @@ class _NotificationAppBar extends StatelessWidget implements PreferredSizeWidget
         // Mark all read
         if (ctrl.totalUnread > 0)
           IconButton(
-            icon: Icon(Icons.done_all_rounded, size: 20,
+            icon: Icon(Iconsax.tick_circle, size: 20,
               color: isDark ? Colors.white60 : const Color(0xFF64748B)),
             tooltip: 'Mark all read',
             onPressed: ctrl.markAllRead,
@@ -165,7 +166,7 @@ class _NotificationAppBar extends StatelessWidget implements PreferredSizeWidget
         // Settings
         if (cfg.enablePreferences)
           IconButton(
-            icon: Icon(Icons.settings_outlined, size: 20,
+            icon: Icon(Iconsax.setting, size: 20,
               color: isDark ? Colors.white60 : const Color(0xFF64748B)),
             onPressed: () => Navigator.push(
               context,
@@ -456,7 +457,7 @@ class _EmptyDetail extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.touch_app_rounded, size: 48,
+          Icon(Iconsax.info_circle, size: 48,
             color: isDark ? Colors.white.withOpacity(0.15) : Colors.black12),
           const SizedBox(height: 12),
           Text('Select a notification',

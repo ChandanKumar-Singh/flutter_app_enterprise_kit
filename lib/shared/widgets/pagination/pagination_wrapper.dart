@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/loaders/app_shimmer.dart';
 import 'package:enterprise_kit/shared/widgets/states/app_state_widget.dart';
@@ -455,7 +456,7 @@ class _LoadMoreRetryBar extends StatelessWidget {
           ),
           TextButton.icon(
             onPressed: onRetry,
-            icon: Icon(Icons.refresh_rounded, size: 16, color: colors.error),
+            icon: Icon(Iconsax.refresh, size: 16, color: colors.error),
             label: Text(
               'Retry',
               style: TextStyle(color: colors.error, fontSize: 13, fontWeight: FontWeight.bold),

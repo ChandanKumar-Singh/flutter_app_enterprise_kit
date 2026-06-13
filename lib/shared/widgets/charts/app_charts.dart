@@ -18,6 +18,7 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -95,7 +96,7 @@ Widget _buildEmpty(BuildContext context, String message) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.bar_chart_rounded,
+        Icon(Iconsax.chart,
             size: 40, color: cs.onSurfaceVariant.withOpacity(0.3)),
         const SizedBox(height: 8),
         Text(
@@ -115,7 +116,7 @@ Widget _buildError(BuildContext context, String? error) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.error_outline_rounded, size: 32, color: cs.error),
+        Icon(Iconsax.danger, size: 32, color: cs.error),
         const SizedBox(height: 8),
         Text(
           error ?? 'Failed to load chart',

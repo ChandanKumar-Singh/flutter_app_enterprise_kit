@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/router/route_names.dart';
 import 'package:enterprise_kit/features/splash/splash_page.dart';
 import 'package:enterprise_kit/features/home/home_page.dart';
@@ -64,6 +65,7 @@ CustomTransitionPage<T> _slideUp<T>(BuildContext context, GoRouterState state, W
   );
 }
 
+
 class AppRouter {
   AppRouter._();
 
@@ -126,7 +128,7 @@ class AppRouter {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const Icon(Iconsax.danger, size: 48, color: Colors.red),
             const SizedBox(height: 16),
             Text('Page not found: ${state.uri}'),
           ],

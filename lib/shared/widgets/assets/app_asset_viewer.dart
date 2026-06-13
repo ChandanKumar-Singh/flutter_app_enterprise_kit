@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:photo_view/photo_view.dart';
@@ -338,7 +339,7 @@ class _FileViewer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.insert_drive_file_outlined, size: 40, color: cs.primary),
+          Icon(Iconsax.document, size: 40, color: cs.primary),
           const SizedBox(height: 8),
           Text(ext, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: cs.primary)),
         ],
@@ -363,7 +364,7 @@ class _ErrorPlaceholder extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.broken_image_outlined,
+          Icon(Iconsax.gallery_slash,
               color: Theme.of(context).colorScheme.error, size: 32),
           const SizedBox(height: 4),
           Text('Failed to load',
@@ -455,7 +456,7 @@ class _AppAssetFullscreenState extends State<AppAssetFullscreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Iconsax.arrow_left, color: Colors.white),
                     onPressed: () => Navigator.pop(context),
                   ),
                   if (widget.sources.length > 1)

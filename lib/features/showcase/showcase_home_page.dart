@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:enterprise_kit/core/router/route_names.dart';
@@ -350,7 +351,7 @@ class _SectionCard extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Icon(Icons.chevron_right_rounded, size: 18, color: cs.onSurfaceVariant),
+                              Icon(Iconsax.arrow_right_3, size: 18, color: cs.onSurfaceVariant),
                             ],
                           ),
                         ),
@@ -394,7 +395,7 @@ const _sections = [
     items: [
       _ShowcaseItem(
         'AppNotificationCenter',
-        Icons.notifications_rounded,
+        Iconsax.notification,
         '/showcase/notification-center',
         Color(0xFF7C3AED),
         description: 'Enterprise inbox · 6 card variants · swipe · bulk ops · filter · search · groups · 3-layout responsive · preferences',
@@ -408,7 +409,7 @@ const _sections = [
     items: [
       _ShowcaseItem(
         'AppNavigationWorkspace',
-        Icons.space_dashboard_rounded,
+        Iconsax.category,
         '/showcase/navigation',
         Color(0xFF0891B2),
         description:
@@ -423,7 +424,7 @@ const _sections = [
     items: [
       _ShowcaseItem(
         'All Services & Components',
-        Icons.rocket_launch_rounded,
+        Iconsax.ranking,
         '/showcase/services',
         Color(0xFF7C3AED),
         description:
@@ -436,19 +437,19 @@ const _sections = [
     title: 'Enterprise (New)',
     accentColor: Color(0xFF7C3AED),
     items: [
-      _ShowcaseItem('Enterprise Components', Icons.widgets_rounded, RouteNames.showcaseComponents, Color(0xFF7C3AED),
+      _ShowcaseItem('Enterprise Components', Iconsax.element_4, RouteNames.showcaseComponents, Color(0xFF7C3AED),
         description: 'Toasts, banners, gradients, tags, rating, timeline, table',
         isNew: true),
-      _ShowcaseItem('Theme Configuration', Icons.tune_rounded, RouteNames.showcaseThemeConfig, Color(0xFF2563EB),
+      _ShowcaseItem('Theme Configuration', Iconsax.candle_2, RouteNames.showcaseThemeConfig, Color(0xFF2563EB),
         description: '10 color presets, fonts, radius, density, accessibility',
         isNew: true),
-      _ShowcaseItem('UI Kit (Product Cards & More)', Icons.style_rounded, RouteNames.showcaseUiKit, Color(0xFFEC4899),
+      _ShowcaseItem('UI Kit (Product Cards & More)', Iconsax.colors_square, RouteNames.showcaseUiKit, Color(0xFFEC4899),
         description: 'Product cards, feature cards, promo banners, floating nav',
         isNew: true),
-      _ShowcaseItem('Food & Restaurant UI', Icons.restaurant_rounded, RouteNames.showcaseFood, Color(0xFFDC2626),
+      _ShowcaseItem('Food & Restaurant UI', Iconsax.cup, RouteNames.showcaseFood, Color(0xFFDC2626),
         description: 'Restaurant cards, food wheel, filters, offer banners — Zomato style',
         isNew: true),
-      _ShowcaseItem('Advanced Giant-App UX', Icons.auto_awesome_rounded, RouteNames.showcaseAdvanced, Color(0xFF7C3AED),
+      _ShowcaseItem('Advanced Giant-App UX', Iconsax.magicpen, RouteNames.showcaseAdvanced, Color(0xFF7C3AED),
         description: 'Snapping sheets, context preview, popovers, mini-player, media picker, permissions',
         isNew: true),
     ],
@@ -457,16 +458,16 @@ const _sections = [
     title: 'Platform Services (New)',
     accentColor: Color(0xFF0891B2),
     items: [
-      _ShowcaseItem('App Glass Card + Metric Grid', Icons.blur_on_rounded, RouteNames.showcaseComponents, Color(0xFF0891B2),
+      _ShowcaseItem('App Glass Card + Metric Grid', Iconsax.element_4, RouteNames.showcaseComponents, Color(0xFF0891B2),
         description: 'Multi-variant glass cards, metric grid, footer cards, glow variant',
         isNew: true),
-      _ShowcaseItem('App Status Pill', Icons.fiber_manual_record_rounded, RouteNames.showcaseComponents, Color(0xFF16A34A),
+      _ShowcaseItem('App Status Pill', Iconsax.record, RouteNames.showcaseComponents, Color(0xFF16A34A),
         description: 'Semantic status pills: success, error, warning, info, pending',
         isNew: true),
-      _ShowcaseItem('Analytics Service', Icons.analytics_rounded, RouteNames.showcaseComponents, Color(0xFF9333EA),
+      _ShowcaseItem('Analytics Service', Iconsax.presention_chart, RouteNames.showcaseComponents, Color(0xFF9333EA),
         description: 'Firebase Analytics abstraction — screen tracking, events, user properties',
         isNew: true),
-      _ShowcaseItem('Device Info + Lifecycle', Icons.devices_rounded, RouteNames.showcaseComponents, Color(0xFFD97706),
+      _ShowcaseItem('Device Info + Lifecycle', Iconsax.monitor_mobbile, RouteNames.showcaseComponents, Color(0xFFD97706),
         description: 'Device ID, version, OS info, app lifecycle observer',
         isNew: true),
     ],
@@ -475,13 +476,13 @@ const _sections = [
     title: 'UI Components',
     accentColor: Color(0xFF2563EB),
     items: [
-      _ShowcaseItem('Buttons', Icons.smart_button_rounded, RouteNames.showcaseButtons, Color(0xFF2563EB),
+      _ShowcaseItem('Buttons', Iconsax.link, RouteNames.showcaseButtons, Color(0xFF2563EB),
         description: 'Filled, outlined, text, icon, loading, gradient'),
-      _ShowcaseItem('Cards', Icons.credit_card_rounded, RouteNames.showcaseCards, Color(0xFF7C3AED),
+      _ShowcaseItem('Cards', Iconsax.card, RouteNames.showcaseCards, Color(0xFF7C3AED),
         description: 'Elevated, outlined, tinted, interactive'),
-      _ShowcaseItem('Form Inputs', Icons.input_rounded, RouteNames.showcaseInputs, Color(0xFF16A34A),
+      _ShowcaseItem('Form Inputs', Iconsax.import, RouteNames.showcaseInputs, Color(0xFF16A34A),
         description: 'Text, date, select, OTP, search'),
-      _ShowcaseItem('Typography', Icons.text_fields_rounded, RouteNames.showcaseTypography, Color(0xFF92400E),
+      _ShowcaseItem('Typography', Iconsax.document_text, RouteNames.showcaseTypography, Color(0xFF92400E),
         description: 'Display, headline, body, label scales'),
     ],
   ),
@@ -489,13 +490,13 @@ const _sections = [
     title: 'Overlays & Feedback',
     accentColor: Color(0xFF0891B2),
     items: [
-      _ShowcaseItem('Dialogs', Icons.open_in_new_rounded, RouteNames.showcaseDialogs, Color(0xFF0891B2),
+      _ShowcaseItem('Dialogs', Iconsax.export, RouteNames.showcaseDialogs, Color(0xFF0891B2),
         description: 'Alert, confirm, bottom, fullscreen'),
-      _ShowcaseItem('Bottom Sheets', Icons.layers_rounded, RouteNames.showcaseSheets, Color(0xFFD97706),
+      _ShowcaseItem('Bottom Sheets', Iconsax.layer, RouteNames.showcaseSheets, Color(0xFFD97706),
         description: 'Modal, scrollable, persistent, snap'),
-      _ShowcaseItem('Loaders & Shimmer', Icons.hourglass_top_rounded, RouteNames.showcaseLoaders, Color(0xFF64748B),
+      _ShowcaseItem('Loaders & Shimmer', Iconsax.timer, RouteNames.showcaseLoaders, Color(0xFF64748B),
         description: 'Progress, shimmer, skeleton, refresh'),
-      _ShowcaseItem('State Screens', Icons.info_outline_rounded, RouteNames.showcaseStates, Color(0xFF7C3AED),
+      _ShowcaseItem('State Screens', Iconsax.info_circle, RouteNames.showcaseStates, Color(0xFF7C3AED),
         description: 'Empty, error, loading, success states'),
     ],
   ),
@@ -503,13 +504,13 @@ const _sections = [
     title: 'Media & Data',
     accentColor: Color(0xFFDC2626),
     items: [
-      _ShowcaseItem('Images & Assets', Icons.image_rounded, RouteNames.showcaseImages, Color(0xFF4F46E5),
+      _ShowcaseItem('Images & Assets', Iconsax.image, RouteNames.showcaseImages, Color(0xFF4F46E5),
         description: 'Gallery, hero, cached, video, PDF viewer'),
-      _ShowcaseItem('PDF Viewer', Icons.picture_as_pdf_rounded, RouteNames.showcasePdf, Color(0xFFDC2626),
+      _ShowcaseItem('PDF Viewer', Iconsax.document_text, RouteNames.showcasePdf, Color(0xFFDC2626),
         description: 'Full-featured PDF rendering'),
-      _ShowcaseItem('Charts & Analytics', Icons.bar_chart_rounded, RouteNames.showcaseCharts, Color(0xFF0891B2),
+      _ShowcaseItem('Charts & Analytics', Iconsax.chart, RouteNames.showcaseCharts, Color(0xFF0891B2),
         description: 'Line, bar, pie, radar charts'),
-      _ShowcaseItem('Animations', Icons.animation_rounded, RouteNames.showcaseAnimations, Color(0xFFEC4899),
+      _ShowcaseItem('Animations', Iconsax.magicpen, RouteNames.showcaseAnimations, Color(0xFFEC4899),
         description: 'Page transitions, hero, stagger'),
     ],
   ),
@@ -517,11 +518,11 @@ const _sections = [
     title: 'System & DevTools',
     accentColor: Color(0xFF65A30D),
     items: [
-      _ShowcaseItem('Theme System', Icons.palette_rounded, RouteNames.showcaseTheme, Color(0xFFDC2626),
+      _ShowcaseItem('Theme System', Iconsax.colorfilter, RouteNames.showcaseTheme, Color(0xFFDC2626),
         description: 'Colors, typography, spacing tokens'),
-      _ShowcaseItem('Network & API', Icons.wifi_rounded, RouteNames.showcaseNetwork, Color(0xFF65A30D),
+      _ShowcaseItem('Network & API', Iconsax.wifi, RouteNames.showcaseNetwork, Color(0xFF65A30D),
         description: 'Dio, interceptors, offline detection'),
-      _ShowcaseItem('Utilities', Icons.build_rounded, RouteNames.showcaseUtils, Color(0xFFD97706),
+      _ShowcaseItem('Utilities', Iconsax.designtools, RouteNames.showcaseUtils, Color(0xFFD97706),
         description: 'Formatters, validators, extensions'),
     ],
   ),

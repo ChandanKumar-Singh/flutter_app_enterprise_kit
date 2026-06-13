@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
@@ -248,13 +249,13 @@ class _StatusConfig {
 _StatusConfig _statusConfig(AppTimelineStatus status, ColorScheme cs) =>
     switch (status) {
       AppTimelineStatus.completed => _StatusConfig(
-          color: const Color(0xFF16A34A), icon: Icons.check_rounded),
+          color: const Color(0xFF16A34A), icon: Iconsax.tick_circle),
       AppTimelineStatus.active => _StatusConfig(
-          color: cs.primary, icon: Icons.radio_button_checked_rounded),
+          color: cs.primary, icon: Iconsax.record_circle),
       AppTimelineStatus.error => _StatusConfig(
-          color: cs.error, icon: Icons.close_rounded),
+          color: cs.error, icon: Iconsax.close_circle),
       AppTimelineStatus.warning => _StatusConfig(
-          color: const Color(0xFFD97706), icon: Icons.warning_rounded),
+          color: const Color(0xFFD97706), icon: Iconsax.danger),
       _ => _StatusConfig(
-          color: cs.onSurfaceVariant, icon: Icons.radio_button_unchecked_rounded),
+          color: cs.onSurfaceVariant, icon: Iconsax.record),
     };

@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import '../controller/app_notification_controller.dart';
 import '../models/app_notification_model.dart';
 
@@ -128,7 +129,7 @@ class _SortButton extends StatelessWidget {
     final theme = Theme.of(context);
     return PopupMenuButton<String>(
       icon: Icon(
-        Icons.tune_rounded,
+        Iconsax.candle_2,
         size: 18,
         color: isDark ? Colors.white60 : const Color(0xFF64748B),
       ),
@@ -147,7 +148,7 @@ class _SortButton extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                controller.sort == s ? Icons.radio_button_checked_rounded : Icons.radio_button_unchecked_rounded,
+                controller.sort == s ? Iconsax.record_circle : Iconsax.record,
                 size: 16,
                 color: controller.sort == s ? theme.colorScheme.primary : (isDark ? Colors.white38 : Colors.black38),
               ),
@@ -171,7 +172,7 @@ class _SortButton extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                controller.groupBy == g ? Icons.radio_button_checked_rounded : Icons.radio_button_unchecked_rounded,
+                controller.groupBy == g ? Iconsax.record_circle : Iconsax.record,
                 size: 16,
                 color: controller.groupBy == g ? theme.colorScheme.primary : (isDark ? Colors.white38 : Colors.black38),
               ),

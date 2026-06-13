@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:enterprise_kit/core/router/route_names.dart';
@@ -34,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
                 color: colors.onPrimary.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: Icon(Icons.layers_rounded, size: 56, color: colors.onPrimary),
+              child: Icon(Iconsax.layer, size: 56, color: colors.onPrimary),
             ).animate()
               .scale(duration: 600.ms, curve: Curves.easeOutBack)
               .fade(duration: 600.ms),

@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,9 +15,9 @@ import 'package:enterprise_kit/shared/widgets/sheets/app_sheet.dart';
 // ─── Enums & Models ───────────────────────────────────────────────────────────
 
 enum AppMediaSource {
-  camera('Camera', Icons.camera_alt_rounded),
-  gallery('Gallery', Icons.photo_library_rounded),
-  file('Files', Icons.folder_open_rounded);
+  camera('Camera', Iconsax.camera),
+  gallery('Gallery', Iconsax.gallery),
+  file('Files', Iconsax.folder_open);
 
   final String label;
   final IconData icon;
@@ -514,7 +515,7 @@ class _SourceTileState extends State<_SourceTile>
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, size: 20, color: cs.onSurfaceVariant),
+              Icon(Iconsax.arrow_right_3, size: 20, color: cs.onSurfaceVariant),
             ],
           ),
         ),
@@ -565,7 +566,7 @@ class AppMediaFilePreview extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        file.isVideo ? Icons.video_file_rounded : Icons.insert_drive_file_rounded,
+                        file.isVideo ? Iconsax.video_play : Iconsax.document_text,
                         size: 28,
                         color: cs.primary,
                       ),
@@ -615,7 +616,7 @@ class AppMediaFilePreview extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: cs.surface, width: 1.5),
                 ),
-                child: const Icon(Icons.close_rounded, size: 12, color: Colors.white),
+                child: const Icon(Iconsax.close_circle, size: 12, color: Colors.white),
               ),
             ),
           ),
@@ -726,7 +727,7 @@ class _AppMediaPickerFieldState extends State<AppMediaPickerField> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add_rounded, size: 26, color: cs.primary),
+                      Icon(Iconsax.add, size: 26, color: cs.primary),
                       Text(
                         'Add',
                         style: TextStyle(fontSize: 11, color: cs.primary, fontWeight: FontWeight.w600),

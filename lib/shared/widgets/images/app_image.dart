@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -233,7 +234,7 @@ class AppImage extends StatelessWidget {
       height: height,
       color: backgroundColor ?? Colors.grey.shade100,
       child: Center(
-        child: Icon(Icons.broken_image_outlined,
+        child: Icon(Iconsax.gallery_slash,
             color: errorColor ?? Colors.grey.shade400,
             size: (width != null && height != null)
                 ? (width! < height! ? width! * 0.4 : height! * 0.4) : 32),
@@ -292,7 +293,7 @@ class _FullScreenImageViewer extends StatelessWidget {
               child: Image(image: provider, fit: BoxFit.contain),
             ),
           )
-        : const Center(child: Icon(Icons.image_not_supported));
+        : const Center(child: Icon(Iconsax.gallery_slash));
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -301,7 +302,7 @@ class _FullScreenImageViewer extends StatelessWidget {
         foregroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.white),
+          icon: const Icon(Iconsax.close_circle, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),

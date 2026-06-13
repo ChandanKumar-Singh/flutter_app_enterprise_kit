@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:dio/dio.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
@@ -46,7 +47,7 @@ class _NetworkShowcasePageState extends State<NetworkShowcasePage> {
             label: _isLoading ? 'Fetching...' : 'GET /posts/1',
             onPressed: _isLoading ? null : _fetchPosts,
             isLoading: _isLoading,
-            icon: const Icon(Icons.cloud_download_outlined, size: 18),
+            icon: const Icon(Iconsax.document_download, size: 18),
           ),
           const SizedBox(height: AppSpacing.md),
           if (_result != null)
@@ -72,7 +73,7 @@ class _NetworkShowcasePageState extends State<NetworkShowcasePage> {
                 color: Theme.of(context).colorScheme.primaryContainer,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.bolt, size: 16, color: Theme.of(context).colorScheme.primary),
+              child: Icon(Iconsax.flash, size: 16, color: Theme.of(context).colorScheme.primary),
             ),
             title: Text(e.$1, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
             subtitle: Text(e.$2, style: const TextStyle(fontSize: 11)),

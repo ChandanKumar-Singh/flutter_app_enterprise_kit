@@ -18,7 +18,7 @@
 //       final products = await _api.searchProducts(query);
 //       return products.map((p) => AppSearchResult(
 //         title: p.name, subtitle: p.category,
-//         data: p, icon: Icons.shopping_bag_rounded,
+//         data: p, icon: Iconsax.shopping_bag,
 //       )).toList();
 //     }
 //
@@ -34,6 +34,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -271,12 +272,12 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
                             color: cs.onSurfaceVariant,
                           ),
                           prefixIcon: Icon(
-                            Icons.search_rounded,
+                            Iconsax.search_normal,
                             color: cs.onSurfaceVariant,
                           ),
                           suffixIcon: _query.isNotEmpty
                               ? IconButton(
-                                  icon: const Icon(Icons.close_rounded),
+                                  icon: const Icon(Iconsax.close_circle),
                                   onPressed: () {
                                     _controller.clear();
                                     _onQueryChanged('');
@@ -331,7 +332,7 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
                 result: r,
                 query: '',
                 onTap: () => _onResultTap(r),
-                trailing: const Icon(Icons.north_west_rounded, size: 16),
+                trailing: const Icon(Iconsax.arrow_left, size: 16),
               )),
         ],
         // History
@@ -345,11 +346,11 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
           ),
           ..._history.map(
             (q) => ListTile(
-              leading: Icon(Icons.history_rounded, color: cs.onSurfaceVariant),
+              leading: Icon(Iconsax.clock, color: cs.onSurfaceVariant),
               title: Text(q),
               trailing: IconButton(
                 icon: Icon(
-                  Icons.close_rounded,
+                  Iconsax.close_circle,
                   size: 16,
                   color: cs.onSurfaceVariant,
                 ),
@@ -366,7 +367,7 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
               child: Column(
                 children: [
                   Icon(
-                    Icons.search_rounded,
+                    Iconsax.search_normal,
                     size: 64,
                     color: cs.onSurfaceVariant.withOpacity(0.3),
                   ),
@@ -394,7 +395,7 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline_rounded,
+            Icon(Iconsax.danger,
                 size: 48, color: cs.error),
             const SizedBox(height: AppSpacing.md),
             Text(
@@ -424,7 +425,7 @@ class _AppSearchOverlayState<T> extends State<AppSearchOverlay<T>> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.search_off_rounded,
+              Iconsax.search_normal,
               size: 64,
               color: cs.onSurfaceVariant.withOpacity(0.3),
             ),
@@ -536,7 +537,7 @@ class _ResultTile<T> extends StatelessWidget {
           height: 40,
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) =>
-              Icon(result.icon ?? Icons.image_rounded, color: cs.primary),
+              Icon(result.icon ?? Iconsax.image, color: cs.primary),
         ),
       );
     }

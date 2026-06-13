@@ -26,6 +26,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 
 // ── Version helpers ───────────────────────────────────────────────────────────
@@ -264,7 +265,7 @@ class _AppForceUpdateDialog extends StatelessWidget {
                 color: cs.primaryContainer,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.system_update_rounded, size: 36, color: cs.primary),
+              child: Icon(Iconsax.refresh, size: 36, color: cs.primary),
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
@@ -302,7 +303,7 @@ class _AppForceUpdateDialog extends StatelessWidget {
               width: double.infinity,
               child: FilledButton.icon(
                 onPressed: () => _openStore(info.storeUrl),
-                icon: const Icon(Icons.download_rounded),
+                icon: const Icon(Iconsax.document_download),
                 label: const Text('Update Now'),
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14),
@@ -352,7 +353,7 @@ class _AppOptionalUpdateSheet extends StatelessWidget {
                   color: cs.primaryContainer,
                   borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
                 ),
-                child: Icon(Icons.new_releases_rounded, color: cs.primary, size: 28),
+                child: Icon(Iconsax.flash, color: cs.primary, size: 28),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
@@ -411,7 +412,7 @@ class _AppOptionalUpdateSheet extends StatelessWidget {
                     Navigator.of(context).pop();
                     _openStore(info.storeUrl);
                   },
-                  icon: const Icon(Icons.download_rounded),
+                  icon: const Icon(Iconsax.document_download),
                   label: const Text('Update'),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),

@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/banners/app_promo_banner.dart';
@@ -170,10 +171,10 @@ class _ProductCardsTab extends StatelessWidget {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           children: [
-            AppStatCard(label: 'Revenue', value: '₹2.4M', trend: '+18%', trendUp: true, icon: Icons.currency_rupee_rounded, color: const Color(0xFF16A34A)),
-            AppStatCard(label: 'Orders', value: '8,291', trend: '+5.2%', trendUp: true, icon: Icons.shopping_bag_rounded, color: const Color(0xFF2563EB)),
-            AppStatCard(label: 'Returns', value: '142', trend: '-3%', trendUp: false, icon: Icons.replay_rounded, color: const Color(0xFFDC2626)),
-            AppStatCard(label: 'Rating', value: '4.7★', subValue: '12,490 reviews', icon: Icons.star_rounded, color: const Color(0xFFF59E0B)),
+            AppStatCard(label: 'Revenue', value: '₹2.4M', trend: '+18%', trendUp: true, icon: Iconsax.wallet_money, color: const Color(0xFF16A34A)),
+            AppStatCard(label: 'Orders', value: '8,291', trend: '+5.2%', trendUp: true, icon: Iconsax.shopping_bag, color: const Color(0xFF2563EB)),
+            AppStatCard(label: 'Returns', value: '142', trend: '-3%', trendUp: false, icon: Iconsax.rotate_left, color: const Color(0xFFDC2626)),
+            AppStatCard(label: 'Rating', value: '4.7★', subValue: '12,490 reviews', icon: Iconsax.star, color: const Color(0xFFF59E0B)),
           ],
         ),
 
@@ -210,12 +211,12 @@ class _CategoryChipsDemoState extends State<_CategoryChipsDemo> {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      (Icons.restaurant_rounded, 'All'),
-      (Icons.local_pizza_rounded, 'Fast Food'),
-      (Icons.rice_bowl_rounded, 'Indian'),
-      (Icons.local_cafe_rounded, 'Beverages'),
-      (Icons.cake_rounded, 'Desserts'),
-      (Icons.local_pizza_rounded, 'Italian'),
+      (Iconsax.cup, 'All'),
+      (Iconsax.coffee, 'Fast Food'),
+      (Iconsax.cup, 'Indian'),
+      (Iconsax.coffee, 'Beverages'),
+      (Iconsax.cake, 'Desserts'),
+      (Iconsax.coffee, 'Italian'),
     ];
 
     return SingleChildScrollView(
@@ -318,12 +319,12 @@ class _CategoriesGrid extends StatefulWidget {
 class _CategoriesGridState extends State<_CategoriesGrid> {
   int _sel = 0;
   final _cats = [
-    ('Home', Icons.home_rounded, const Color(0xFF2563EB)),
-    ('Food', Icons.restaurant_rounded, const Color(0xFFDC2626)),
-    ('Health', Icons.health_and_safety_rounded, const Color(0xFF16A34A)),
-    ('Style', Icons.shopping_bag_rounded, const Color(0xFF7C3AED)),
-    ('Finance', Icons.account_balance_rounded, const Color(0xFF0891B2)),
-    ('Travel', Icons.flight_rounded, const Color(0xFFD97706)),
+    ('Home', Iconsax.home, const Color(0xFF2563EB)),
+    ('Food', Iconsax.cup, const Color(0xFFDC2626)),
+    ('Health', Iconsax.shield_tick, const Color(0xFF16A34A)),
+    ('Style', Iconsax.shopping_bag, const Color(0xFF7C3AED)),
+    ('Finance', Iconsax.bank, const Color(0xFF0891B2)),
+    ('Travel', Iconsax.airplane, const Color(0xFFD97706)),
   ];
 
   @override
@@ -472,7 +473,7 @@ class _NavigationTabState extends State<_NavigationTab> {
                   color: Theme.of(context).colorScheme.primaryContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(Icons.recommend_rounded, size: 16, color: Theme.of(context).colorScheme.onPrimaryContainer),
+                child: Icon(Iconsax.like, size: 16, color: Theme.of(context).colorScheme.onPrimaryContainer),
               ),
             ),
             const Divider(),
@@ -497,10 +498,10 @@ class _NavigationTabState extends State<_NavigationTab> {
             currentIndex: _navIndex,
             onIndexChanged: (i) => setState(() => _navIndex = i),
             items: const [
-              AppBottomNavItem(icon: Icons.home_outlined, activeIcon: Icons.home_rounded, label: 'Home'),
-              AppBottomNavItem(icon: Icons.search_outlined, activeIcon: Icons.search_rounded, label: 'Search'),
-              AppBottomNavItem(icon: Icons.shopping_cart_outlined, activeIcon: Icons.shopping_cart_rounded, label: 'Cart', badgeCount: 3),
-              AppBottomNavItem(icon: Icons.person_outline_rounded, activeIcon: Icons.person_rounded, label: 'Profile'),
+              AppBottomNavItem(icon: Iconsax.home, activeIcon: Iconsax.home, label: 'Home'),
+              AppBottomNavItem(icon: Iconsax.search_normal, activeIcon: Iconsax.search_normal, label: 'Search'),
+              AppBottomNavItem(icon: Iconsax.shopping_cart, activeIcon: Iconsax.shopping_cart, label: 'Cart', badgeCount: 3),
+              AppBottomNavItem(icon: Iconsax.profile, activeIcon: Iconsax.profile, label: 'Profile'),
             ],
           ).animate().slideY(begin: 0.3, duration: 500.ms, curve: Curves.easeOutCubic),
         ),

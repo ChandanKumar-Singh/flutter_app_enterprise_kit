@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/theme/tokens/app_spacing.dart';
 import 'package:enterprise_kit/shared/widgets/buttons/app_button.dart';
@@ -251,17 +252,17 @@ class _StepIndicators extends StatelessWidget {
 
         if (isErrored) {
           nodeColor = cs.error;
-          nodeChild = const Icon(Icons.close_rounded, size: 14, color: Colors.white);
+          nodeChild = const Icon(Iconsax.close_circle, size: 14, color: Colors.white);
         } else if (isCompleted) {
           nodeColor = const Color(0xFF16A34A);
-          nodeChild = const Icon(Icons.check_rounded, size: 14, color: Colors.white);
+          nodeChild = const Icon(Iconsax.tick_circle, size: 14, color: Colors.white);
         } else if (isCurrent) {
           nodeColor = cs.primary;
           nodeChild = showNumbers
               ? Text('${i + 1}',
                   style: const TextStyle(
                       fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white))
-              : step.icon ?? Icon(Icons.circle, size: 8, color: cs.onPrimary);
+              : step.icon ?? Icon(Iconsax.record, size: 8, color: cs.onPrimary);
         } else {
           nodeColor = cs.surfaceVariant;
           nodeChild = showNumbers
@@ -270,7 +271,7 @@ class _StepIndicators extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: cs.onSurfaceVariant))
-              : Icon(Icons.circle, size: 8, color: cs.onSurfaceVariant);
+              : Icon(Iconsax.record, size: 8, color: cs.onSurfaceVariant);
         }
 
         return Expanded(
@@ -399,7 +400,7 @@ class _StepNavigation extends StatelessWidget {
               onPressed: onNext,
               isLoading: isCompleting,
               size: AppButtonSize.md,
-              icon: isLast ? const Icon(Icons.check_rounded, size: 18) : null,
+              icon: isLast ? const Icon(Iconsax.tick_circle, size: 18) : null,
             ),
           ),
         ],

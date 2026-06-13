@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:enterprise_kit/core/permissions/app_permission_manager.dart';
@@ -27,12 +28,12 @@ class _AdvancedShowcasePageState extends State<AdvancedShowcasePage>
   bool _isCollapsed = false;
 
   static const _tabs = [
-    (icon: Icons.layers_rounded, label: 'Sheets'),
-    (icon: Icons.touch_app_rounded, label: 'Previews'),
-    (icon: Icons.open_in_new_rounded, label: 'Popovers'),
-    (icon: Icons.music_note_rounded, label: 'Player'),
-    (icon: Icons.photo_rounded, label: 'Media'),
-    (icon: Icons.security_rounded, label: 'Permissions'),
+    (icon: Iconsax.layer, label: 'Sheets'),
+    (icon: Iconsax.scan, label: 'Previews'),
+    (icon: Iconsax.export, label: 'Popovers'),
+    (icon: Iconsax.musicnote, label: 'Player'),
+    (icon: Iconsax.image, label: 'Media'),
+    (icon: Iconsax.security, label: 'Permissions'),
   ];
 
   @override
@@ -223,7 +224,7 @@ class _SheetsTab extends StatelessWidget {
         const _SectionHeader(
           'AppSnappingSheet',
           'Uber / Airbnb multi-snap elastic sheets',
-          Icons.layers_rounded,
+          Iconsax.layer,
           Color(0xFF1B1B2F),
         ),
         const SizedBox(height: 12),
@@ -231,7 +232,7 @@ class _SheetsTab extends StatelessWidget {
         _DemoCard(
           label: 'Uber-style Map Sheet',
           description: 'Multi-snap (35% → 60% → 92%) with scrim + rubber-band physics',
-          icon: Icons.map_rounded,
+          icon: Iconsax.routing,
           color: const Color(0xFF1B1B2F),
           onTap: () => _showMapSheet(context),
         ),
@@ -239,7 +240,7 @@ class _SheetsTab extends StatelessWidget {
         _DemoCard(
           label: 'Filter Panel Sheet',
           description: 'Chips + range slider — AppFilterSheet preset',
-          icon: Icons.tune_rounded,
+          icon: Iconsax.candle_2,
           color: const Color(0xFF2563EB),
           onTap: () => AppFilterSheet.show(
             context: context,
@@ -256,18 +257,18 @@ class _SheetsTab extends StatelessWidget {
         _DemoCard(
           label: 'Options Sheet',
           description: 'iOS-style action list — AppOptionSheet preset',
-          icon: Icons.list_rounded,
+          icon: Iconsax.menu,
           color: const Color(0xFF16A34A),
           onTap: () => AppOptionSheet.show(
             context: context,
             title: 'Share via',
             subtitle: 'Choose how to share this item',
             options: [
-              const AppOptionItem(icon: Icons.link_rounded, label: 'Copy Link'),
-              const AppOptionItem(icon: Icons.share_rounded, label: 'Share Sheet'),
-              const AppOptionItem(icon: Icons.bookmark_border_rounded, label: 'Save'),
+              const AppOptionItem(icon: Iconsax.link, label: 'Copy Link'),
+              const AppOptionItem(icon: Iconsax.send_2, label: 'Share Sheet'),
+              const AppOptionItem(icon: Iconsax.archive_1, label: 'Save'),
               const AppOptionItem(
-                  icon: Icons.report_rounded, label: 'Report', isDestructive: true),
+                  icon: Iconsax.danger, label: 'Report', isDestructive: true),
             ],
           ),
         ),
@@ -289,7 +290,7 @@ class _SheetsTab extends StatelessWidget {
         title: '3 restaurants nearby',
         subtitle: 'Sorted by distance',
         trailing: TextButton.icon(
-          icon: const Icon(Icons.tune_rounded, size: 14),
+          icon: const Icon(Iconsax.candle_2, size: 14),
           label: const Text('Filters'),
           onPressed: () {},
         ),
@@ -351,7 +352,7 @@ class _FakeMapBackground extends StatelessWidget {
             left: 0,
             right: 0,
             child: Center(
-              child: Icon(Icons.location_on_rounded, color: Colors.red, size: 40),
+              child: Icon(Iconsax.location, color: Colors.red, size: 40),
             ),
           ),
         ],
@@ -394,7 +395,7 @@ class _MapResultTile extends StatelessWidget {
                 height: 52,
                 color: const Color(0xFFFF6B35).withOpacity(0.15),
                 child:
-                    const Icon(Icons.restaurant_rounded, color: Color(0xFFFF6B35), size: 24),
+                    const Icon(Iconsax.cup, color: Color(0xFFFF6B35), size: 24),
               ),
             ),
             const SizedBox(width: 12),
@@ -407,7 +408,7 @@ class _MapResultTile extends StatelessWidget {
                           const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                   const SizedBox(height: 2),
                   Row(children: [
-                    const Icon(Icons.star_rounded, color: Colors.amber, size: 13),
+                    const Icon(Iconsax.star, color: Colors.amber, size: 13),
                     const SizedBox(width: 3),
                     Text('${_ratings[i]}',
                         style: TextStyle(
@@ -421,7 +422,7 @@ class _MapResultTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: cs.onSurfaceVariant, size: 18),
+            Icon(Iconsax.arrow_right_3, color: cs.onSurfaceVariant, size: 18),
           ],
         ),
       ),
@@ -442,7 +443,7 @@ class _ContextPreviewTab extends StatelessWidget {
         const _SectionHeader(
           'AppContextPreview',
           'Instagram / Telegram 3D-touch haptic long-press preview',
-          Icons.touch_app_rounded,
+          Iconsax.scan,
           Color(0xFF833AB4),
         ),
         const SizedBox(height: 8),
@@ -455,7 +456,7 @@ class _ContextPreviewTab extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(Icons.touch_app_rounded, size: 14, color: cs.primary),
+              Icon(Iconsax.scan, size: 14, color: cs.primary),
               const SizedBox(width: 8),
               Text('Long-press any card below',
                   style: TextStyle(
@@ -482,17 +483,17 @@ class _ContextPreviewTab extends StatelessWidget {
               previewHeight: 260,
               actions: [
                 AppQuickAction(
-                    icon: Icons.add_shopping_cart_rounded,
+                    icon: Iconsax.shopping_cart,
                     label: 'Add to Cart',
                     onTap: () {}),
                 AppQuickAction(
-                    icon: Icons.favorite_border_rounded,
+                    icon: Iconsax.heart,
                     label: 'Save',
                     onTap: () {}),
                 AppQuickAction(
-                    icon: Icons.share_rounded, label: 'Share', onTap: () {}),
+                    icon: Iconsax.send_2, label: 'Share', onTap: () {}),
                 AppQuickAction(
-                    icon: Icons.report_rounded,
+                    icon: Iconsax.danger,
                     label: 'Report',
                     isDestructive: true,
                     onTap: () {}),
@@ -531,7 +532,7 @@ class _FoodPreviewCard extends StatelessWidget {
         Container(
           height: 160,
           color: color.withOpacity(0.2),
-          child: Center(child: Icon(Icons.restaurant_menu_rounded, color: color, size: 64)),
+          child: Center(child: Icon(Iconsax.cup, color: color, size: 64)),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
@@ -590,7 +591,7 @@ class _FoodListItem extends StatelessWidget {
             decoration: BoxDecoration(
                 color: color.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(10)),
-            child: Icon(Icons.fastfood_rounded, color: color, size: 22),
+            child: Icon(Iconsax.coffee, color: color, size: 22),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -605,7 +606,7 @@ class _FoodListItem extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.add_circle_rounded, color: color),
+          Icon(Iconsax.add_circle, color: color),
         ],
       ),
     );
@@ -625,7 +626,7 @@ class _PopoverTab extends StatelessWidget {
         const _SectionHeader(
           'AppPopover',
           'Anchor-positioned floating cards with auto-flip',
-          Icons.open_in_new_rounded,
+          Iconsax.export,
           Color(0xFF0891B2),
         ),
         const SizedBox(height: 16),
@@ -637,7 +638,7 @@ class _PopoverTab extends StatelessWidget {
               position: AppPopoverPosition.bottom,
               popover: _InfoPopoverContent(),
               child: FilledButton.icon(
-                icon: const Icon(Icons.info_outline_rounded, size: 16),
+                icon: const Icon(Iconsax.info_circle, size: 16),
                 label: const Text('Info Popover'),
                 onPressed: null,
               ),
@@ -645,19 +646,19 @@ class _PopoverTab extends StatelessWidget {
             AppMenuPopover(
               items: [
                 AppPopoverMenuItem(
-                    icon: Icons.edit_rounded, label: 'Edit', onTap: () {}),
+                    icon: Iconsax.edit, label: 'Edit', onTap: () {}),
                 AppPopoverMenuItem(
-                    icon: Icons.copy_rounded, label: 'Duplicate', onTap: () {}),
+                    icon: Iconsax.copy, label: 'Duplicate', onTap: () {}),
                 AppPopoverMenuItem(
-                    icon: Icons.share_rounded, label: 'Share', onTap: () {}),
+                    icon: Iconsax.send_2, label: 'Share', onTap: () {}),
                 AppPopoverMenuItem(
-                    icon: Icons.delete_rounded,
+                    icon: Iconsax.trash,
                     label: 'Delete',
                     isDestructive: true,
                     onTap: () {}),
               ],
               child: OutlinedButton.icon(
-                icon: const Icon(Icons.more_horiz_rounded, size: 16),
+                icon: const Icon(Iconsax.more, size: 16),
                 label: const Text('Menu Popover'),
                 onPressed: null,
               ),
@@ -669,7 +670,7 @@ class _PopoverTab extends StatelessWidget {
         const _SectionHeader(
           'AppAppBar',
           'Glassmorphic adaptive bar — transparent → blur on scroll',
-          Icons.web_asset_rounded,
+          Iconsax.monitor,
           Color(0xFF7C3AED),
         ),
         const SizedBox(height: 12),
@@ -688,7 +689,7 @@ class _PopoverTab extends StatelessWidget {
         const _SectionHeader(
           'AppBarScrollBehavior',
           'Four scroll-linked behavior modes',
-          Icons.view_agenda_rounded,
+          Iconsax.element_equal,
           Color(0xFF16A34A),
         ),
         const SizedBox(height: 12),
@@ -716,10 +717,10 @@ class _PopoverTab extends StatelessWidget {
       };
 
   IconData _behaviorIcon(AppBarScrollBehavior b) => switch (b) {
-        AppBarScrollBehavior.transparent => Icons.blur_off_rounded,
-        AppBarScrollBehavior.glassmorphic => Icons.blur_on_rounded,
-        AppBarScrollBehavior.solid => Icons.rectangle_rounded,
-        AppBarScrollBehavior.hideOnScrollDown => Icons.swap_vert_rounded,
+        AppBarScrollBehavior.transparent => Iconsax.element_4,
+        AppBarScrollBehavior.glassmorphic => Iconsax.element_4,
+        AppBarScrollBehavior.solid => Iconsax.element_3,
+        AppBarScrollBehavior.hideOnScrollDown => Iconsax.arrow_swap_horizontal,
       };
 }
 
@@ -732,7 +733,7 @@ class _InfoPopoverContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Row(children: [
-          Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+          Icon(Iconsax.star, color: Colors.amber, size: 16),
           SizedBox(width: 6),
           Text('4.8 Rating',
               style: TextStyle(fontWeight: FontWeight.w800)),
@@ -810,7 +811,7 @@ class _AppBarPreviewState extends State<_AppBarPreview> {
         scrollController: _sc,
         actions: [
           const IconButton(
-              icon: Icon(Icons.search_rounded), onPressed: null),
+              icon: Icon(Iconsax.search_normal), onPressed: null),
         ],
       ),
     ]);
@@ -839,7 +840,7 @@ class _MiniPlayerTabState extends State<_MiniPlayerTab> {
           const _SectionHeader(
             'AppMiniPlayer',
             'Spotify / YouTube persistent mini-player with gestures',
-            Icons.music_note_rounded,
+            Iconsax.musicnote,
             Color(0xFF1DB954),
           ),
           const SizedBox(height: 12),
@@ -874,7 +875,7 @@ class _MiniPlayerTabState extends State<_MiniPlayerTab> {
                         color: t.accentColor!.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(Icons.music_note_rounded,
+                      child: Icon(Iconsax.musicnote,
                           color: t.accentColor, size: 20),
                     ),
                     const SizedBox(width: 12),
@@ -891,7 +892,7 @@ class _MiniPlayerTabState extends State<_MiniPlayerTab> {
                       ),
                     ),
                     if (isActive)
-                      Icon(Icons.equalizer_rounded,
+                      Icon(Iconsax.chart_1,
                           color: t.accentColor, size: 20),
                   ]),
                 ).animate(delay: Duration(milliseconds: 60 * i)).fadeIn(duration: 250.ms),
@@ -902,8 +903,8 @@ class _MiniPlayerTabState extends State<_MiniPlayerTab> {
           Center(
             child: TextButton.icon(
               icon: Icon(_visible
-                  ? Icons.visibility_off_rounded
-                  : Icons.visibility_rounded, size: 14),
+                  ? Iconsax.eye_slash
+                  : Iconsax.eye, size: 14),
               label: Text(_visible ? 'Hide player' : 'Show player'),
               onPressed: () => setState(() => _visible = !_visible),
             ),
@@ -987,14 +988,14 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         const _SectionHeader(
           'AppMediaPicker',
           'Universal multi-source picker — camera · gallery · files',
-          Icons.photo_library_rounded,
+          Iconsax.gallery,
           Color(0xFFEC4899),
         ),
         const SizedBox(height: 16),
         _DemoCard(
           label: 'Gallery Multi-Select',
           description: 'Pick up to 5 images from gallery, max 10 MB each',
-          icon: Icons.photo_library_rounded,
+          icon: Iconsax.gallery,
           color: const Color(0xFF4CAF50),
           onTap: () async {
             final files = await AppMediaPicker.pick(context,
@@ -1006,7 +1007,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         _DemoCard(
           label: 'Camera Capture',
           description: 'Single photo from camera, high quality',
-          icon: Icons.camera_alt_rounded,
+          icon: Iconsax.camera,
           color: const Color(0xFF2196F3),
           onTap: () async {
             final files = await AppMediaPicker.pick(context,
@@ -1019,7 +1020,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         _DemoCard(
           label: 'Multi-Source Sheet',
           description: 'Camera + Gallery + Files — shows source selector',
-          icon: Icons.add_photo_alternate_rounded,
+          icon: Iconsax.gallery_add,
           color: const Color(0xFFFF5722),
           onTap: () async {
             final files = await AppMediaPicker.pick(context,
@@ -1035,7 +1036,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         if (_picked.isNotEmpty) ...[
           const SizedBox(height: 20),
           _SectionHeader('Picked Images', '${_picked.length} file(s)',
-              Icons.image_rounded, const Color(0xFF4CAF50)),
+              Iconsax.image, const Color(0xFF4CAF50)),
           const SizedBox(height: 10),
           SizedBox(
             height: 100,
@@ -1054,7 +1055,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         if (_docs.isNotEmpty) ...[
           const SizedBox(height: 20),
           _SectionHeader('Picked Files', '${_docs.length} file(s)',
-              Icons.folder_open_rounded, const Color(0xFFFF5722)),
+              Iconsax.folder_open, const Color(0xFFFF5722)),
           const SizedBox(height: 10),
           ..._docs.map((f) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -1066,7 +1067,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
                     border: Border.all(color: cs.outlineVariant),
                   ),
                   child: Row(children: [
-                    Icon(Icons.insert_drive_file_rounded, color: cs.primary),
+                    Icon(Iconsax.document_text, color: cs.primary),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
@@ -1083,7 +1084,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close_rounded, size: 16),
+                      icon: const Icon(Iconsax.close_circle, size: 16),
                       onPressed: () => setState(() => _docs.remove(f)),
                     ),
                   ]),
@@ -1094,7 +1095,7 @@ class _MediaPickerTabState extends State<_MediaPickerTab> {
         const SizedBox(height: 24),
         const _SectionHeader('AppMediaPickerField',
             'Drop-in form field with live thumbnail grid',
-            Icons.grid_view_rounded, Color(0xFF7C3AED)),
+            Iconsax.grid_1, Color(0xFF7C3AED)),
         const SizedBox(height: 12),
         AppMediaPickerField(
           label: 'Attach Documents',
@@ -1153,7 +1154,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
       (
         label: 'Camera & Media',
         color: Color(0xFF2196F3),
-        icon: Icons.camera_alt_rounded,
+        icon: Iconsax.camera,
         types: [
           AppPermissionType.camera,
           AppPermissionType.microphone,
@@ -1164,7 +1165,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
       (
         label: 'Location',
         color: Color(0xFF4CAF50),
-        icon: Icons.location_on_rounded,
+        icon: Iconsax.location,
         types: [
           AppPermissionType.locationWhenInUse,
           AppPermissionType.locationAlways,
@@ -1173,7 +1174,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
       (
         label: 'Connectivity',
         color: Color(0xFF00BCD4),
-        icon: Icons.bluetooth_rounded,
+        icon: Iconsax.bluetooth,
         types: [
           AppPermissionType.notifications,
           AppPermissionType.bluetooth,
@@ -1183,7 +1184,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
       (
         label: 'Device & Data',
         color: Color(0xFF9C27B0),
-        icon: Icons.storage_rounded,
+        icon: Iconsax.archive,
         types: [
           AppPermissionType.contacts,
           AppPermissionType.storage,
@@ -1199,7 +1200,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
         const _SectionHeader(
           'AppPermissionManager',
           'Enterprise-grade platform-aware permission system',
-          Icons.security_rounded,
+          Iconsax.security,
           Color(0xFF7C3AED),
         ),
         const SizedBox(height: 8),
@@ -1222,7 +1223,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Row(children: [
-                Icon(Icons.info_outline_rounded,
+                Icon(Iconsax.info_circle,
                     size: 14, color: Color(0xFF7C3AED)),
                 SizedBox(width: 6),
                 Text('Platform-aware permission resolution',
@@ -1246,7 +1247,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
         SizedBox(
           width: double.infinity,
           child: FilledButton.icon(
-            icon: const Icon(Icons.verified_user_rounded, size: 16),
+            icon: const Icon(Iconsax.verify, size: 16),
             label: const Text('Request Common Permissions'),
             onPressed: () async {
               await AppPermissionManager.requestAll(
@@ -1291,7 +1292,7 @@ class _PermissionsTabState extends State<_PermissionsTab> with WidgetsBindingObs
                 color: cs.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(Icons.settings_rounded, color: cs.primary, size: 20),
+              child: Icon(Iconsax.setting, color: cs.primary, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -1492,7 +1493,7 @@ class _DemoCard extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.play_circle_outline_rounded, color: color, size: 22),
+            Icon(Iconsax.play_circle, color: color, size: 22),
           ]),
         ),
       ),
